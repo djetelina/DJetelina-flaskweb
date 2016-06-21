@@ -1,5 +1,5 @@
 import os
-from run import app, db
+from app import app, db
 from flask import render_template, send_from_directory, request, flash, session, redirect, url_for
 from models import Projects
 from functools import wraps
@@ -37,7 +37,7 @@ def login():
     error = None
     if request.method == 'POST':
         if request.form['password'] != os.environ.get('password'):
-            error = 'Incorrect password'
+            flash('Incorrect password')
         else:
             session['logged_in'] = True
             flash('Logged in')
@@ -56,7 +56,7 @@ def logout():
 def add_project():
     if request.method == 'POST':
         if not request.form['name'] or not request.form['category'] or not request.form['info']:
-            flash('Please enter all the fields', 'error')
+            flash('Please fill Name, Category and Info', 'error')
         else:
             project = Projects(request.form['name'], request.form['category'], request.form['info'],
                                github=request.form['github'])
