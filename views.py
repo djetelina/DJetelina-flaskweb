@@ -1,7 +1,19 @@
 import os
 from run import app, db
-from flask import render_template, send_from_directory, request, flash
+from flask import render_template, send_from_directory, request, flash, session, redirect, url_for
 from models import Projects
+from functools import wraps
+
+
+def login_required(f):
+    @wraps(f)
+    def wrap(*args, **kwargs):
+        if 'logged_in' in session:
+            return f(*args, **kwargs)
+        else:
+            flash('You need to login first.')
+            return redirect(url_for('login'))
+    return wrap
 
 
 @app.route('/favicon.ico')
@@ -16,10 +28,31 @@ def page_not_found(e):
 
 @app.route("/")
 @app.route("/home")
-def index():
-    return render_template('index.html', projects = Projects.query.all())
+def home():
+    return render_template('home.html', projects = Projects.query.all())
 
-@app.route("/add_project", methods = ['GET', 'POST'])
+
+@app.route("/login", methods=['GET', 'POST'])
+def login():
+    error = None
+    if request.method == 'POST':
+        if request.form['password'] != os.environ.get('password'):
+            error = 'Incorrect password'
+        else:
+            session['logged_in'] = True
+            flash('Logged in')
+            return redirect(url_for('home'))
+    return render_template('login.html')
+
+
+@app.route("/logout")
+def logout():
+    session.pop('logged_in', None)
+    return redirect(url_for('home'))
+
+
+@app.route("/add_project", methods=['GET', 'POST'])
+@login_required
 def add_project():
     if request.method == 'POST':
         if not request.form['name'] or not request.form['category'] or not request.form['info']:
@@ -29,6 +62,6 @@ def add_project():
                                github=request.form['github'])
             db.session.add(project)
             db.session.commit()
-
             flash('New project added')
+
     return render_template('new.html')

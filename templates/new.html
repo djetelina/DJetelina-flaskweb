@@ -4,12 +4,6 @@
 <h3>Add new project</h3>
       <hr/>
 
-      {%- for category, message in get_flashed_messages(with_categories = true) %}
-         <div class = "alert alert-danger">
-            {{ message }}
-         </div>
-      {%- endfor %}
-
       <form action = "{{ request.path }}" method = "post">
          <label for = "name">Name</label><br>
          <input type = "text" name = "name" placeholder = "Name" /><br>
