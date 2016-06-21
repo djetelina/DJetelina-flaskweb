@@ -1,9 +1,27 @@
 {% extends "base.html" %}
 {% block title %} - Home{% endblock %}
 {% block content %}
-{% if not session.logged_in %}
-     <p>You are not logged in.</p>
-{% else %}
-     <p>You are logged in.</p>
-{% endif %}
+<h3>Projects</h3>
+<p><a href="{{ url_for('add_project') }}">Create new here</a></p>
+      <table>
+         <thead>
+            <tr>
+               <th>Name</th>
+               <th>Category</th>
+               <th>Github</th>
+               <th>Info</th>
+            </tr>
+         </thead>
+
+         <tbody>
+            {% for project in projects %}
+               <tr>
+                  <td>{{ project.name }}</td>
+                  <td>{{ project.category }}</td>
+                  <td>{{ project.github }}</td>
+                  <td>{{ project.info }}</td>
+               </tr>
+            {% endfor %}
+         </tbody>
+      </table>
 {% endblock %}
