@@ -51,6 +51,14 @@ def logout():
     return redirect(url_for('home'))
 
 
+@app.route("/category/<string:category>")
+def category(category):
+    return render_template('category.html',
+                           name = category,
+                           category = Projects.query.filter(Projects.category==category).all(),
+                           )
+
+
 @app.route("/add_project", methods=['GET', 'POST'])
 @login_required
 def add_project():
