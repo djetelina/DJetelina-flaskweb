@@ -4,15 +4,28 @@
 <h3>Add new project</h3>
       <hr/>
 
-      <form action = "{{ request.path }}" method = "post">
-         <label for = "name">Name</label><br>
-         <input type = "text" name = "name" placeholder = "Name" /><br>
-         <label for = "category">Category</label><br>
-         <input type = "text" name = "category" placeholder = "Category" /><br>
-         <label for = "github">Github</label><br>
-         <input type = "text" name = "github" placeholder = "Github" /><br>
-         <label for = "addr">Info</label><br>
-         <textarea name = "info" placeholder = "About the project"></textarea><br>
-         <input type = "submit" value = "Submit" />
-      </form>
+    <form role="form" action="{{ request.path }}" method="post">
+        <div class="form-group">
+            <label for="name">Name<br>
+            <input class="form-control" type="text" name="name" placeholder="Name" /></label><br>
+        </div>
+        <div class="form-group">
+            <label for="category">Category<br>
+            <input class="form-control" type="text" name="category" placeholder="Programming" /></label><br>
+        </div>
+        <div class="form-group">
+            <label for="github">Github<br>
+            <input class="form-control" type="text" name="github" placeholder="Github of the project" /></label><br>
+        </div>
+        <div class="form-group">
+            <label for="url">URL<br>
+            <input class="form-control" type="text" name="url" placeholder="URL for final presentation" /></label><br>
+        </div>
+        <div class="form-group">
+            <label for="info">Info<br>
+            <textarea class="form-control" name="info" placeholder="About the project"></textarea></label><br>
+        </div>
+
+        <button type="submit" class="btn btn-default">Submit</button>
+    </form>
 {% endblock %}

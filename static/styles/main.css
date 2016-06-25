@@ -1,3 +1,6 @@
 .dropdown:hover .dropdown-menu {
    display: block!important;
 }
+textarea {
+    width: 100%;
+}

@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Editing {{ project.name }}</h1>
+    <form role="form" action="{{ request.path }}" method="post">
+        <div class="form-group">
+            <label for="name">Name<br>
+            <input class="form-control" type="text" name="name" value="{{ project.name }}" /></label><br>
+        </div>
+        <div class="form-group">
+            <label for="category">Category<br>
+            <input class="form-control" type="text" name="category" value="{{ project.category }}" /></label><br>
+        </div>
+        <div class="form-group">
+            <label for="github">Github<br>
+            <input class="form-control" type="text" name="github" value="{{ project.github if project.github != None }}" /></label><br>
+        </div>
+        <div class="form-group">
+            <label for="url">URL<br>
+            <input class="form-control" type="text" name="url" value="{{ project.url if project.url != None }}" /></label><br>
+        </div>
+        <div class="form-group">
+            <label for="info">Info<br>
+            <textarea class="form-control" name="info" rows="7">{{ project.info }}</textarea></label><br>
+        </div>
+
+        <button type="submit" class="btn btn-default">Submit</button>
+    </form>
+    <h2>Delete?</h2>
+    <form role="form" action="{{ url_for('delete', name=project.name) }}">
+        <button type="submit" class="btn btn-danger">DELETE</button>
+    </form>
+{% endblock %}
