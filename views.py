@@ -53,10 +53,21 @@ def logout():
 
 @app.route("/category/<string:category>")
 def category(category):
-    return render_template('category.html',
-                           name = category,
-                           category = Projects.query.filter(Projects.category==category).all(),
-                           )
+    found = Projects.query.filter(Projects.category==category).all()
+    if found is not None:
+        return render_template('category.html',
+                               name = category,
+                               category = found,
+                               )
+    else:
+        redirect(url_for('page_not_found'))
+
+
+@app.route("/project/<string:project>")
+def project(project):
+    return render_template('project.html',
+                           project=Projects.query.filter(Projects.name==project).first())
+
 
 @app.route("/edit/<string:name>", methods=['GET', 'POST'])
 @login_required

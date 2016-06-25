@@ -8,11 +8,14 @@ from views import *
 from models import *
 
 app.config.from_object('config')
+
+
 @app.context_processor
 def inject_categories():
     query = db.session.query(Projects.category.distinct().label("category"))
     g.categories = [row.category for row in query.all()]
     return dict(categories=g.categories)
+
 
 if __name__ == "__main__":
     db.create_all()

@@ -3,25 +3,27 @@
 {% block content %}
     <h1>Editing {{ project.name }}</h1>
     <form role="form" action="{{ request.path }}" method="post">
-        <div class="form-group">
-            <label for="name">Name<br>
-            <input class="form-control" type="text" name="name" value="{{ project.name }}" /></label><br>
+        <div class="form-inline">
+            <label for="name">
+                Name:
+                <input class="form-control" type="text" name="name" id="name" value="{{ project.name }}" />
+            </label>
+            <label for="category">
+                Category:
+                <input class="form-control" type="text" name="category" id="category" value="{{ project.category }}" />
+            </label>
+            <label for="github">
+                Github:
+                <input class="form-control" type="text" name="github" id="github" value="{{ project.github if project.github != None }}" />
+            </label>
+            <label class="control-label" for="url">
+                URL:
+                <input class="form-control" type="text" name="url" id="url" value="{{ project.url if project.url != None }}" />
+            </label>
         </div>
         <div class="form-group">
-            <label for="category">Category<br>
-            <input class="form-control" type="text" name="category" value="{{ project.category }}" /></label><br>
-        </div>
-        <div class="form-group">
-            <label for="github">Github<br>
-            <input class="form-control" type="text" name="github" value="{{ project.github if project.github != None }}" /></label><br>
-        </div>
-        <div class="form-group">
-            <label for="url">URL<br>
-            <input class="form-control" type="text" name="url" value="{{ project.url if project.url != None }}" /></label><br>
-        </div>
-        <div class="form-group">
-            <label for="info">Info<br>
-            <textarea class="form-control" name="info" rows="7">{{ project.info }}</textarea></label><br>
+            <label for="info">Info:</label>
+            <textarea class="form-control" name="info" id="info" rows="7">{{ project.info }}</textarea><br>
         </div>
 
         <button type="submit" class="btn btn-default">Submit</button>
