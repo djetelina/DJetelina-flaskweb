@@ -54,13 +54,13 @@ def logout():
 @app.route("/category/<string:category>")
 def category(category):
     found = Projects.query.filter(Projects.category==category).all()
-    if found is not None:
+    if found:
         return render_template('category.html',
                                name = category,
                                category = found,
                                )
     else:
-        redirect(url_for('page_not_found'))
+        return render_template('404.html'), 404
 
 
 @app.route("/project/<string:project>")

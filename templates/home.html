@@ -20,8 +20,8 @@
                <tr>
                    <td>{{ project.name }}</td>
                    <td>{{ project.category }}</td>
-                   <td>{{ project.url if project.url != None }}</td>
-                   <td>{{ project.github if project.github != None }}</td>
+                   <td>{% if project.url != None %}{{ project.url}}{% endif %}</td>
+                   <td>{% if project.github %}<a href="{{ project.github }}"><i class="fa fa-github"></i></a>{% endif %}</td>
                    <td>{{ project.info }}</td>
                    <td>
                        <div class="btn-group">
