@@ -1,32 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+<head>
     {% block head %}
-    <title>David Jetelina{% block title %}{% endblock %}</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Personal website of David Jetelina">
-    <meta name="keywords" content="portfolio, david, jetelina, djetelina, iscre4m">
-    <meta name="author" content="David Jetelina">
-    <meta charset="utf-8">
+        <title>David Jetelina{% block title %}{% endblock %}</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="Personal website of David Jetelina">
+        <meta name="keywords" content="portfolio, david, jetelina, djetelina, iscre4m">
+        <meta name="author" content="David Jetelina">
+        <meta charset="utf-8">
 
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles/main.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles/slate_bootstrap.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles/font-awesome.min.css') }}">
-    <link rel="shortcut icon" href="{{ url_for('static', filename='ico/favicon.ico') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='styles/main.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='styles/slate_bootstrap.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='styles/font-awesome.min.css') }}">
+        <link rel="shortcut icon" href="{{ url_for('static', filename='ico/favicon.ico') }}">
     {% endblock %}
-  </head>
-  <body>
-    {% block navbar %}
+</head>
+<body>
+{% block navbar %}
     <div class="navbar navbar-static-top navbar-default container">
-      <div class="navbar-header">
-        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-        </button>
-        <a class="navbar-brand" href="/">David Jetelina</a>
-      </div>
-        <div class="nav-collapse" id="navbar">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">David Jetelina</a>
+        </div>
+        <div class="collapse navbar-collapse" id="navbar">
             <ul class="nav navbar-nav">
                 <li {% if request.path == '/' or request.path == '/home' %}class="active"{% endif %}>
                      <a href="{{ url_for('home') }}">Home</a>
@@ -45,40 +45,40 @@
                     {% endif %}
                 </li>
             </ul>
-          {% block navbar_right %}
-          <ul class="nav navbar-nav navbar-right">
-            <li><a href="mailto:david@djetelina.cz" target="_blank"><i class="fa fa-envelope"></i></a></li>
-            <li><a href="https://www.facebook.com/djetelina" target="_blank"><i class="fa fa-facebook"></i></a></li>
-            <li><a href="https://twitter.com/djetelina" target="_blank"><i class="fa fa-twitter"></i></a></li>
-            <li><a href="https://linkedin.com/in/david-jetelina-893085aa" target="_blank"><i class="fa fa-linkedin"></i></a></li>
-            <li><a href="https://github.com/iscre4m/" target="_blank"><i class="fa fa-github"></i></a></li>
-            <li><a href="http://stackoverflow.com/users/5616110/iscre4m?tab=profile" target="_blank"><i class="fa fa-stack-overflow"></i></a></li>
-          </ul>
-          {% endblock %}
+            {% block navbar_right %}
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="mailto:david@djetelina.cz" target="_blank"><i class="fa fa-envelope"></i></a></li>
+                    <li><a href="https://www.facebook.com/djetelina" target="_blank"><i class="fa fa-facebook"></i></a></li>
+                    <li><a href="https://twitter.com/djetelina" target="_blank"><i class="fa fa-twitter"></i></a></li>
+                    <li><a href="https://linkedin.com/in/david-jetelina-893085aa" target="_blank"><i class="fa fa-linkedin"></i></a></li>
+                    <li><a href="https://github.com/iscre4m/" target="_blank"><i class="fa fa-github"></i></a></li>
+                    <li><a href="http://stackoverflow.com/users/5616110/iscre4m?tab=profile" target="_blank"><i class="fa fa-stack-overflow"></i></a></li>
+                </ul>
+            {% endblock %}
         </div><!--/.nav-collapse -->
-      </div>
-    {% endblock %}
-    <div class="container page">
-        <div class="content">
-            {%- for category, message in get_flashed_messages(with_categories = true) %}
-                <div class = "alert alert-danger">
-                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                    {{ message }}
-                </div>
-            {%- endfor %}
-          {% block content %}
-          {% endblock %}
-        </div>
-        <hr>
-        {% block footer %}
+    </div>
+{% endblock %}
+<div class="container page">
+    <div class="content">
+        {%- for category, message in get_flashed_messages(with_categories = true) %}
+            <div class = "alert alert-danger">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                {{ message }}
+            </div>
+        {%- endfor %}
+        {% block content %}
+        {% endblock %}
+    </div>
+    <hr>
+    {% block footer %}
         <footer class="footer">
             <p>&copy; David Jetelina - Built using Flask, Bootstrap and PostgreSQL</p>
         </footer>
-        {% endblock %}
-    </div>
-    {% block js_footer %}
-      <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-      <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
     {% endblock %}
-  </body>
+</div>
+{% block js_footer %}
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+{% endblock %}
+</body>
 </html>
