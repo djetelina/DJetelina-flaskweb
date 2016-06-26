@@ -19,13 +19,13 @@
     {% block navbar %}
     <div class="navbar navbar-static-top navbar-default">
       <div class="container">
-        <button class="navbar-toggle">
+        <button class="navbar-toggle" data-toggle="collapse" data-target="navbar">
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
         <a class="navbar-brand" href="/">David Jetelina</a>
-        <div class="nav-collapse">
+        <div class="nav-collapse" id="navbar">
             <ul class="nav navbar-nav">
                 <li {% if request.path == '/' or request.path == '/home' %}class="active"{% endif %}>
                      <a href="{{ url_for('home') }}">Home</a>
@@ -39,6 +39,9 @@
                             <li><a href="{{ url_for('category', category_name=category) }}">{{ category }}</a></li>
                         {% endfor %}
                     </ul>
+                    {% if 'logged_in' in session %}
+                    <li {% if request.path == '/admin' %}class="active"{% endif %}><a href="{{ url_for('admin') }}">Admin</a></li>
+                    {% endif %}
                 </li>
             </ul>
           {% block navbar_right %}
@@ -49,11 +52,6 @@
             <li><a href="https://linkedin.com/in/david-jetelina-893085aa"><i class="fa fa-linkedin"></i></a></li>
             <li><a href="https://github.com/iscre4m/"><i class="fa fa-github"></i></a></li>
             <li><a href="http://stackoverflow.com/users/5616110/iscre4m?tab=profile"><i class="fa fa-stack-overflow"></i></a></li>
-            <!--{% if not 'logged_in' in session %}
-              <li><a href="{{ url_for('login') }}">Login</a></li>
-            {% else %}
-              <li><a href="{{ url_for('logout') }}">Logout</a></li>
-            {% endif %}-->
           </ul>
           {% endblock %}
         </div><!--/.nav-collapse -->
