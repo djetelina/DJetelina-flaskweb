@@ -4,9 +4,9 @@
     {% block head %}
     <title>David Jetelina{% block title %}{% endblock %}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="">
-    <meta name="keywords" content="">
-    <meta name="author" content="">
+    <meta name="description" content="Personal website of David Jetelina">
+    <meta name="keywords" content="portfolio, david, jetelina, djetelina, iscre4m">
+    <meta name="author" content="David Jetelina">
     <meta charset="utf-8">
 
     <link rel="stylesheet" href="{{ url_for('static', filename='styles/main.css') }}">
@@ -30,24 +30,30 @@
                 <li {% if request.path == '/' or request.path == '/home' %}class="active"{% endif %}>
                      <a href="{{ url_for('home') }}">Home</a>
                 </li>
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" role="button" aria-haspopup="true" aria-expanded="false">
+                <li class="dropdown {% if request.path == '/projects' %}active{% endif %}">
+                    <a href="{{ url_for('projects') }}" class="dropdown-toggle" role="button" aria-haspopup="true" aria-expanded="false">
                         Projects<span class="caret"></span>
                     </a>
                     <ul class="dropdown-menu">
                         {% for category in g.categories %}
-                            <li><a href="{{ url_for('category', category=category) }}">{{ category }}</a></li>
+                            <li><a href="{{ url_for('category', category_name=category) }}">{{ category }}</a></li>
                         {% endfor %}
                     </ul>
                 </li>
             </ul>
           {% block navbar_right %}
           <ul class="nav navbar-nav pull-right">
-            {% if not 'logged_in' in session %}
+            <li><a href="mailto:david@djetelina.cz"><i class="fa fa-envelope"></i></a></li>
+            <li><a href="https://www.facebook.com/djetelina"><i class="fa fa-facebook"></i></a></li>
+            <li><a href="https://twitter.com/djetelina"><i class="fa fa-twitter"></i></a></li>
+            <li><a href="https://linkedin.com/in/david-jetelina-893085aa"><i class="fa fa-linkedin"></i></a></li>
+            <li><a href="https://github.com/iscre4m/"><i class="fa fa-github"></i></a></li>
+            <li><a href="http://stackoverflow.com/users/5616110/iscre4m?tab=profile"><i class="fa fa-stack-overflow"></i></a></li>
+            <!--{% if not 'logged_in' in session %}
               <li><a href="{{ url_for('login') }}">Login</a></li>
             {% else %}
               <li><a href="{{ url_for('logout') }}">Logout</a></li>
-            {% endif %}
+            {% endif %}-->
           </ul>
           {% endblock %}
         </div><!--/.nav-collapse -->
@@ -58,6 +64,7 @@
         <div class="content">
             {%- for category, message in get_flashed_messages(with_categories = true) %}
                 <div class = "alert alert-danger">
+                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
                     {{ message }}
                 </div>
             {%- endfor %}

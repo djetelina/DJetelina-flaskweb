@@ -1,37 +1,15 @@
 {% extends "base.html" %}
 {% block title %} - Home{% endblock %}
 {% block content %}
-<h1>Projects</h1>
-<p><a class="btn btn-success" href="{{ url_for('add_project') }}">New</a></p>
-      <table class="table">
-         <thead>
-            <tr>
-               <th>Name</th>
-               <th>Category</th>
-               <th>URL</th>
-               <th>Github</th>
-               <th>Info</th>
-               <th>Actions</th>
-            </tr>
-         </thead>
-
-         <tbody>
-            {% for project in projects %}
-               <tr>
-                   <td>{{ project.name }}</td>
-                   <td>{{ project.category }}</td>
-                   <td>{% if project.url != None %}{{ project.url}}{% endif %}</td>
-                   <td>{% if project.github %}<a href="{{ project.github }}"><i class="fa fa-github"></i></a>{% endif %}</td>
-                   <td>{{ project.info }}</td>
-                   <td>
-                       <div class="btn-group">
-                           <a class="btn btn-success btn-xs" href="{{ url_for('project', project=project.name) }}">View</a>
-                           <a class="btn btn-info btn-xs" href="{{ url_for('edit', name=project.name) }}">Edit</a>
-                           <a class="btn btn-danger btn-xs" href="{{ url_for('delete', name=project.name) }}">Delete</a>
-                       </div>
-                   </td>
-               </tr>
-            {% endfor %}
-         </tbody>
-      </table>
+<div class="container-fluid">
+    <h1>Stay awhile and listen</h1>
+        <h2>Purpose of this site</h2>
+            <p>This site should serve as a portfolio-kinda thing.</p>
+            <p>GitHub is a great thing to link to when I'm trying to present myself, but there are two major faults:</p>
+            <ul>
+                <li>GitHub's readme isn't ideal for presenting the project.</li>
+                <li>Not every source code can be public</li>
+            </ul>
+            <p>That's why this site exists and why I'd prefer you to read the context :)</p>
+</div>
 {% endblock %}

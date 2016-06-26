@@ -13,6 +13,7 @@ def login_required(f):
         else:
             flash('You need to login first.')
             return redirect(url_for('login'))
+
     return wrap
 
 
@@ -29,12 +30,17 @@ def page_not_found(e):
 @app.route("/")
 @app.route("/home")
 def home():
-    return render_template('home.html', projects = Projects.query.all())
+    return render_template('home.html')
+
+
+@app.route("/admin")
+@login_required
+def admin():
+    return render_template('admin.html', projects=Projects.query.all())
 
 
 @app.route("/login", methods=['GET', 'POST'])
 def login():
-    error = None
     if request.method == 'POST':
         if request.form['password'] != os.environ.get('password'):
             flash('Incorrect password')
@@ -51,22 +57,26 @@ def logout():
     return redirect(url_for('home'))
 
 
-@app.route("/category/<string:category>")
-def category(category):
-    found = Projects.query.filter(Projects.category==category).all()
+@app.route("/category/<string:category_name>")
+def category(category_name):
+    found = Projects.query.filter(Projects.category == category_name).all()
     if found:
         return render_template('category.html',
-                               name = category,
-                               category = found,
+                               name=category_name,
+                               category=found,
                                )
     else:
         return render_template('404.html'), 404
 
+@app.route("/projects")
+def projects():
+    return render_template('projects.html',
+                           projects=Projects.query.all())
 
-@app.route("/project/<string:project>")
-def project(project):
+@app.route("/project/<string:project_name>")
+def project(project_name):
     return render_template('project.html',
-                           project=Projects.query.filter(Projects.name==project).first())
+                           project=Projects.query.filter(Projects.name == project_name).first())
 
 
 @app.route("/edit/<string:name>", methods=['GET', 'POST'])
@@ -76,28 +86,29 @@ def edit(name):
         if not request.form['name'] or not request.form['category'] or not request.form['info']:
             flash('Please fill Name, Category and Info', 'error')
         else:
-            project = Projects.query.filter(Projects.name==name).first()
-            project.name = request.form['name']
-            project.category = request.form['category']
-            project.info = request.form['info']
+            selected_project = Projects.query.filter(Projects.name == name).first()
+            selected_project.name = request.form['name']
+            selected_project.category = request.form['category']
+            selected_project.info = request.form['info']
             if request.form['url']:
-               project.url = request.form['url']
+                selected_project.url = request.form['url']
             else:
-                project.url = None
+                selected_project.url = None
             if request.form['github']:
-               project.github = request.form['github']
+                selected_project.github = request.form['github']
             else:
-                project.github = None
+                selected_project.github = None
             db.session.commit()
             flash('Project edited')
     return render_template('edit.html',
-                           project = Projects.query.filter(Projects.name==name).first())
+                           project=Projects.query.filter(Projects.name == name).first())
+
 
 @app.route("/delete/<string:name>")
 @login_required
 def delete(name):
-    project = Projects.query.filter(Projects.name==name).first()
-    db.session.delete(project)
+    selected_project = Projects.query.filter(Projects.name == name).first()
+    db.session.delete(selected_project)
     db.session.commit()
     return redirect(url_for('home'))
 
@@ -109,9 +120,9 @@ def add_project():
         if not request.form['name'] or not request.form['category'] or not request.form['info']:
             flash('Please fill Name, Category and Info', 'error')
         else:
-            project = Projects(request.form['name'], request.form['category'], request.form['info'],
-                               github=request.form['github'], url=request.form['url'])
-            db.session.add(project)
+            new_project = Projects(request.form['name'], request.form['category'], request.form['info'],
+                                   github=request.form['github'], url=request.form['url'])
+            db.session.add(new_project)
             db.session.commit()
             flash('New project added')
 
