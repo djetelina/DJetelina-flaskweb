@@ -36,7 +36,7 @@ def home():
 @app.route("/admin")
 @login_required
 def admin():
-    return render_template('admin.html', projects=Projects.query.all())
+    return render_template('admin.html', projects=Projects.query.order_by(Projects.created).all())
 
 
 @app.route("/login", methods=['GET', 'POST'])
@@ -57,21 +57,28 @@ def logout():
     return redirect(url_for('home'))
 
 
-@app.route("/category/<string:category_name>")
+@app.route("/about")
+def about():
+    return render_template('about.html')
+
+
+@app.route("/projects/<string:category_name>")
 def category(category_name):
-    found = Projects.query.filter(Projects.category == category_name).all()
+    found = Projects.query.filter(Projects.category == category_name).order_by(Projects.created).all()
     if found:
-        return render_template('category.html',
-                               name=category_name,
-                               category=found,
+        return render_template('projects.html',
+                               category=category_name,
+                               projects=found,
                                )
     else:
         return render_template('404.html'), 404
 
+
 @app.route("/projects")
 def projects():
     return render_template('projects.html',
-                           projects=Projects.query.all())
+                           projects=Projects.query.order_by(Projects.created).all())
+
 
 @app.route("/project/<string:project_name>")
 def project(project_name):

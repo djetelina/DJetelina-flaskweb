@@ -2,19 +2,20 @@
 {% block title %} - Projects{% endblock %}
 {% block content %}
     <div class="container">
+    <h1>Projects {% if category %}<small>{{ category }}</small>{% endif %}</h1>
     {% for project in projects %}
-            <div class="col-sm-4">
-                <h2>{{ project.name }}</h2>
-                <p>
-                    {{ project.info[:300] }}...
-                </p>
-                <p>
-                    <a class="btn btn-success btn-block" href="{{ url_for('project', project_name=project.name) }}">
-                        Read more
-                        <i class="fa fa-arrow-right"></i>
-                    </a>
-                </p>
-            </div>
+        <div class="col-sm-4">
+            <h2>{{ project.name }}</h2>
+            <p>
+                {{ project.info[:300] }}...
+            </p>
+            <p>
+                <a class="btn btn-success btn-block" href="{{ url_for('project', project_name=project.name) }}">
+                    Read more
+                    <i class="fa fa-arrow-right"></i>
+                </a>
+            </p>
+        </div>
     {% endfor %}
     </div>
 {% endblock %}
