@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
+    <a href="{{ url_for('project', project_name=project.name) }}" class="btn btn-success pull-right">View</a>
     <h1>Editing {{ project.name }}</h1>
     <form role="form" action="{{ request.path }}" method="post">
         <div class="form-inline">
