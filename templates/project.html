@@ -12,5 +12,5 @@
     {% endif %}
     <h1>{{ project.name }} <small>{{ project.category }}</small></h1>
     <h2>About {{ project.name }}</h2>
-    <p>{{ project.info }}</p>
+    <p>{% filter markdown %}{{ project.info }}{% endfilter %}</p>
 {% endblock %}

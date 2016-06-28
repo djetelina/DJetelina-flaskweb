@@ -1,8 +1,10 @@
 from flask import Flask, g
 from flask_sqlalchemy import SQLAlchemy
+from flaskext.markdown import Markdown
 
 app = Flask(__name__)
 db = SQLAlchemy(app)
+Markdown(app)
 
 from views import *
 from models import *
