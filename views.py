@@ -36,7 +36,7 @@ def home():
 @app.route("/admin")
 @login_required
 def admin():
-    return render_template('admin.html', projects=Projects.query.order_by(Projects.created).all())
+    return render_template('admin.html', projects=Projects.query.order_by(Projects.created.desc()).all())
 
 
 @app.route("/login", methods=['GET', 'POST'])
@@ -47,7 +47,7 @@ def login():
         else:
             session['logged_in'] = True
             flash('Logged in')
-            return redirect(url_for('home'))
+            return redirect(url_for('admin'))
     return render_template('login.html')
 
 
@@ -64,7 +64,7 @@ def about():
 
 @app.route("/projects/<string:category_name>")
 def category(category_name):
-    found = Projects.query.filter(Projects.category == category_name).order_by(Projects.created).all()
+    found = Projects.query.filter(Projects.category == category_name).order_by(Projects.created.desc()).all()
     if found:
         return render_template('projects.html',
                                category=category_name,
@@ -77,7 +77,7 @@ def category(category_name):
 @app.route("/projects")
 def projects():
     return render_template('projects.html',
-                           projects=Projects.query.order_by(Projects.created).all())
+                           projects=Projects.query.order_by(Projects.created.desc()).all())
 
 
 @app.route("/project/<string:project_name>")
@@ -117,7 +117,7 @@ def delete(name):
     selected_project = Projects.query.filter(Projects.name == name).first()
     db.session.delete(selected_project)
     db.session.commit()
-    return redirect(url_for('home'))
+    return redirect(url_for('admin'))
 
 
 @app.route("/add_project", methods=['GET', 'POST'])

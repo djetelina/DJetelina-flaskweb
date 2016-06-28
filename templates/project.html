@@ -1,13 +1,13 @@
 {% extends "base.html" %}
 {% block title %} - {{ project.name }}{% endblock %}
 {% block content %}
-    <h1>{{ project.name }}</h1>
-    <h2>{{ project.category }}</h2>
-    {% if project.url != None %}
-    <p>{{ project.url }}</p>
+    <h1>{{ project.name }} <small>{{ project.category }}</small>
+    {% if project.url %}
+    <a href="{{ project.url }}" target="_blank" class="btn btn-success">Visit site</a>
     {% endif %}
-    {% if project.github != None %}
-    <p>{{ project.github }}</p>
-    {% endif %}
+    {% if project.github %}
+    <a href="{{ project.github }}" target="_blank" class="btn btn-success">View on GitHub</a>
+    {% endif %}</h1>
+    <h2>About {{ project.name }}</h2>
     <p>{{ project.info }}</p>
 {% endblock %}
