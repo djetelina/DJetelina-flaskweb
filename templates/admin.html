@@ -1,7 +1,6 @@
 {% extends "base.html" %}
 {% block title %} - Admin{% endblock %}
 {% block content %}
-<div class="container">
 <h1>Projects</h1>
 <p><a class="btn btn-success btn-block" href="{{ url_for('add_project') }}">New</a></p>
     <div class="table-responsive">
@@ -35,5 +34,4 @@
          </tbody>
       </table>
     </div>
-</div>
 {% endblock %}
