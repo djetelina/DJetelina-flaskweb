@@ -1,6 +1,6 @@
 import os
 from app import app, db
-from flask import render_template, send_from_directory, request, flash, session, redirect, url_for
+from flask import render_template, send_from_directory, request, flash, session, redirect, url_for, make_response
 from models import Projects
 from functools import wraps
 
@@ -134,3 +134,22 @@ def add_project():
             flash('New project added')
 
     return render_template('new.html')
+
+@app.route("/sitemap.xml")
+def sitemap():
+    """Generate sitemap.xml """
+    pages = []
+    # All pages registed with flask apps
+    for rule in app.url_map.iter_rules():
+        if "GET" in rule.methods and len(rule.arguments) == 0:
+            pages.append(rule.rule)
+
+    sitemap_xml = render_template('sitemap_template.xml', pages=pages)
+    response = make_response(sitemap_xml)
+    response.headers["Content-Type"] = "application/xml"
+
+    return response
+
+@app.route("/robots.txt")
+def robots():
+    return send_from_directory(os.path.join(app.root_path, 'static'), 'robots.txt')
