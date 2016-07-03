@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" prefix="og: http://ogp.me/ns# article: http://ogp.me/ns/article#">
 <head>
+<!--Code is more readable in Jinja templates, indentations that you see here look wrong because of that. -->
     {% block head %}
         <title>David Jetelina{% block title %}{% endblock %}</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -50,9 +51,7 @@
                         {% endfor %}
                     </ul>
                 </li>
-                    {% if 'logged_in' in session %}
-                    <li {% if request.path == '/admin' %}class="active"{% endif %}><a href="{{ url_for('admin') }}">Admin</a></li>
-                    {% endif %}
+                {% if 'logged_in' in session %}<li {% if request.path == '/admin' %}class="active"{% endif %}><a href="{{ url_for('admin') }}">Admin</a></li>{% endif %}
             </ul>
             {% block navbar_right %}
                 <ul class="nav navbar-nav navbar-right">
