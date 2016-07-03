@@ -2,28 +2,28 @@
 {% block title %} - New{% endblock %}
 {% block content %}
 <h3>Add new project</h3>
-      <hr/>
-
     <form role="form" action="{{ request.path }}" method="post">
-        <div class="form-group">
-            <label for="name">Name<br>
-            <input class="form-control" type="text" name="name" placeholder="Name" /></label><br>
+        <div class="form-inline">
+            <label for="name">
+                Name:
+                <input class="form-control" type="text" name="name" id="name" value="e.g. My Project" />
+            </label>
+            <label for="category">
+                Category:
+                <input class="form-control" type="text" name="category" id="category" value="e.g. Python" />
+            </label>
+            <label for="github">
+                Github:
+                <input class="form-control" type="text" name="github" id="github" value="e.g. http://" />
+            </label>
+            <label class="control-label" for="url">
+                URL:
+                <input class="form-control" type="text" name="url" id="url" value="e.g. http://" />
+            </label>
         </div>
         <div class="form-group">
-            <label for="category">Category<br>
-            <input class="form-control" type="text" name="category" placeholder="Programming" /></label><br>
-        </div>
-        <div class="form-group">
-            <label for="github">Github<br>
-            <input class="form-control" type="text" name="github" placeholder="Github of the project" /></label><br>
-        </div>
-        <div class="form-group">
-            <label for="url">URL<br>
-            <input class="form-control" type="text" name="url" placeholder="URL for final presentation" /></label><br>
-        </div>
-        <div class="form-group">
-            <label for="info">Info<br>
-            <textarea class="form-control" name="info" placeholder="About the project"></textarea></label><br>
+            <label for="info">Info:</label>
+            <textarea class="form-control" name="info" id="info" rows="7">Write something about new project</textarea><br>
         </div>
 
         <button type="submit" class="btn btn-default">Submit</button>
