@@ -1,5 +1,15 @@
 {% extends "base.html" %}
 {% block title %} - {{ project.name }}{% endblock %}
+{% block og %}
+    <meta property="og:title" content="David Jetelina - Projects" />
+    <meta property="og:url" content="http://djetelina.cz/project/{{ project.name }}/" />
+    <meta property="og:type" content="article" />
+    <meta property="og:description" content="{{ project.info[:50] }}..." />
+    <meta property="article:published_time" content="{{ project.created }}" />
+    <meta property="article:modified_time" content="{{ project.modified }}" />
+    <meta property="article:author" content="David Jetelina" />
+    <meta property="article:section" content="{{ project.category }}">
+{% endblock %}
 {% block content %}
     {% if project.url %}
         <a href="{{ project.url }}" target="_blank" class="btn btn-success pull-right">Visit site</a>

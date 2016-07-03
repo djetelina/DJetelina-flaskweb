@@ -8,7 +8,7 @@ class Projects(db.Model):
     url = db.Column(db.String(250))
     info = db.Column(db.String(5000))
     created = db.Column(db.DateTime(timezone=True), default=db.func.now())
-    modified = db.Column(db.DateTime(timezone=True), onupdate=db.func.now())
+    modified = db.Column(db.DateTime(timezone=True), default=db.func.now(), onupdate=db.func.now())
 
     def __init__(self, name, category, info, github=None, url=None):
         self.name = name

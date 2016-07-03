@@ -1,5 +1,11 @@
 {% extends "base.html" %}
 {% block title %} - Home{% endblock %}
+{% block og %}
+    <meta property="og:title" content="David Jetelina" />
+    <meta property="og:url" content="http://djetelina.cz/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:description" content="Personal website of David Jetelina" />
+{% endblock %}
 {% block content %}
     <h1>Stay awhile and listen</h1>
     <h2>Purpose of this site</h2>
@@ -9,5 +15,5 @@
         <li>GitHub's readme isn't ideal for presenting the project.</li>
         <li>Not every source code can be public</li>
     </ul>
-            <p>That's why this site exists and why I'd prefer you to read the context :)</p>
+    <p>That's why this site exists and why I'd prefer you to read the context :)</p>
 {% endblock %}
