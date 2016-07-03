@@ -10,9 +10,9 @@
         <meta charset="utf-8">
 
         {% block og %}{% endblock %}
-        <meta property="og:site_name" content="DJetelina">
+        <meta property="og:site_name" content="DJetelina" />
         <meta property="og:locale" content="en_GB" />
-        {% block ogimage %}<meta property="og:image" content="http://djetelina.cz{{ url_for('static', filename='i/og_me.png') }} /">{% endblock %}
+        {% block ogimage %}<meta property="og:image" content="http://djetelina.cz{{ url_for('static', filename='i/og_me.png') }}" />{% endblock %}
 
 
         <link rel="stylesheet" href="{{ url_for('static', filename='styles/main.css') }}">
