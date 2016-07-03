@@ -135,11 +135,10 @@ def add_project():
 
     return render_template('new.html')
 
+
 @app.route("/sitemap.xml")
 def sitemap():
-    """Generate sitemap.xml """
     pages = []
-    # All pages registed with flask apps
     for rule in app.url_map.iter_rules():
         if "GET" in rule.methods and len(rule.arguments) == 0:
             pages.append(rule.rule)
@@ -149,6 +148,7 @@ def sitemap():
     response.headers["Content-Type"] = "application/xml"
 
     return response
+
 
 @app.route("/robots.txt")
 def robots():

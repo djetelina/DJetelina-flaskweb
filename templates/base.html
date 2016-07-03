@@ -49,10 +49,10 @@
                             <li><a href="{{ url_for('category', category_name=category) }}">{{ category }}</a></li>
                         {% endfor %}
                     </ul>
+                </li>
                     {% if 'logged_in' in session %}
                     <li {% if request.path == '/admin' %}class="active"{% endif %}><a href="{{ url_for('admin') }}">Admin</a></li>
                     {% endif %}
-                </li>
             </ul>
             {% block navbar_right %}
                 <ul class="nav navbar-nav navbar-right">
@@ -89,8 +89,10 @@
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
     <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
     <script>
-      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;//noinspection CommaExpressionJS
+          i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();//noinspection CommaExpressionJS
+          a=s.createElement(o),
       m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
       })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
 
