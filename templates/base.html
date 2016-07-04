@@ -41,11 +41,22 @@
                 <li {% if request.path == '/about' %}class="active"{% endif %}>
                      <a href="{{ url_for('about') }}">About me</a>
                 </li>
-                <li class="dropdown {% if request.path == '/projects' %}active{% endif %}">
+                <li class="dropdown hidden-xs {% if request.path == '/projects' %}active{% endif %}">
                     <a href="{{ url_for('projects') }}" class="dropdown-toggle" role="button" aria-haspopup="true" aria-expanded="false">
                         Projects<span class="caret"></span>
                     </a>
                     <ul class="dropdown-menu">
+                        {% for category in g.categories %}
+                            <li><a href="{{ url_for('category', category_name=category) }}">{{ category }}</a></li>
+                        {% endfor %}
+                    </ul>
+                </li>
+                <li class="dropdown visible-xs">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                        Projects<span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a href="{{ url_for('projects') }}">All</a></li>
                         {% for category in g.categories %}
                             <li><a href="{{ url_for('category', category_name=category) }}">{{ category }}</a></li>
                         {% endfor %}
