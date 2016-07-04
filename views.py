@@ -82,8 +82,13 @@ def projects():
 
 @app.route("/project/<string:project_name>")
 def project(project_name):
-    return render_template('project.html',
-                           project=Projects.query.filter(Projects.name == project_name).first())
+    found = Projects.query.filter(Projects.name == project_name).first()
+    if found:
+        return render_template('project.html',
+                               project=found)
+    else:
+        return render_template('404.html'), 404
+
 
 
 @app.route("/edit/<string:name>", methods=['GET', 'POST'])

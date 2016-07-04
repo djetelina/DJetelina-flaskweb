@@ -1,3 +1,13 @@
 .hidden-xs.dropdown:hover .dropdown-menu  {
     display: block!important;
 }
+
+@media (max-width: 768px) {
+
+.nav.navbar-right {
+  text-align: center;
+}
+.nav.navbar-right >li {
+    display: inline-block;
+  }
+}
