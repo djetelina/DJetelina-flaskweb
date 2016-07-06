@@ -5,3 +5,4 @@ Flask-Migrate
 Flask-Markdown
 flask-compress
 Flask-Cache
+flask-sslify

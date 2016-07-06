@@ -3,11 +3,14 @@ from flask_sqlalchemy import SQLAlchemy
 from flaskext.markdown import Markdown
 from flask_compress import Compress
 from flask_cache import Cache
+from flask_sslify import SSLify
 
 app = Flask(__name__)
 db = SQLAlchemy(app)
 cache = Cache(app, config={'CACHE_TYPE': 'simple'})
 Markdown(app)
+if 'DYNO' in os.environ:
+    sslify = SSLify(app)
 
 from views import *
 from models import *
