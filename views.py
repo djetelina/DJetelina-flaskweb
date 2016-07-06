@@ -51,7 +51,6 @@ def admin():
 
 
 @app.route("/login/", methods=['GET', 'POST'])
-@cache.cached(timeout=50)
 def login():
     if request.method == 'POST':
         if request.form['password'] != os.environ.get('password'):
