@@ -7,12 +7,20 @@
     <meta property="og:description" content="About David Jetelina" />
 {% endblock %}
 {% block content %}
-    <h1>About me</h1>
+    <span itemscope itemtype="http://schema.org/Person">
+    <h1>About <span itemprop="givenName">David</span> <span itemprop="familyName">Jetelina</span></h1>
     <div class="col-sm-6">
     <h2>Career</h2>
     <p>
-        I was born 31st of July 1992 in a small city called Nový Jičín. Since my father was a preacher, we moved a lot,
-        so after 2 years in Nový Jičín 6 years in Vsetín we ended up in Prague. There, I finished elementary school
+        I was born <span itemprop="birthDate" content="1992-07-31">31st of July 1992</span> in a small city called
+        <span itemprop="birthPlace" itemscope itemtype="http://schema.org/PostalAdress">
+            <span itemprop="addressLocality">Nový Jičín</span>, <span itemprop="addressCountry">Czech Republic</span>
+        </span>.
+        Since my father was a preacher, we moved a lot, so after 2 years in Nový Jičín 6 years in Vsetín we ended up in
+        <span itemprop="address" itemscope itemtype="http://schema.org/PostalAdress">
+            <span itemprop="addressLocality">Prague</span>, <span itemprop="addressCountry">Czech Republic</span>
+        </span>.
+        There, I finished elementary school
         and high school, <a href="http://panska.cz/" target="_blank">SPŠST Panská</a>, where I studied Audio and Video
         technology - technological and organizational focus (nicknamed production).
     </p>
@@ -55,4 +63,5 @@
         clear logic behind everything. Programming is like a puzzle. and I love solving puzzles.
     </p>
     </div>
+    </span>
 {% endblock %}
