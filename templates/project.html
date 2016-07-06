@@ -4,10 +4,10 @@
     <meta property="og:title" content="David Jetelina - Project: {{ project.name }}" />
     <meta property="og:url" content="https://www.djetelina.cz/project/{{ project.name.replace(" ", "%20") }}/" />
     <meta property="og:type" content="article" />
-    <meta property="og:description" content="{{ project.info.split()[:25] }}..." />
+    <meta property="og:description" content="{{ project.info[:150] }}..." />
     <meta property="article:published_time" content="{{ project.created }}" />
     <meta property="article:modified_time" content="{{ project.modified }}" />
-    <meta property="article:author" content="David Jetelina" />
+    <meta property="article:author" content="https://www.facebook.com/djetelina" />
     <meta property="article:section" content="{{ project.category }}">
 {% endblock %}
 {% block content %}
