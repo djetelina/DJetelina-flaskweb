@@ -10,7 +10,7 @@ app = Flask(__name__)
 db = SQLAlchemy(app)
 cache = Cache(app, config={'CACHE_TYPE': 'simple'})
 Markdown(app)
-if 'DYNO' in os.environ:
+if 'ON_HEROKU' in os.environ:
     sslify = SSLify(app)
 
 from views import *
