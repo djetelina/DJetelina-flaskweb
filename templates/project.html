@@ -21,6 +21,12 @@
         <a href="{{ url_for('edit', name=project.name) }}" class="btn btn-success pull-right">Edit</a>
     {% endif %}
     <h1>{{ project.name }} <small>{{ project.category }}</small></h1>
+    <ol class="breadcrumb">
+        <li><a href="{{ url_for('home') }}">Home</a></li>
+        <li><a href="{{ url_for('projects') }}">Projects</a></li>
+        <li><a href="{{ url_for('projects', category_name=project.category) }}">{{ project.category }}</a></li>
+        <li class="active">{{ project.name }}</li>
+    </ol>
     <h2>About {{ project.name }}</h2>
     <p>{% filter markdown %}{{ project.info }}{% endfilter %}</p>
 {% endblock %}

@@ -9,6 +9,10 @@
 {% block content %}
     <span itemscope itemtype="http://schema.org/Person">
     <h1>About <span itemprop="givenName">David</span> <span itemprop="familyName">Jetelina</span></h1>
+    <ol class="breadcrumb">
+        <li><a href="{{ url_for('home') }}">Home</a></li>
+        <li class="active">About</li>
+    </ol>
     <div class="col-sm-6">
     <h2>Career</h2>
     <p>

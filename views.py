@@ -103,6 +103,8 @@ def edit(name):
             selected_project.name = request.form['name']
             selected_project.category = request.form['category']
             selected_project.info = request.form['info']
+            selected_project.slug = request.form['slug']
+            selected_project.status = request.form['status']
             if request.form['url']:
                 selected_project.url = request.form['url']
             else:
@@ -127,7 +129,6 @@ def delete(name):
 
 
 @app.route("/add_project/", methods=['GET', 'POST'])
-@cache.cached(timeout=50)
 @login_required
 def add_project():
     if request.method == 'POST':
@@ -135,6 +136,7 @@ def add_project():
             flash('Please fill Name, Category and Info', 'error')
         else:
             new_project = Projects(request.form['name'], request.form['category'], request.form['info'],
+                                   request.form['slug'], request.form['status'],
                                    github=request.form['github'], url=request.form['url'])
             db.session.add(new_project)
             db.session.commit()

@@ -9,6 +9,15 @@
 {% block content %}
     <div class="container">
     <h1>Projects {% if category %}<small>{{ category }}</small>{% endif %}</h1>
+    <ol class="breadcrumb">
+        <li><a href="{{ url_for('home') }}">Home</a></li>
+        {% if not category %}
+            <li class="active">Projects</li>
+        {% else %}
+            <li><a href="{{ url_for('projects') }}">Projects</a></li>
+            <li class="active">{{ category }}</li>
+        {% endif %}
+    </ol>
     {% for project in projects %}
         <div class="col-sm-4">
             <h2>{{ project.name }}</h2>
