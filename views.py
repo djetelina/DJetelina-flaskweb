@@ -1,8 +1,11 @@
 import os
-from app import app, db
+from app import app, db, cache
 from flask import render_template, send_from_directory, request, flash, session, redirect, url_for, make_response
 from models import Projects
 from functools import wraps
+
+
+
 
 
 def login_required(f):
@@ -28,18 +31,20 @@ def page_not_found(e):
 
 
 @app.route("/")
-@app.route("/home")
+@app.route("/home/")
+@cache.cached(timeout=50)
 def home():
     return render_template('home.html')
 
 
-@app.route("/admin")
+@app.route("/admin/")
 @login_required
 def admin():
     return render_template('admin.html', projects=Projects.query.order_by(Projects.created.desc()).all())
 
 
-@app.route("/login", methods=['GET', 'POST'])
+@app.route("/login/", methods=['GET', 'POST'])
+@cache.cached(timeout=50)
 def login():
     if request.method == 'POST':
         if request.form['password'] != os.environ.get('password'):
@@ -51,18 +56,19 @@ def login():
     return render_template('login.html')
 
 
-@app.route("/logout")
+@app.route("/logout/")
 def logout():
     session.pop('logged_in', None)
     return redirect(url_for('home'))
 
 
-@app.route("/about")
+@app.route("/about/")
+@cache.cached(timeout=50)
 def about():
     return render_template('about.html')
 
 
-@app.route("/projects/<string:category_name>")
+@app.route("/projects/<string:category_name>/")
 def category(category_name):
     found = Projects.query.filter(Projects.category == category_name).order_by(Projects.created.desc()).all()
     if found:
@@ -74,13 +80,13 @@ def category(category_name):
         return render_template('404.html'), 404
 
 
-@app.route("/projects")
+@app.route("/projects/")
 def projects():
     return render_template('projects.html',
                            projects=Projects.query.order_by(Projects.created.desc()).all())
 
 
-@app.route("/project/<string:project_name>")
+@app.route("/project/<string:project_name>/")
 def project(project_name):
     found = Projects.query.filter(Projects.name == project_name).first()
     if found:
@@ -90,8 +96,7 @@ def project(project_name):
         return render_template('404.html'), 404
 
 
-
-@app.route("/edit/<string:name>", methods=['GET', 'POST'])
+@app.route("/edit/<string:name>/", methods=['GET', 'POST'])
 @login_required
 def edit(name):
     if request.method == 'POST':
@@ -116,7 +121,7 @@ def edit(name):
                            project=Projects.query.filter(Projects.name == name).first())
 
 
-@app.route("/delete/<string:name>")
+@app.route("/delete/<string:name>/")
 @login_required
 def delete(name):
     selected_project = Projects.query.filter(Projects.name == name).first()
@@ -125,7 +130,8 @@ def delete(name):
     return redirect(url_for('admin'))
 
 
-@app.route("/add_project", methods=['GET', 'POST'])
+@app.route("/add_project/", methods=['GET', 'POST'])
+@cache.cached(timeout=50)
 @login_required
 def add_project():
     if request.method == 'POST':
@@ -142,6 +148,7 @@ def add_project():
 
 
 @app.route("/sitemap.xml")
+@cache.cached(timeout=100)
 def sitemap():
     pages = []
     for rule in app.url_map.iter_rules():
@@ -156,5 +163,6 @@ def sitemap():
 
 
 @app.route("/robots.txt")
+@cache.cached(timeout=10000)
 def robots():
     return send_from_directory(os.path.join(app.root_path, 'static'), 'robots.txt')

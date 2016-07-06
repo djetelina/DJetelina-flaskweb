@@ -1,9 +1,12 @@
 from flask import Flask, g
 from flask_sqlalchemy import SQLAlchemy
 from flaskext.markdown import Markdown
+from flask_compress import Compress
+from flask_cache import Cache
 
 app = Flask(__name__)
 db = SQLAlchemy(app)
+cache = Cache(app, config={'CACHE_TYPE': 'simple'})
 Markdown(app)
 
 from views import *
@@ -11,6 +14,7 @@ from models import *
 
 app.config.from_object('config')
 
+Compress(app)
 
 @app.context_processor
 def inject_categories():
