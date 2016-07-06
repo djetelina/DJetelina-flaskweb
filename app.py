@@ -4,6 +4,7 @@ from flaskext.markdown import Markdown
 from flask_compress import Compress
 from flask_cache import Cache
 from flask_sslify import SSLify
+import os
 
 app = Flask(__name__)
 db = SQLAlchemy(app)
