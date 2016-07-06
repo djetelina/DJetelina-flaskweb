@@ -9,9 +9,9 @@ from urllib.parse import urlparse, urlunparse
 @app.before_request
 def redirect_www():
     urlparts = urlparse(request.url)
-    if urlparts.netloc == 'www.djetelina.cz':
+    if urlparts.netloc == 'djetelina.cz':
         urlparts_list = list(urlparts)
-        urlparts_list[1] = "djetelina.cz"
+        urlparts_list[1] = "www.djetelina.cz"
         return redirect(urlunparse(urlparts_list), code=301)
 
 
