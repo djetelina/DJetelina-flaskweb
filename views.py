@@ -171,3 +171,11 @@ def sitemap():
 @app.route("/robots.txt")
 def robots():
     return send_from_directory(os.path.join(app.root_path, 'static'), 'robots.txt')
+
+
+@app.route("/.well-known/acme-challenge/<string:file>")
+def ssl_verif(file):
+    if file == "zBoZTgJhuUvbAx2d2bSOzLbAxU5vQRG-y_aLx3-7Buk":
+        return "zBoZTgJhuUvbAx2d2bSOzLbAxU5vQRG-y_aLx3-7Buk.zD-PdGHKwLK8VwOuRsL2KKdJ5VcSCYQqeXbYUXHmLog"
+    elif file == "X3S6SqAQRClyntXga8IXKyh5U3WlAWyx8u-rDvFzdo0":
+        return "X3S6SqAQRClyntXga8IXKyh5U3WlAWyx8u-rDvFzdo0.zD-PdGHKwLK8VwOuRsL2KKdJ5VcSCYQqeXbYUXHmLog"
