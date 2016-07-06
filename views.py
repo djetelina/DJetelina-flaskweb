@@ -148,7 +148,6 @@ def add_project():
 
 
 @app.route("/sitemap.xml")
-@cache.cached(timeout=100)
 def sitemap():
     pages = []
     for rule in app.url_map.iter_rules():
@@ -163,6 +162,5 @@ def sitemap():
 
 
 @app.route("/robots.txt")
-@cache.cached(timeout=10000)
 def robots():
     return send_from_directory(os.path.join(app.root_path, 'static'), 'robots.txt')
