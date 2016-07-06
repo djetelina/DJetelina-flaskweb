@@ -3,16 +3,6 @@ from app import app, db, cache
 from flask import render_template, send_from_directory, request, flash, session, redirect, url_for, make_response
 from models import Projects
 from functools import wraps
-from urllib.parse import urlparse, urlunparse
-
-
-@app.before_request
-def redirect_www():
-    urlparts = urlparse(request.url)
-    if urlparts.netloc == 'djetelina.cz':
-        urlparts_list = list(urlparts)
-        urlparts_list[1] = "www.djetelina.cz"
-        return redirect(urlunparse(urlparts_list), code=301)
 
 
 def login_required(f):
