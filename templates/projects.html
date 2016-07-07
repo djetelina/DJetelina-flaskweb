@@ -7,7 +7,6 @@
     <meta property="og:description" content="Projects of David Jetelina{% if category %}, Category: {{ category }}{% endif %}" />
 {% endblock %}
 {% block content %}
-    <div class="container">
     <h1>Projects {% if category %}<small>{{ category }}</small>{% endif %}</h1>
     <ol class="breadcrumb">
         <li><a href="{{ url_for('home') }}">Home</a></li>
@@ -32,5 +31,4 @@
             </p>
         </div>
     {% endfor %}
-    </div>
 {% endblock %}
