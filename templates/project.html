@@ -8,7 +8,7 @@
     <meta property="article:published_time" content="{{ project.created }}" />
     <meta property="article:modified_time" content="{{ project.modified }}" />
     <meta property="article:author" content="https://www.facebook.com/djetelina" />
-    <meta property="article:section" content="{{ project.category }}">
+    <meta property="article:section" content="{{ project.category }}" />
 {% endblock %}
 {% block content %}
     {% if project.url %}
@@ -21,11 +21,31 @@
         <a href="{{ url_for('edit', name=project.slug) }}" class="btn btn-success pull-right">Edit</a>
     {% endif %}
     <h1>{{ project.name }} <small>{{ project.category }}</small></h1>
-    <ol class="breadcrumb">
-        <li><a href="{{ url_for('home') }}">Home</a></li>
-        <li><a href="{{ url_for('projects') }}">Projects</a></li>
-        <li><a href="{{ url_for('category', category_name=project.category) }}">{{ project.category }}</a></li>
-        <li class="active">{{ project.name }}</li>
+    <ol class="breadcrumb" itemscope itemtype="http://schema.org/BreadcrumbList">
+        <li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+            <a itemscope itemtype="http://schema.org/Thing" itemprop="item" href="{{ url_for('home') }}">
+                <span itemprop="name">Home</span>
+            </a>
+            <meta itemprop="position" content="1" />
+        </li>
+        <li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+            <a itemscope itemtype="http://schema.org/Thing" itemprop="item" href="{{ url_for('projects') }}">
+                <span itemprop="name">Projects</span>
+            </a>
+            <meta itemprop="position" content="2" />
+        </li>
+        <li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+            <a itemscope itemtype="http://schema.org/Thing" itemprop="item" href="{{ url_for('category', category_name=project.category) }}">
+                <span itemprop="name">{{ project.category }}</span>
+            </a>
+            <meta itemprop="position" content="3" />
+        </li>
+        <li class="active" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+            <span itemscope itemtype="http://schema.org/Thing" itemprop="item">
+                <span itemprop="name">{{ project.name }}</span>
+            </span>
+            <meta itemprop="position" content="4" />
+        </li>
     </ol>
     <h2>About {{ project.name }}</h2>
     <p>{% filter markdown %}{{ project.info }}{% endfilter %}</p>

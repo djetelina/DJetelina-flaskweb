@@ -8,13 +8,33 @@
 {% endblock %}
 {% block content %}
     <h1>Projects {% if category %}<small>{{ category }}</small>{% endif %}</h1>
-    <ol class="breadcrumb">
-        <li><a href="{{ url_for('home') }}">Home</a></li>
+    <ol class="breadcrumb" itemscope itemtype="http://schema.org/BreadcrumbList">
+        <li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+            <a itemscope itemtype="http://schema.org/Thing" itemprop="item" href="{{ url_for('home') }}">
+                <span itemprop="name">Home</span>
+            </a>
+            <meta itemprop="position" content="1" />
+        </li>
         {% if not category %}
-            <li class="active">Projects</li>
+            <li class="active" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+                <span itemscope itemtype="http://schema.org/Thing" itemprop="item">
+                    <span itemprop="name">Projects</span>
+                </span>
+                    <meta itemprop="position" content="2" />
+            </li>
         {% else %}
-            <li><a href="{{ url_for('projects') }}">Projects</a></li>
-            <li class="active">{{ category }}</li>
+            <li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+                <a itemscope itemtype="http://schema.org/Thing" itemprop="item" href="{{ url_for('projects') }}">
+                    <span itemprop="name">Projects</span>
+                </a>
+                <meta itemprop="position" content="2" />
+            </li>
+            <li class="active" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+                <span itemscope itemtype="http://schema.org/Thing" itemprop="item">
+                    <span itemprop="name">{{ category }}</span>
+                </span>
+                <meta itemprop="position" content="3" />
+            </li>
         {% endif %}
     </ol>
     {% for count, project in enumerate(projects, 1) %}
