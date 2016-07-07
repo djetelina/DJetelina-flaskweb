@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <a href="{{ url_for('project', project_name=project.name) }}" class="btn btn-success pull-right">View</a>
+    <a href="{{ url_for('project', project_name=project.slug) }}" class="btn btn-success pull-right">View</a>
     <h1>Editing {{ project.name }}</h1>
     <form role="form" action="{{ request.path }}" method="post">
         <div class="form-inline">
@@ -38,7 +38,7 @@
         <button type="submit" class="btn btn-default">Submit</button>
     </form>
     <h2>Delete?</h2>
-    <form role="form" action="{{ url_for('delete', name=project.name) }}">
+    <form role="form" action="{{ url_for('delete', name=project.slug) }}">
         <button type="submit" class="btn btn-danger">DELETE</button>
     </form>
 {% endblock %}
