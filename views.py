@@ -84,7 +84,7 @@ def projects():
 
 @app.route("/project/<string:project_name>/")
 def project(project_name):
-    found = Projects.query.filter(Projects.name == project_name).first()
+    found = Projects.query.filter(Projects.slug == project_name).first()
     if found:
         return render_template('project.html',
                                project=found)
@@ -99,7 +99,7 @@ def edit(name):
         if not request.form['name'] or not request.form['category'] or not request.form['info']:
             flash('Please fill Name, Category and Info', 'error')
         else:
-            selected_project = Projects.query.filter(Projects.name == name).first()
+            selected_project = Projects.query.filter(Projects.slug == name).first()
             selected_project.name = request.form['name']
             selected_project.category = request.form['category']
             selected_project.info = request.form['info']
@@ -116,13 +116,13 @@ def edit(name):
             db.session.commit()
             flash('Project edited')
     return render_template('edit.html',
-                           project=Projects.query.filter(Projects.name == name).first())
+                           project=Projects.query.filter(Projects.slug == name).first())
 
 
 @app.route("/delete/<string:name>/")
 @login_required
 def delete(name):
-    selected_project = Projects.query.filter(Projects.name == name).first()
+    selected_project = Projects.query.filter(Projects.slug == name).first()
     db.session.delete(selected_project)
     db.session.commit()
     return redirect(url_for('admin'))

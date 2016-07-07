@@ -6,19 +6,27 @@
         <div class="form-inline">
             <label for="name">
                 Name:
-                <input class="form-control" type="text" name="name" id="name" value="e.g. My Project" />
+                <input class="form-control" type="text" name="name" id="name" placeholde="e.g. My Project" />
             </label>
             <label for="category">
                 Category:
-                <input class="form-control" type="text" name="category" id="category" value="e.g. Python" />
+                <input class="form-control" type="text" name="category" id="category" placeholder="e.g. Python" />
             </label>
             <label for="github">
                 Github:
-                <input class="form-control" type="text" name="github" id="github" value="e.g. http://" />
+                <input class="form-control" type="text" name="github" id="github" placeholder="e.g. http://" />
             </label>
             <label class="control-label" for="url">
                 URL:
-                <input class="form-control" type="text" name="url" id="url" value="e.g. http://" />
+                <input class="form-control" type="text" name="url" id="url" placeholder="e.g. http://" />
+            </label>
+            <label for="slug">
+                Slug:
+                <input class="form-control" type="text" name="slug" id="slug" placeholder="{{ slugify-the-name }}" />
+            </label>
+            <label for="status">
+                Status:
+                <input class="form-control" type="text" name="status" id="status" placeholder="{{ working }}" />
             </label>
         </div>
         <div class="form-group">

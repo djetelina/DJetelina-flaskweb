@@ -25,7 +25,7 @@
                 {{ project.info[:300] }}...
             </p>
             <p>
-                <a class="btn btn-success btn-block" href="{{ url_for('project', project_name=project.name) }}">
+                <a class="btn btn-success btn-block" href="{{ url_for('project', project_name=project.slug) }}">
                     Read more
                     <i class="fa fa-arrow-right"></i>
                 </a>
