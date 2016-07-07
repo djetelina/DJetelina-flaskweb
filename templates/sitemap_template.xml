@@ -5,6 +5,12 @@
             <loc>https://www.djetelina.cz{{page}}</loc>
         </url>
     {% endfor %}
+    {% for category in categories %}
+        <url>
+            <loc>https://www.djetelina.cz/projects/{{ category }}/</loc>
+            <changefreq>weekly</changefreq>
+        </url>
+    {% endfor %}
     {% for project in projects %}
         <url>
             <loc>https://www.djetelina.cz/project/{{ project.slug }}/</loc>

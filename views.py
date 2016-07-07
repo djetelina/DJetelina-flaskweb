@@ -1,6 +1,6 @@
 import os
 from app import app, db, cache
-from flask import render_template, send_from_directory, request, flash, session, redirect, url_for, make_response
+from flask import render_template, send_from_directory, request, flash, session, redirect, url_for, make_response, g
 from models import Projects
 from functools import wraps
 
@@ -148,12 +148,17 @@ def add_project():
 @app.route("/sitemap.xml")
 def sitemap():
     projects = Projects.query.order_by(Projects.created.desc()).all()
+
+    query = db.session.query(Projects.category.distinct().label("category"))
+    categories = [row.category for row in query.all()]
+
     pages = []
+    filter_rule = ["/sitemap.xml", "/robots.txt", "/login/", "/logout/", "/admin/", "/add_project/", "/favicon.ico"]
     for rule in app.url_map.iter_rules():
-        if "GET" in rule.methods and len(rule.arguments) == 0:
+        if "GET" in rule.methods and len(rule.arguments) == 0 and rule.rule not in filter_rule:
             pages.append(rule.rule)
 
-    sitemap_xml = render_template('sitemap_template.xml', pages=pages, projects=projects)
+    sitemap_xml = render_template('sitemap_template.xml', pages=pages, projects=projects, categories=categories)
     response = make_response(sitemap_xml)
     response.headers["Content-Type"] = "application/xml"
 
