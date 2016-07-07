@@ -26,6 +26,9 @@ def inject_categories():
     g.categories = [row.category for row in query.all()]
     return dict(categories=g.categories)
 
+@app.context_processor
+def inject_python():
+    return dict(enumerate=enumerate, list=list, len=len)
 
 if __name__ == "__main__":
     db.create_all()

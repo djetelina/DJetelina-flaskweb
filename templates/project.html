@@ -24,7 +24,7 @@
     <ol class="breadcrumb">
         <li><a href="{{ url_for('home') }}">Home</a></li>
         <li><a href="{{ url_for('projects') }}">Projects</a></li>
-        <li><a href="{{ url_for('projects', category_name=project.category) }}">{{ project.category }}</a></li>
+        <li><a href="{{ url_for('category', category_name=project.category) }}">{{ project.category }}</a></li>
         <li class="active">{{ project.name }}</li>
     </ol>
     <h2>About {{ project.name }}</h2>

@@ -17,7 +17,8 @@
             <li class="active">{{ category }}</li>
         {% endif %}
     </ol>
-    {% for project in projects %}
+    {% for count, project in enumerate(projects, 1) %}
+        {% if count in list(range(1,15, 3)) %}<div class="row">{% endif %}
         <div class="col-sm-4">
             <h2>{{ project.name }}</h2>
             <p>
@@ -30,5 +31,7 @@
                 </a>
             </p>
         </div>
+        {% if count in list(range(3,18, 3)) %}</div>{% endif %}
     {% endfor %}
+    {% if len(projects) not in list(range(3,18, 3)) %}</div>{% endif %}
 {% endblock %}
