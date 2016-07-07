@@ -1,5 +1,4 @@
 from app import db
-from slugify import slugify
 
 class Projects(db.Model):
     id = db.Column(db.Integer, primary_key=True)
