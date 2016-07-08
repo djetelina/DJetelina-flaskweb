@@ -1,5 +1,5 @@
 import os
-from app import app, db, cache
+from app import app, db, cache, recaptcha
 from flask import render_template, send_from_directory, request, flash, session, redirect, url_for, make_response, g
 from models import Projects
 from functools import wraps
@@ -46,11 +46,13 @@ def login():
     if request.method == 'POST':
         if request.form['password'] != os.environ.get('password'):
             flash('Incorrect password')
-        else:
+        elif recaptcha.verify():
             session['logged_in'] = True
             flash('Logged in')
             return redirect(url_for('admin'))
-    return render_template('login.html')
+        else:
+            flash("Don't bypass ReCaptcha!")
+    return render_template('login.html', captcha=recaptcha.get_code())
 
 
 @app.route("/logout/")

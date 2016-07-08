@@ -4,6 +4,7 @@ from flaskext.markdown import Markdown
 from flask_compress import Compress
 from flask_cache import Cache
 from flask_sslify import SSLify
+from flask_recaptcha import ReCaptcha
 from ago import human
 import os
 
@@ -11,6 +12,8 @@ app = Flask(__name__)
 db = SQLAlchemy(app)
 cache = Cache(app, config={'CACHE_TYPE': 'simple'})
 Markdown(app)
+recaptcha = ReCaptcha(site_key=os.environ.get('RECAPTCHA_SITE'), secret_key=os.environ.get("RECAPTCHA_SECRET"), theme='dark')
+recaptcha.init_app(app)
 if 'ON_HEROKU' in os.environ:
     sslify = SSLify(app)
 
