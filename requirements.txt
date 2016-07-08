@@ -8,3 +8,4 @@ Flask-Cache
 flask-sslify
 ago
 flask-recaptcha
+flask-wtf

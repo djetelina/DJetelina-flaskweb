@@ -4,35 +4,27 @@
     <a href="{{ url_for('project', project_name=project.slug) }}" class="btn btn-success pull-right">View</a>
     <h1>Editing {{ project.name }}</h1>
     <form role="form" action="{{ request.path }}" method="post">
+        {{ form.csrf_token }}
         <div class="form-inline">
-            <label for="name">
-                Name:
-                <input class="form-control" type="text" name="name" id="name" value="{{ project.name }}" />
-            </label>
-            <label for="category">
-                Category:
-                <input class="form-control" type="text" name="category" id="category" value="{{ project.category }}" />
-            </label>
-            <label for="github">
-                Github:
-                <input class="form-control" type="text" name="github" id="github" value="{{ project.github if project.github != None }}" />
-            </label>
-            <label class="control-label" for="url">
-                URL:
-                <input class="form-control" type="text" name="url" id="url" value="{{ project.url if project.url != None }}" />
-            </label>
-            <label for="slug">
-                Slug:
-                <input class="form-control" type="text" name="slug" id="slug" value="{{ project.slug }}" />
-            </label>
-            <label for="status">
-                Status:
-                <input class="form-control" type="text" name="status" id="status" value="{{ project.status }}" />
-            </label>
+            {{ form.name.label(class="control-label") }}
+            {{ form.name(class="form-control", value=project.name) }}
+            {{ form.slug.label(class="control-label") }}
+            {{ form.slug(class="form-control", value=project.slug) }}
+            {{ form.category.label(class="control-label") }}
+            {{ form.category(class="form-control", value=project.category) }}
+            {{ form.status.label(class="control-label") }}
+            {{ form.status(class="form-control", value=project.status) }}
+        </div>
+        <div class="form-inline">
+            {{ form.github.label(class="control-label") }}
+            {{ form.github(class="form-control", value=project.github if project.github != None) }}
+            {{ form.url.label(class="control-label") }}
+            {{ form.url(class="form-control", value=project.url if project.url != None) }}
         </div>
         <div class="form-group">
-            <label for="info">Info:</label>
-            <textarea class="form-control" name="info" id="info" rows="7">{{ project.info }}</textarea><br>
+            {{ form.info.label }}
+            {% set existing_info = form.info.process_data(project.info) %}
+            {{ form.info(class="form-control", rows="7") }}
         </div>
 
         <button type="submit" class="btn btn-default">Submit</button>

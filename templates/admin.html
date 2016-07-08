@@ -24,9 +24,9 @@
                    <td>{% if project.github %}<a href="{{ project.github }}"><i class="fa fa-github"></i></a>{% endif %}</td>
                    <td>
                        <div class="btn-group">
-                           <a class="btn btn-success btn-xs" href="{{ url_for('project', project_name=project.name) }}">View</a>
-                           <a class="btn btn-info btn-xs" href="{{ url_for('edit', name=project.name) }}">Edit</a>
-                           <a class="btn btn-danger btn-xs" href="{{ url_for('delete', name=project.name) }}">Delete</a>
+                           <a class="btn btn-success btn-xs" href="{{ url_for('project', project_name=project.slug) }}">View</a>
+                           <a class="btn btn-info btn-xs" href="{{ url_for('edit', name=project.slug) }}">Edit</a>
+                           <a class="btn btn-danger btn-xs" href="{{ url_for('delete', name=project.slug) }}">Delete</a>
                        </div>
                    </td>
                </tr>

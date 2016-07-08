@@ -2,6 +2,7 @@ import os
 from app import app, db, cache, recaptcha
 from flask import render_template, send_from_directory, request, flash, session, redirect, url_for, make_response, g
 from models import Projects
+from forms import ProjectForm
 from functools import wraps
 
 
@@ -98,28 +99,30 @@ def project(project_name):
 @app.route("/edit/<string:name>/", methods=['GET', 'POST'])
 @login_required
 def edit(name):
+    form = ProjectForm()
     if request.method == 'POST':
-        if not request.form['name'] or not request.form['category'] or not request.form['info']:
-            flash('Please fill Name, Category and Info', 'error')
-        else:
+        if form.validate_on_submit():
             selected_project = Projects.query.filter(Projects.slug == name).first()
-            selected_project.name = request.form['name']
-            selected_project.category = request.form['category']
-            selected_project.info = request.form['info']
-            selected_project.slug = request.form['slug']
-            selected_project.status = request.form['status']
-            if request.form['url']:
-                selected_project.url = request.form['url']
+            selected_project.name = form.name.data
+            selected_project.category = form.category.data
+            selected_project.info = form.info.data
+            selected_project.slug = form.slug.data
+            selected_project.status = form.status.data
+            if form.url.data:
+                selected_project.url = form.url.data
             else:
                 selected_project.url = None
-            if request.form['github']:
-                selected_project.github = request.form['github']
+            if form.github.data:
+                selected_project.github = form.github.data
             else:
                 selected_project.github = None
             db.session.commit()
             flash('Project edited')
+        else:
+            flash('Validation error')
     return render_template('edit.html',
-                           project=Projects.query.filter(Projects.slug == name).first())
+                           project=Projects.query.filter(Projects.slug == name).first(),
+                           form=form)
 
 
 @app.route("/delete/<string:name>/")
@@ -134,18 +137,18 @@ def delete(name):
 @app.route("/add_project/", methods=['GET', 'POST'])
 @login_required
 def add_project():
+    form = ProjectForm()
     if request.method == 'POST':
-        if not request.form['name'] or not request.form['category'] or not request.form['info']:
-            flash('Please fill Name, Category and Info', 'error')
-        else:
-            new_project = Projects(request.form['name'], request.form['category'], request.form['info'],
-                                   request.form['slug'], request.form['status'],
-                                   github=request.form['github'], url=request.form['url'])
+        if form.validate_on_submit():
+            new_project = Projects(form.name.data, form.category.data, form.info.data, form.slug.data,
+                                   form.status.data, github=form.github.data, url=form.url.data)
             db.session.add(new_project)
             db.session.commit()
             flash('New project added')
+        else:
+            flash('Validation failed')
 
-    return render_template('new.html')
+    return render_template('new.html', form=form)
 
 
 @app.route("/sitemap.xml")

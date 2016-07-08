@@ -3,35 +3,26 @@
 {% block content %}
 <h3>Add new project</h3>
     <form role="form" action="{{ request.path }}" method="post">
+        {{ form.csrf_token }}
         <div class="form-inline">
-            <label for="name">
-                Name:
-                <input class="form-control" type="text" name="name" id="name" placeholde="e.g. My Project" />
-            </label>
-            <label for="category">
-                Category:
-                <input class="form-control" type="text" name="category" id="category" placeholder="e.g. Python" />
-            </label>
-            <label for="github">
-                Github:
-                <input class="form-control" type="text" name="github" id="github" placeholder="e.g. http://" />
-            </label>
-            <label class="control-label" for="url">
-                URL:
-                <input class="form-control" type="text" name="url" id="url" placeholder="e.g. http://" />
-            </label>
-            <label for="slug">
-                Slug:
-                <input class="form-control" type="text" name="slug" id="slug" placeholder="slugify-the-name" />
-            </label>
-            <label for="status">
-                Status:
-                <input class="form-control" type="text" name="status" id="status" placeholder="working" />
-            </label>
+            {{ form.name.label(class="control-label") }}
+            {{ form.name(class="form-control") }}
+            {{ form.slug.label(class="control-label") }}
+            {{ form.slug(class="form-control") }}
+            {{ form.category.label(class="control-label") }}
+            {{ form.category(class="form-control") }}
+            {{ form.status.label(class="control-label") }}
+            {{ form.status(class="form-control") }}
+        </div>
+        <div class="form-inline">
+            {{ form.github.label(class="control-label") }}
+            {{ form.github(class="form-control") }}
+            {{ form.url.label(class="control-label") }}
+            {{ form.url(class="form-control") }}
         </div>
         <div class="form-group">
-            <label for="info">Info:</label>
-            <textarea class="form-control" name="info" id="info" rows="7">Write something about new project</textarea><br>
+            {{ form.info.label }}
+            {{ form.info(class="form-control", rows="7") }}
         </div>
 
         <button type="submit" class="btn btn-default">Submit</button>
