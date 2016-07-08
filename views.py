@@ -31,7 +31,8 @@ def page_not_found(e):
 @app.route("/home/")
 @cache.cached(timeout=50)
 def home():
-    return render_template('home.html')
+    projects = Projects.query.order_by(Projects.modified.desc()).limit(3).all()
+    return render_template('home.html', projects=projects)
 
 
 @app.route("/admin/")

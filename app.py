@@ -4,6 +4,7 @@ from flaskext.markdown import Markdown
 from flask_compress import Compress
 from flask_cache import Cache
 from flask_sslify import SSLify
+from ago import human
 import os
 
 app = Flask(__name__)
@@ -28,7 +29,7 @@ def inject_categories():
 
 @app.context_processor
 def inject_python():
-    return dict(enumerate=enumerate, list=list, len=len)
+    return dict(enumerate=enumerate, list=list, len=len, human=human)
 
 if __name__ == "__main__":
     db.create_all()

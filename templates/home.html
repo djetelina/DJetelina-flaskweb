@@ -7,13 +7,34 @@
     <meta property="og:description" content="Personal website of David Jetelina" />
 {% endblock %}
 {% block content %}
-    <h1>Stay awhile and listen</h1>
-    <h2>Purpose of this site</h2>
-    <p>This site should serve as a portfolio-kinda thing.</p>
-    <p>GitHub is a great thing to link to when I'm trying to present myself, but there are two major faults:</p>
-    <ul>
-        <li>GitHub's readme isn't ideal for presenting the project.</li>
-        <li>Not every source code can be public</li>
-    </ul>
-            <p>That's why this site exists and why I'd prefer you to read the context :)</p>
+    <h1>David Jetelina</h1>
+    <div class="row">
+        <div class="col-sm-8">
+            <h2>Website purpose</h2>
+            <p>The primary purpose is to serve me as a portfolio for my projects. While GitHub is a great
+                thing to link to when I'm trying to present myself, there are two major faults:</p>
+            <ul>
+                <li>GitHub's readme isn't ideal for presenting the project.</li>
+                <li>Not every source code can be public</li>
+            </ul>
+            <p>Secondar purpose is to present that I can build a nice website. I love that I'll always be able to
+                work on something in here. I love presenting myself and this is a good way to do it!</p>
+            <p>You can read more about all that <a href="https://www.djetelina.cz/project/djetelina-website/">here</a>.</p>
+        </div>
+        <div class="col-sm-4">
+            <h2>Recently worked on</h2>
+            {% for project in projects %}
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        {{ project.name }}
+                    </div>
+                    <div class="panel-body">
+                        <p>Category: {{ project.category }}</p>
+                        <p>Last modified {{ human(project.modified.replace(tzinfo=None)) }}</p>
+                        <p><a href="{{ url_for('project', project_name=project.slug) }}" class="btn btn-default btn-xs btn-block">View</a></p>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
 {% endblock %}
