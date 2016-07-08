@@ -1,27 +1,35 @@
 {% extends "base.html" %}
-
+{% block title %} - Edit project{% endblock %}
 {% block content %}
     <a href="{{ url_for('project', project_name=project.slug) }}" class="btn btn-success pull-right">View</a>
     <h1>Editing {{ project.name }}</h1>
-    <form role="form" action="{{ request.path }}" method="post">
+    <form role="form" action="{{ request.path }}" method="post" data-toggle="validator">
         {{ form.csrf_token }}
-        <div class="form-inline">
+        <div class="form-group has-feedback col-sm-4">
             {{ form.name.label(class="control-label") }}
             {{ form.name(class="form-control", value=project.name) }}
+        </div>
+        <div class="form-group has-feedback col-sm-4">
             {{ form.slug.label(class="control-label") }}
             {{ form.slug(class="form-control", value=project.slug) }}
+        </div>
+        <div class="form-group has-feedback col-sm-4">
             {{ form.category.label(class="control-label") }}
             {{ form.category(class="form-control", value=project.category) }}
+        </div>
+        <div class="form-group has-feedback col-sm-4">
             {{ form.status.label(class="control-label") }}
             {{ form.status(class="form-control", value=project.status) }}
         </div>
-        <div class="form-inline">
+        <div class="form-group col-sm-4">
             {{ form.github.label(class="control-label") }}
             {{ form.github(class="form-control", value=project.github if project.github != None) }}
+        </div>
+        <div class="form-group col-sm-4">
             {{ form.url.label(class="control-label") }}
             {{ form.url(class="form-control", value=project.url if project.url != None) }}
         </div>
-        <div class="form-group">
+        <div class="form-group has-feedback col-sm-12">
             {{ form.info.label }}
             {% set existing_info = form.info.process_data(project.info) %}
             {{ form.info(class="form-control", rows="7") }}
@@ -33,4 +41,8 @@
     <form role="form" action="{{ url_for('delete', name=project.slug) }}">
         <button type="submit" class="btn btn-danger">DELETE</button>
     </form>
+{% endblock %}
+{% block js_footer %}
+    {{ super() }}
+    <script src="{{ url_for('static', filename='js/validator.js') }}"></script>
 {% endblock %}
