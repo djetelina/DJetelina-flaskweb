@@ -1,9 +1,9 @@
 import os
 from app import app, db, cache, recaptcha
-from flask import render_template, send_from_directory, request, flash, session, redirect, url_for, make_response, g
-from models import Projects
+from flask import render_template, send_from_directory, request, flash, session, redirect, url_for, make_response
 from forms import ProjectForm
 from functools import wraps
+from models import Projects
 
 
 def login_required(f):
@@ -23,17 +23,30 @@ def favicon():
     return send_from_directory(os.path.join(app.root_path, 'static'), 'ico/favicon.ico')
 
 
+# noinspection PyUnusedLocal
+@app.errorhandler(403)
+def forbidden(e):
+    return render_template('403.html'), 403
+
+
+# noinspection PyUnusedLocal
 @app.errorhandler(404)
 def page_not_found(e):
     return render_template('404.html'), 404
+
+
+# noinspection PyUnusedLocal
+@app.errorhandler(500)
+def internal_server_error(e):
+    return render_template('500.html'), 500
 
 
 @app.route("/")
 @app.route("/home/")
 @cache.cached(timeout=50)
 def home():
-    projects = Projects.query.order_by(Projects.modified.desc()).limit(3).all()
-    return render_template('home.html', projects=projects)
+    latest_projects = Projects.query.order_by(Projects.modified.desc()).limit(3).all()
+    return render_template('home.html', projects=latest_projects)
 
 
 @app.route("/admin/")
@@ -153,7 +166,7 @@ def add_project():
 
 @app.route("/sitemap.xml")
 def sitemap():
-    projects = Projects.query.order_by(Projects.created.desc()).all()
+    all_projects = Projects.query.order_by(Projects.created.desc()).all()
 
     query = db.session.query(Projects.category.distinct().label("category"))
     categories = [row.category for row in query.all()]
@@ -164,7 +177,7 @@ def sitemap():
         if "GET" in rule.methods and len(rule.arguments) == 0 and rule.rule not in filter_rule:
             pages.append(rule.rule)
 
-    sitemap_xml = render_template('sitemap_template.xml', pages=pages, projects=projects, categories=categories)
+    sitemap_xml = render_template('sitemap_template.xml', pages=pages, projects=all_projects, categories=categories)
     response = make_response(sitemap_xml)
     response.headers["Content-Type"] = "application/xml"
 
