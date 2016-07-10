@@ -51,7 +51,7 @@ def admin():
 
 @app.route("/login/", methods=['GET', 'POST'])
 def login():
-    if current_user.is_authenticated():
+    if current_user.is_authenticated:
         redirect(url_for('admin'))
     form = LoginForm()
     if form.validate_on_submit() and request.method == 'POST':
