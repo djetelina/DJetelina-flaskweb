@@ -18,7 +18,7 @@
         {% if project.github %}
             <a href="{{ project.github }}" target="_blank" class="btn btn-info">View on GitHub</a>
         {% endif %}
-        {% if 'logged_in' in session %}
+        {% if current_user.is_authenticated in session %}
             <a href="{{ url_for('edit', name=project.slug) }}" class="btn btn-success">Edit</a>
         {% endif %}
     </div>

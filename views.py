@@ -1,21 +1,9 @@
 import os
-from app import app, db, cache, recaptcha
-from flask import render_template, send_from_directory, request, flash, session, redirect, url_for, make_response
-from forms import ProjectForm
-from functools import wraps
-from models import Projects
-
-
-def login_required(f):
-    @wraps(f)
-    def wrap(*args, **kwargs):
-        if 'logged_in' in session:
-            return f(*args, **kwargs)
-        else:
-            flash('You need to login first.')
-            return redirect(url_for('login'))
-
-    return wrap
+from app import app, db, cache
+from flask import render_template, send_from_directory, request, flash, redirect, url_for, make_response
+from forms import LoginForm, ProjectForm
+from flask_login import login_user, login_required, logout_user, current_user
+from models import User, Projects
 
 
 @app.route('/favicon.ico')
@@ -27,6 +15,12 @@ def favicon():
 @app.errorhandler(403)
 def forbidden(e):
     return render_template('403.html'), 403
+
+
+# noinspection PyUnusedLocal
+@app.errorhandler(401)
+def forbidden(e):
+    return render_template('401.html'), 401
 
 
 # noinspection PyUnusedLocal
@@ -57,21 +51,33 @@ def admin():
 
 @app.route("/login/", methods=['GET', 'POST'])
 def login():
-    if request.method == 'POST':
-        if request.form['password'] != os.environ.get('password'):
-            flash('Incorrect password')
-        elif recaptcha.verify():
-            session['logged_in'] = True
-            flash('Logged in')
-            return redirect(url_for('admin'))
+    if current_user.is_authenticated():
+        redirect(url_for('admin'))
+    form = LoginForm()
+    if form.validate_on_submit() and request.method == 'POST':
+        user = User.query.get(form.email.data)
+        if user:
+            if user.check_password(form.password.data):
+                user.authenticated = True
+                db.session.add(user)
+                db.session.commit()
+                login_user(user, remember=True)
+                return redirect(url_for("admin"))
+            else:
+                flash("Invalid username or password")
         else:
-            flash("Don't bypass ReCaptcha!")
-    return render_template('login.html', captcha=recaptcha.get_code())
+            flash("Invalid username or password")
+
+    return render_template("login.html", form=form)
 
 
 @app.route("/logout/")
 def logout():
-    session.pop('logged_in', None)
+    user = current_user
+    user.authenticated = False
+    db.session.add(user)
+    db.session.commit() # I think that this doesn't work really. The hazards of copying from dozens of sources
+    logout_user()
     return redirect(url_for('home'))
 
 

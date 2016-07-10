@@ -3,3 +3,5 @@ Disallow: /admin/
 Disallow: /login/
 Disallow: /logout/
 Disallow: /add_project/
+Disallow: /edit/
+Disallow: /delete/

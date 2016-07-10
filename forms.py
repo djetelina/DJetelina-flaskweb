@@ -1,5 +1,6 @@
-from flask_wtf import Form
-from wtforms import TextAreaField, StringField, validators
+from flask_wtf import Form, RecaptchaField
+from wtforms import TextAreaField, StringField, PasswordField, validators
+from wtforms.fields.html5 import EmailField
 
 
 class ProjectForm(Form):
@@ -35,3 +36,16 @@ class ProjectForm(Form):
                          default="Write something about the project",
                          render_kw={"data-minlength": "50",
                                     "required": True})
+
+class LoginForm(Form):
+    email = EmailField('Email',
+                        [validators.InputRequired(), validators.Email()],
+                        render_kw={"placeholder": "email@email.email",
+                                   "data-minlength": "5",
+                                   "required": True})
+    password = PasswordField('Password',
+                           [validators.InputRequired()],
+                           render_kw={"required": True,
+                                      "data-minlength": "2",
+                                      "placeholder": "Password"})
+    recaptcha = RecaptchaField()

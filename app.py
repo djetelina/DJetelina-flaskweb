@@ -4,7 +4,7 @@ from flaskext.markdown import Markdown
 from flask_compress import Compress
 from flask_cache import Cache
 from flask_sslify import SSLify
-from flask_recaptcha import ReCaptcha
+from flask_login import LoginManager
 from ago import human
 import os
 
@@ -12,9 +12,6 @@ app = Flask(__name__)
 db = SQLAlchemy(app)
 cache = Cache(app, config={'CACHE_TYPE': 'simple'})
 Markdown(app)
-recaptcha = ReCaptcha(site_key=os.environ.get('RECAPTCHA_SITE'), secret_key=os.environ.get("RECAPTCHA_SECRET"),
-                      theme='dark')
-recaptcha.init_app(app)
 if 'ON_HEROKU' in os.environ:
     sslify = SSLify(app)
 
@@ -23,9 +20,17 @@ from views import *
 # noinspection PyPep8
 from models import *
 
+login_manager = LoginManager()
+login_manager.init_app(app)
+
 app.config.from_object('config')
 
 Compress(app)
+
+
+@login_manager.user_loader
+def user_loader(user_id):
+    return User.query.get(user_id)
 
 
 @app.context_processor

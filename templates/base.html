@@ -69,7 +69,7 @@
                         {% endfor %}
                     </ul>
                 </li>
-                {% if 'logged_in' in session %}<li {% if request.path == '/admin/' %}class="active"{% endif %}><a href="{{ url_for('admin') }}">Admin</a></li>{% endif %}
+                {% if current_user.is_authenticated %}<li {% if request.path == '/admin/' %}class="active"{% endif %}><a href="{{ url_for('admin') }}">Admin</a></li>{% endif %}
             </ul>
             {% block navbar_right %}
                 <ul class="nav navbar-nav navbar-right">

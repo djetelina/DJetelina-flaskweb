@@ -7,6 +7,6 @@ flask-compress
 Flask-Cache
 flask-sslify
 ago
-flask-recaptcha
 flask-wtf
 newrelic
+flask-login
