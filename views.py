@@ -122,19 +122,7 @@ def edit(name):
     if request.method == 'POST':
         if form.validate_on_submit():
             selected_project = Projects.query.filter(Projects.slug == name).first()
-            selected_project.name = form.name.data
-            selected_project.category = form.category.data
-            selected_project.info = form.info.data
-            selected_project.slug = form.slug.data
-            selected_project.status = form.status.data
-            if form.url.data:
-                selected_project.url = form.url.data
-            else:
-                selected_project.url = None
-            if form.github.data:
-                selected_project.github = form.github.data
-            else:
-                selected_project.github = None
+            selected_project.update(form)
             db.session.commit()
             flash('Project edited')
         else:

@@ -25,6 +25,21 @@ class Projects(db.Model):
         if url is not None:
             self.url = url
 
+    def update(self, form):
+            self.name = form.name.data
+            self.category = form.category.data
+            self.info = form.info.data
+            self.slug = form.slug.data
+            self.status = form.status.data
+            if form.url.data:
+                self.url = form.url.data
+            else:
+                self.url = None
+            if form.github.data:
+                self.github = form.github.data
+            else:
+                self.github = None
+
 
 class User(db.Model):
     email = db.Column(db.String(64), primary_key=True, unique=True)

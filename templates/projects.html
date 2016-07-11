@@ -1,10 +1,8 @@
 {% extends "base.html" %}
 {% block title %} - Projects{% endblock %}
+{% block description %}List of my projects{% if category %} for category: {{ category }}{% endif %}. Mom, look!{% endblock %}
 {% block og %}
-    <meta property="og:title" content="David Jetelina - {% if category %}{{ category }}{% endif %} Projects" />
-    <meta property="og:url" content="https://www.djetelina.cz/projects/{% if category %}{{ category }}{% endif %}/" />
     <meta property="og:type" content="website" />
-    <meta property="og:description" content="Projects of David Jetelina{% if category %}, Category: {{ category }}{% endif %}" />
 {% endblock %}
 {% block content %}
     <h1>Projects {% if category %}<small>{{ category }}</small>{% endif %}</h1>
