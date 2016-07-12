@@ -9,8 +9,6 @@
     <meta property="article:section" content="{{ project.category }}" />
 {% endblock %}
 {% block content %}
-    <div itemscope itemtype="http://schema.org/CreativeWork">
-    <meta itemprop="author" content="David Jetelina">
     <div class="btn-group pull-right project-btn">
         {% if project.url %}
             <a href="{{ project.url }}" target="_blank" class="btn btn-primary">Visit site</a>
@@ -22,6 +20,8 @@
             <a href="{{ url_for('edit', name=project.slug) }}" class="btn btn-success">Edit</a>
         {% endif %}
     </div>
+    <div itemscope itemtype="http://schema.org/CreativeWork">
+    <meta itemprop="author" content="David Jetelina">
     <h1><span itemprop="name">{{ project.name }}</span> <small itemprop="genre">{{ project.category }}</small></h1>
     <ol class="breadcrumb" itemscope itemtype="http://schema.org/BreadcrumbList">
         <li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
