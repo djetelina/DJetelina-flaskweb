@@ -38,17 +38,18 @@ class ProjectForm(Form):
                                     "required": True})
     tags = StringField('Tags',
                        [validators.Optional()],
-                       render_kw={"placeholder":"flask,discord.py,sqlalchemy"})
+                       render_kw={"placeholder": "flask,discord.py,sqlalchemy"})
+
 
 class LoginForm(Form):
     email = EmailField('Email',
-                        [validators.InputRequired(), validators.Email()],
-                        render_kw={"placeholder": "email@email.email",
-                                   "data-minlength": "5",
-                                   "required": True})
+                       [validators.InputRequired(), validators.Email()],
+                       render_kw={"placeholder": "email@email.email",
+                                  "data-minlength": "5",
+                                  "required": True})
     password = PasswordField('Password',
-                           [validators.InputRequired()],
-                           render_kw={"required": True,
-                                      "data-minlength": "2",
-                                      "placeholder": "Password"})
+                             [validators.InputRequired()],
+                             render_kw={"required": True,
+                                        "data-minlength": "2",
+                                        "placeholder": "Password"})
     recaptcha = RecaptchaField()

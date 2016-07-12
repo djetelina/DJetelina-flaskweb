@@ -13,7 +13,7 @@ def fetch_commits(repo_name):
     return r
 
 
-class Commits():
+class Commits:
     """
     Create instance with repo_name
 
@@ -31,7 +31,7 @@ class Commits():
         return Commit(date, message)
 
 
-class Commit():
+class Commit:
     """
     Commit infromation
     self.date       string with date like 2016-07-12T19:26:15Z

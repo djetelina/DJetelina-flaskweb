@@ -4,6 +4,7 @@ import sys
 from app import app
 from models import User, db
 
+
 def main():
     """Main entry point for script."""
     with app.app_context():
@@ -23,7 +24,6 @@ def main():
         db.session.add(user)
         db.session.commit()
         print('User added.')
-
 
 
 if __name__ == '__main__':

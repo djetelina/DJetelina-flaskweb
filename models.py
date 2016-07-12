@@ -1,5 +1,6 @@
 from app import db
 from werkzeug.security import generate_password_hash, check_password_hash
+# noinspection PyPackageRequirements
 from plugins.github import Commits
 
 
@@ -28,31 +29,30 @@ class Projects(db.Model):
             self.url = url
 
     def update(self, form):
-            self.name = form.name.data
-            self.category = form.category.data
-            self.info = form.info.data
-            self.slug = form.slug.data
-            self.status = form.status.data
-            self.tags = form.tags.data
-            if form.url.data:
-                self.url = form.url.data
-            else:
-                self.url = None
-            if form.github.data:
-                self.github = form.github.data
-            else:
-                self.github = None
+        self.name = form.name.data
+        self.category = form.category.data
+        self.info = form.info.data
+        self.slug = form.slug.data
+        self.status = form.status.data
+        self.tags = form.tags.data
+        if form.url.data:
+            self.url = form.url.data
+        else:
+            self.url = None
+        if form.github.data:
+            self.github = form.github.data
+        else:
+            self.github = None
 
     def get_tags(self):
         return self.tags.replace(" ", "").split(",")
-
 
     @property
     def commits(self):
         return Commits(self.github)
 
 
-
+# noinspection PyMethodMayBeStatic
 class User(db.Model):
     email = db.Column(db.String(64), primary_key=True, unique=True)
     hash = db.Column(db.String(300))

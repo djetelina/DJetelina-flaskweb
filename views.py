@@ -76,7 +76,7 @@ def logout():
     user = current_user
     user.authenticated = False
     db.session.add(user)
-    db.session.commit() # I think that this doesn't work really. The hazards of copying from dozens of sources
+    db.session.commit()  # I think that this doesn't work really. The hazards of copying from dozens of sources
     logout_user()
     return redirect(url_for('home'))
 
