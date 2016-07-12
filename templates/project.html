@@ -9,6 +9,8 @@
     <meta property="article:section" content="{{ project.category }}" />
 {% endblock %}
 {% block content %}
+    <div itemscope itemtype="http://schema.org/CreativeWork">
+    <meta itemprop="author" content="David Jetelina">
     <div class="btn-group pull-right project-btn">
         {% if project.url %}
             <a href="{{ project.url }}" target="_blank" class="btn btn-primary">Visit site</a>
@@ -16,11 +18,11 @@
         {% if project.github %}
             <a href="{{ project.github }}" target="_blank" class="btn btn-info">View on GitHub</a>
         {% endif %}
-        {% if current_user.is_authenticated in session %}
+        {% if current_user.is_authenticated %}
             <a href="{{ url_for('edit', name=project.slug) }}" class="btn btn-success">Edit</a>
         {% endif %}
     </div>
-    <h1>{{ project.name }} <small>{{ project.category }}</small></h1>
+    <h1><span itemprop="name">{{ project.name }}</span> <small itemprop="genre">{{ project.category }}</small></h1>
     <ol class="breadcrumb" itemscope itemtype="http://schema.org/BreadcrumbList">
         <li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
             <a itemscope itemtype="http://schema.org/Thing" itemprop="item" href="{{ url_for('home') }}">
@@ -72,5 +74,13 @@
         {% endif %}
     </div>
     <h2>About {{ project.name }}</h2>
-    <p>{% filter markdown %}{{ project.info }}{% endfilter %}</p>
+    <span itemprop="about">{% filter markdown %}{{ project.info }}{% endfilter %}</span>
+    {% if project.tags != None %}
+        <h3>Tags</h3>
+        {% set tags = project.get_tags() %}
+        {% for tag in tags %}
+            <span class="label label-default" itemprop="keywords">{{ tag }}</span>
+        {% endfor %}
+    {% endif %}
+    </div>
 {% endblock %}

@@ -36,6 +36,9 @@ class ProjectForm(Form):
                          default="Write something about the project",
                          render_kw={"data-minlength": "50",
                                     "required": True})
+    tags = StringField('Tags',
+                       [validators.Optional()],
+                       render_kw={"placeholder":"flask,discord.py,sqlalchemy"})
 
 class LoginForm(Form):
     email = EmailField('Email',

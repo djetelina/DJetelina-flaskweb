@@ -11,6 +11,7 @@ class Projects(db.Model):
     url = db.Column(db.String(250))
     info = db.Column(db.String(5000))
     status = db.Column(db.String(64))
+    tags = db.Column(db.String(500))
     created = db.Column(db.DateTime(timezone=True), default=db.func.now())
     modified = db.Column(db.DateTime(timezone=True), default=db.func.now(), onupdate=db.func.now())
 
@@ -31,6 +32,7 @@ class Projects(db.Model):
             self.info = form.info.data
             self.slug = form.slug.data
             self.status = form.status.data
+            self.tags = form.tags.data
             if form.url.data:
                 self.url = form.url.data
             else:
@@ -39,6 +41,11 @@ class Projects(db.Model):
                 self.github = form.github.data
             else:
                 self.github = None
+
+    def get_tags(self):
+        return self.tags.replace(" ", "").split(",")
+
+
 
 
 class User(db.Model):
