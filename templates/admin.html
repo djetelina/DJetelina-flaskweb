@@ -21,7 +21,7 @@
                    <td>{{ project.name }}</td>
                    <td>{{ project.category }}</td>
                    <td>{% if project.url != None %}{{ project.url}}{% endif %}</td>
-                   <td>{% if project.github %}<a href="{{ project.github }}"><i class="fa fa-github"></i></a>{% endif %}</td>
+                   <td>{% if project.github %}<a href="https://github.com/iScrE4m/{{ project.github }}"><i class="fa fa-github"></i></a>{% endif %}</td>
                    <td>
                        <div class="btn-group">
                            <a class="btn btn-success btn-xs" href="{{ url_for('project', project_name=project.slug) }}">View</a>

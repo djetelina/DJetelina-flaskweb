@@ -39,7 +39,7 @@ def internal_server_error(e):
 @app.route("/home/")
 @cache.cached(timeout=50)
 def home():
-    latest_projects = Projects.query.order_by(Projects.modified.desc()).limit(3).all()
+    latest_projects = Projects.query.order_by(Projects.modified.desc()).limit(2).all()
     return render_template('home.html', projects=latest_projects)
 
 

@@ -10,3 +10,5 @@ ago
 flask-wtf
 newrelic
 flask-login
+requests
+requests-cache

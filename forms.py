@@ -27,7 +27,7 @@ class ProjectForm(Form):
                                     "required": True})
     github = StringField('GitHub',
                          [validators.Optional()],
-                         render_kw={"placeholder": "https://github.com/iScrE4m/DJetelina"})
+                         render_kw={"placeholder": "e.g. DJetelina"})
     url = StringField('URL',
                       [validators.Optional()],
                       render_kw={"placeholder": "https://www.djetelina.cz/"})

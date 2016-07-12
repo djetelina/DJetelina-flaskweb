@@ -14,7 +14,7 @@
             <a href="{{ project.url }}" target="_blank" class="btn btn-primary">Visit site</a>
         {% endif %}
         {% if project.github %}
-            <a href="{{ project.github }}" target="_blank" class="btn btn-info">View on GitHub</a>
+            <a href="https://github.com/iScrE4m/{{ project.github }}" target="_blank" class="btn btn-info">View on GitHub</a>
         {% endif %}
         {% if current_user.is_authenticated %}
             <a href="{{ url_for('edit', name=project.slug) }}" class="btn btn-success">Edit</a>

@@ -1,5 +1,6 @@
 from app import db
 from werkzeug.security import generate_password_hash, check_password_hash
+from plugins.github import Commits
 
 
 class Projects(db.Model):
@@ -45,6 +46,10 @@ class Projects(db.Model):
     def get_tags(self):
         return self.tags.replace(" ", "").split(",")
 
+
+    @property
+    def commits(self):
+        return Commits(self.github)
 
 
 

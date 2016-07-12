@@ -29,7 +29,13 @@
                     </div>
                     <div class="panel-body">
                         <p>Category: {{ project.category }}</p>
-                        <p>Last modified {{ human(project.modified.replace(tzinfo=None)) }}</p>
+                        <p>{% if project.github != None %}
+                                Last GitHub commit {{ human(project.commits.list[0].datetime) }}</p>
+                                <p>Commit message: {{ project.commits.list[0].message }}
+                            {% else %}
+                                Last modified {{ human(project.modified.replace(tzinfo=None)) }}
+                            {% endif %}
+                        </p>
                         <p><a href="{{ url_for('project', project_name=project.slug) }}" class="btn btn-default btn-xs btn-block">View</a></p>
                     </div>
                 </div>
