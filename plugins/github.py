@@ -6,16 +6,17 @@ from datetime import datetime
 def fetch_commits(repo_name):
     """
     Cached commits from GitHub API
-    :return:
+
+    :return:    JSON with commits api
     """
     requests_cache.install_cache('commits_cache', expires_after=60 * 15)
-    r = requests.get('https://api.github.com/repos/iScrE4m/{}/commits'.format(repo_name))
-    return r.json()
+    r = requests.get('https://api.github.com/repos/iScrE4m/{}/commits'.format(repo_name)).json()
+    return r
 
 
 class Commits:
     """
-    Create instance with repo_name
+    Object holding information about a commit, called with name of a repository
 
     Get commit information by calling Commits.list[x].var
     x = 0 will get the newest and 14 the oldest
@@ -33,7 +34,8 @@ class Commits:
 
 class Commit:
     """
-    Commit infromation
+    Information about a commit
+
     self.date       string with date like 2016-07-12T19:26:15Z
     self.datetime   datetime object
     self.message    commit message

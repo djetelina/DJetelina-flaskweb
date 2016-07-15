@@ -34,7 +34,7 @@
             {{ form.tags(class="form-control", value=project.tags if project.tags != None) }}
         </div>
         <div class="form-group has-feedback col-sm-12">
-            {{ form.info.label }}
+            {{ form.info.label(class="control-label") }}
             {% set existing_info = form.info.process_data(project.info) %}
             {{ form.info(class="form-control", rows="7") }}
         </div>
