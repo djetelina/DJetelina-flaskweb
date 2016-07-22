@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block title %} - Pokemon - Pokedex{% endblock %}
+{% block description %}I've collected some Pokemon, here they are!{% endblock %}
+{% block og %}
+    <meta property="og:type" content="website" />
+{% endblock %}
+{% block content %}
+    <h1>My Pokedex</h1>
+    {% for count, pokemon in enumerate(pokemon, 1) %}
+        {% if count in list(range(1, 152, 6)) %}<div class="row">{% endif %}
+        <div class="col-sm-2">
+            <img class="center-block{% if not pokemon.collected %} desaturate{% endif %}" src="{{ pokemon.url }}" alt="{{ pokemon.name }}"/>
+            {% if pokemon.collected %}
+                <p class="text-center text-success">{{ pokemon.name }} <i class="fa fa-check"></i></p>
+            {% else %}
+                <p class="text-center">{{ pokemon.name }}</p>
+            {% endif %}
+            {% if current_user.is_authenticated %}
+                {% if pokemon.collected %}
+                    <a href="{{ url_for('poke_delete', name=pokemon.name) }}" class="btn btn-block btn-warning">Oops!</a>
+                {% else %}
+                    <a href="{{ url_for('poke_caught', name=pokemon.name) }}" class="btn btn-block btn-success">Caught!</a>
+                {% endif %}
+            {% endif %}
+        </div>
+        {% if count in list(range(6, 158, 6)) %}</div>{% endif %}
+    {% endfor %}
+    {% if len(pokemons) not in list(range(6, 158, 6)) %}</div>{% endif %}
+{% endblock %}

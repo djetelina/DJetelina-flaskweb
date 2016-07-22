@@ -3,7 +3,7 @@ from app import app, db, cache
 from flask import render_template, send_from_directory, request, flash, redirect, url_for, make_response
 from forms import LoginForm, ProjectForm
 from flask_login import login_user, login_required, logout_user, current_user
-from models import User, Projects
+from models import User, Projects, Pokemon
 
 
 @app.route('/favicon.ico')
@@ -189,3 +189,23 @@ def ssl_verif(file):
         return "zBoZTgJhuUvbAx2d2bSOzLbAxU5vQRG-y_aLx3-7Buk.zD-PdGHKwLK8VwOuRsL2KKdJ5VcSCYQqeXbYUXHmLog"
     elif file == "X3S6SqAQRClyntXga8IXKyh5U3WlAWyx8u-rDvFzdo0":
         return "X3S6SqAQRClyntXga8IXKyh5U3WlAWyx8u-rDvFzdo0.zD-PdGHKwLK8VwOuRsL2KKdJ5VcSCYQqeXbYUXHmLog"
+
+@app.route("/pokemon/pokedex/")
+def pokedex():
+    return render_template('pokedex.html', pokemon=Pokemon.query.order_by(Pokemon.id).all())
+
+@app.route("/pokemon/catch/<string:name>/")
+@login_required
+def poke_caught(name):
+    pokemon = Pokemon.query.filter(Pokemon.name == name).first()
+    pokemon.collected = True
+    db.session.commit()
+    return redirect(url_for('pokedex'))
+
+@app.route("/pokemon/delete/<string:name>/")
+@login_required
+def poke_delete(name):
+    pokemon = Pokemon.query.filter(Pokemon.name == name).first()
+    pokemon.collected = False
+    db.session.commit()
+    return redirect(url_for('pokedex'))

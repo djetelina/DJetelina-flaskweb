@@ -1,5 +1,6 @@
 from app import db
 from werkzeug.security import generate_password_hash, check_password_hash
+from flask import url_for
 # noinspection PyPackageRequirements
 from plugins.github import Commits
 
@@ -80,3 +81,16 @@ class User(db.Model):
     def is_anonymous(self):
         """False, as anonymous users aren't supported."""
         return False
+
+
+class Pokemon(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(64), unique=True)
+    collected = db.Column(db.Boolean, default=False)
+
+    def __init__(self, pokemon):
+        self.name = pokemon
+
+    @property
+    def url(self):
+        return url_for('static', filename='i/poke/{}.png'.format(self.id))
