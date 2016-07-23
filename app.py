@@ -42,7 +42,7 @@ def inject_categories():
 
 @app.context_processor
 def inject_python():
-    return dict(enumerate=enumerate, list=list, len=len, human=human)
+    return dict(enumerate=enumerate, list=list, len=len, human=human, sum=sum)
 
 
 if __name__ == "__main__":

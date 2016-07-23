@@ -5,25 +5,42 @@
     <meta property="og:type" content="website" />
 {% endblock %}
 {% block content %}
-    <h1>My Pokedex</h1>
-    {% for count, pokemon in enumerate(pokemon, 1) %}
+    <h1>Pokemon GO</h1>
+    <div class="row">
+        <div class="col-sm-3">
+            <h3>Nickname</h3>
+            <p>iScrE4m</p>
+        </div>
+        <div class="col-sm-3">
+            <h3>Level</h3>
+            <p>20</p>
+        </div>
+        <div class="col-sm-3">
+            <h3>Team</h3>
+            <p>Mystic (blue)</p>
+        </div>
+    </div>
+    <h2>Pokedex</h2>
+    <div class="progress">
+        <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="{{ caught }}"
+             aria-valuemin="0" aria-valuemax="100">
+            {{ caught }} collected out of 151
+        </div>
+    </div>
+    {% for count, pokemon in enumerate(pokemons, 1) %}
         {% if count in list(range(1, 152, 6)) %}<div class="row">{% endif %}
         <div class="col-sm-2">
             <div class="panel {% if pokemon.collected %}panel-success{% else %}panel-danger{% endif %}">
                 <div class="panel-heading">
-                {% if pokemon.collected %}
-                    {{ pokemon.name }} <i class="fa fa-check"></i>
-                {% else %}
                     {{ pokemon.name }}
-                {% endif %}
                 </div>
                 <div class="panel-body">
                 <img class="center-block img-responsive{% if not pokemon.collected %} desaturate{% endif %}" src="{{ pokemon.url }}" alt="{{ pokemon.name }}"/>
                 {% if current_user.is_authenticated %}
                     {% if pokemon.collected %}
-                        <a href="{{ url_for('poke_delete', name=pokemon.name) }}" class="btn btn-block btn-warning">Oops!</a>
+                        <a onclick="deletePokemon(this, '{{ pokemon.name }}')" class="btn btn-block btn-warning">Oops!</a>
                     {% else %}
-                        <a href="{{ url_for('poke_caught', name=pokemon.name) }}" class="btn btn-block btn-success">Caught!</a>
+                        <a onclick="catchPokemon(this, '{{ pokemon.name }}')" class="btn btn-block btn-success">Caught!</a>
                     {% endif %}
                 {% endif %}
                 </div>

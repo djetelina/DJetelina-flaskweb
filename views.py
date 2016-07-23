@@ -1,4 +1,5 @@
 import os
+import json
 from app import app, db, cache
 from flask import render_template, send_from_directory, request, flash, redirect, url_for, make_response
 from forms import LoginForm, ProjectForm
@@ -190,9 +191,11 @@ def ssl_verif(file):
     elif file == "X3S6SqAQRClyntXga8IXKyh5U3WlAWyx8u-rDvFzdo0":
         return "X3S6SqAQRClyntXga8IXKyh5U3WlAWyx8u-rDvFzdo0.zD-PdGHKwLK8VwOuRsL2KKdJ5VcSCYQqeXbYUXHmLog"
 
-@app.route("/pokemon/pokedex/")
+@app.route("/pokemon/")
 def pokedex():
-    return render_template('pokedex.html', pokemon=Pokemon.query.order_by(Pokemon.id).all())
+    pokemons = Pokemon.query.order_by(Pokemon.id).all()
+    caught = sum(pokemon.collected for pokemon in pokemons)
+    return render_template('pokemon.html', pokemons=pokemons, caught=caught)
 
 @app.route("/pokemon/catch/<string:name>/")
 @login_required
@@ -200,7 +203,11 @@ def poke_caught(name):
     pokemon = Pokemon.query.filter(Pokemon.name == name).first()
     pokemon.collected = True
     db.session.commit()
-    return redirect(url_for('pokedex'))
+    response = make_response(json.dumps({"status":"OK"}))
+    response.headers["Control-Access-Allow-Origin"] = "*"
+    response.headers["Access-Control-Allow-Credentials"] = "True"
+    response.headers["Content-Type"] = "application/json"
+    return response
 
 @app.route("/pokemon/delete/<string:name>/")
 @login_required
@@ -208,4 +215,8 @@ def poke_delete(name):
     pokemon = Pokemon.query.filter(Pokemon.name == name).first()
     pokemon.collected = False
     db.session.commit()
-    return redirect(url_for('pokedex'))
+    response = make_response(json.dumps({"status":"OK"}))
+    response.headers["Control-Access-Allow-Origin"] = "*"
+    response.headers["Access-Control-Allow-Credentials"] = "True"
+    response.headers["Content-Type"] = "application/json"
+    return response
