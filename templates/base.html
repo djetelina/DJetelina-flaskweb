@@ -11,8 +11,8 @@
 
         <meta property="og:site_name" content="DJetelina" />
         <meta property="og:locale" content="en_GB" />
-        <meta property="og:title" content="David Jetelina{{ self.title }}" />
-        <meta property="og:description" content="{{ self.description }}" />
+        <meta property="og:title" content="David Jetelina{{ self.title() }}" />
+        <meta property="og:description" content="{{ self.description() }}" />
         <meta property="og:url" content="{{ request.url }}" />
         {% block og %}{% endblock %}
         {% block ogimage %}<meta property="og:image" content="https://www.djetelina.cz{{ url_for('static', filename='i/og_me.png') }}" />{% endblock %}
