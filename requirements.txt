@@ -12,3 +12,4 @@ newrelic
 flask-login
 requests
 requests-cache
+discord.py
