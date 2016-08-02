@@ -13,3 +13,4 @@ flask-login
 requests
 requests-cache
 discord.py
+bs4

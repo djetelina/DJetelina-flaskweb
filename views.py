@@ -5,6 +5,7 @@ from flask import render_template, send_from_directory, request, flash, redirect
 from forms import LoginForm, ProjectForm
 from flask_login import login_user, login_required, logout_user, current_user
 from models import User, Projects, Pokemon
+from plugins.seznam.obedy import Restaurants
 
 
 @app.route('/favicon.ico')
@@ -220,3 +221,8 @@ def poke_delete(name):
     response.headers["Access-Control-Allow-Credentials"] = "True"
     response.headers["Content-Type"] = "application/json"
     return response
+
+@app.route("/seznam/obed/")
+def obedy():
+    restaurants = Restaurants().list
+    return render_template("obedy.html", restaurants=restaurants)

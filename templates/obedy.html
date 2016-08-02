@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block title %} - Seznam - Obědy{% endblock %}
+{% block description %}Nebudu prolízat všechny weby!{% endblock %}
+{% block og %}
+    <meta property="og:type" content="website" />
+{% endblock %}
+{% block content %}
+    <h1>Denní menu</h1>
+    {% for count, restaurant in enumerate(restaurants, 1) %}
+        {% if count in list(range(1, 50, 2)) %}<div class="row">{% endif %}
+        <div class="col-sm-6">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    {{ restaurant.name }}
+                </div>
+                <div class="panel-body">
+                    <table class="table table-stripped table-hover">
+                        <thead>
+                            <tr>
+                                <th>Jídlo</th>
+                                <th>Cena</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for meal in restaurant.meals %}
+                                <tr>
+                                    <td>{{ meal.name }}</td>
+                                    <td>{{ meal.price }}</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        {% if count in list(range(2, 52, 2)) %}</div>{% endif %}
+    {% endfor %}
+    {% if len(restaurants) not in list(range(2, 52, 2)) %}</div>{% endif %}
+{% endblock %}
