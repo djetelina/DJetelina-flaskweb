@@ -29,6 +29,16 @@ class Gaming:
                                          "Rank: {1}\n"
                                          "Winrate: {2}%".format(tag, rank, win_rate))
 
+        @self.bot.event()
+        async def on_member_update(old, new):
+            if old.game != new.game:
+                await self.bot.send_message(
+                    self.bot.get_channel(206507394187001856),
+                    "{0.name} | Game updated from {0.game} to {1.game}".format(
+                        old, new)
+                )
+
+
 
 def find_value(stats, to_find):
     for item in stats:

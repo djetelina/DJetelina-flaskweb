@@ -18,7 +18,7 @@ def get_restaurant(url):
 
     :return:    JSON with commits api
     """
-    requests_cache.install_cache('restaurants_cache', expires_after=60 * 15)
+    requests_cache.install_cache('restaurants_cache', expires_after=60 * 10)
     r = requests.get(url)
     return r.content
 
@@ -44,10 +44,12 @@ class ZlatyKlas(Restaurant):
                 price = meal.findAll("span", {"class": "price"})[0].getText()
                 name = meal.findAll("span", {"class": "name"})[0].getText()
                 self.meals.append({"name": name, "price": price})
+
             except Exception as e:
                 pass
 
 class Formanka(Restaurant):
+
     name = "Formanka"
     url = "http://www.smichovskaformanka.cz/1-denni-menu"
 
@@ -62,6 +64,7 @@ class Formanka(Restaurant):
             row = new_row
 
 class Purtes(Restaurant):
+
     name = "Purtes"
     url = "https://purtes.cz/cs/menu/todays-specials"
 
@@ -74,6 +77,7 @@ class Purtes(Restaurant):
             self.meals.append({"name": name, "price": price})
 
 class Mediterane():
+
     name = "Mediterane"
     url = "https://developers.zomato.com/api/v2.1/dailymenu?res_id=16506335"
 
@@ -83,7 +87,7 @@ class Mediterane():
 
     def zomato(self):
         headers = {"User-agent": "curl/7.43.0", 'user_key': os.environ.get('ZOMATO_KEY'), 'Accept': 'application/json'}
-        requests_cache.install_cache('zomato_cache', expires_after=60 * 15)
+        requests_cache.install_cache('zomato_cache', expires_after=60 * 10)
         r = requests.get(self.url, headers=headers).json()
         for meal in r['daily_menus'][0]['daily_menu']['dishes']:
             name = meal['dish']['name']
