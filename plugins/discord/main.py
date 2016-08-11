@@ -11,6 +11,18 @@ async def on_ready():
     print('Discord bot ready')
 
 
+@bot.event
+async def on_member_update(old, new):
+    general = bot.get_channel("206507394187001856")
+    if old.game != new.game:
+        if old.game == None:
+            await bot.send_message(general, "**GAME UPDATE** | **{0.name}** | Started playing **{1.game}**".format(old, new))
+        elif new.game == None:
+            await bot.send_message(general, "**GAME UPDATE** | **{0.name}** |  Stopped playing **{0.game}**".format(old))
+        else:
+            await bot.send_message(general, "**GAME UPDATE** | **{0.name}** | **{0.game}** to **{1.game}**".format(old, new))
+
+
 async def run_discord():
     for extension in extensions:
         try:
