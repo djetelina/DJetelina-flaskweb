@@ -36,7 +36,7 @@ class Gaming:
 
         most_played = 0
         hero = ""
-        for key, value in heroes_data['heroes'].iteritems():
+        for key, value in heroes_data['heroes'].items():
             if value > most_played:
                 hero = key
                 most_played = value
