@@ -44,7 +44,7 @@ class Gaming:
         await self.bot.edit_message(msg, "**Competitive Overwatch stats for {0}**\n"
                                          "Rank: {1}\n"
                                          "Winrate: {2}%\n"
-                                         "Most played: {} ({} hours)".format(tag, rank, win_rate, hero, most_played))
+                                         "Most played: {3} ({4} hours)".format(tag, rank, win_rate, hero, most_played))
 
 
 def setup(bot):
