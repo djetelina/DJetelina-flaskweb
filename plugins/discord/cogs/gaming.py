@@ -2,6 +2,30 @@ from discord.ext import commands
 import aiohttp
 import json
 
+heroes = {
+    "junkrat": "Junkrat",
+    "mccree": "McCree",
+    "reinhardt": "Reinhardt",
+    "lucio": "Lucio",
+    "genji": "Genji",
+    "torbjorn": "Torbjörn",
+    "bastion": "Bastion",
+    "reaper": "Reaper",
+    "soldier76": "Soldier 76",
+    "mercy": "Mercy",
+    "winston": "Winston",
+    "hanzo": "Hanzo",
+    "tracer": "Tracer",
+    "mei": "Mei",
+    "zarya": "Zarya",
+    "symmetra": "Symmetra",
+    "ana": "Ana",
+    "zenyatta": "Zenyatta",
+    "pharah": "Pharah",
+    "widowmaker": "Widowmaker",
+    "roadhog": "Roadhog",
+    "dva": "D.Va"
+}
 
 class Gaming:
     def __init__(self, bot):
@@ -33,18 +57,26 @@ class Gaming:
 
         rank = comp_data["overall_stats"]["comprank"]
         win_rate = comp_data["overall_stats"]["win_rate"]
+        prestige = comp_data["overall_stats"]["prestige"]
+        if prestige > 0:
+            level = "{}{}".format(prestige, comp_data["overall_stats"]["level"])
+        else:
+            level = comp_data["overall_stats"]["level"]
+        total_played = comp_data["game_stats"]["time_played"]
 
         most_played = 0
         hero = ""
         for key, value in heroes_data['heroes'].items():
             if value > most_played:
-                hero = key
+                hero = heroes[key]
                 most_played = value
 
         await self.bot.edit_message(msg, "**Competitive Overwatch stats for {0}**\n"
+                                         "Level: {6}\n"
                                          "Rank: {1}\n"
                                          "Winrate: {2}%\n"
-                                         "Most played: {3} ({4} hours)".format(tag, rank, win_rate, hero, most_played))
+                                         "Most played: {3} ({4} out of {5} hours)".format(
+            tag, rank, win_rate, hero, most_played, total_played, level))
 
 
 def setup(bot):
