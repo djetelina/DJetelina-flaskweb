@@ -110,14 +110,15 @@ class Gaming:
         """
         await self.bot.edit_message(msg, "Fetching stats for {} (2/4 fetching updated stats)".format(tag))
         future = loop.run_in_executor(None, requests.get, url)
-        data = await future
+        res = await future
         try:
-            data.raise_for_status()
+            res.raise_for_status()
         except Exception as e:
             await self.bot.edit_message(msg, "Error fetching diabloprogress: *{}*".format(e))
             return
         await self.bot.edit_message(msg, "Got stats for {} (3/4 processing)".format(tag))
-        soup = BeautifulSoup(data.text, "html.parser")
+        print(res.text)
+        soup = BeautifulSoup(res.text, "html.parser")
         stats = soup.findAll("h2", text="Stats")[0]
         stats_table = stats.findNext("div")
         stats_attrs = stats_table.findAll('div')
