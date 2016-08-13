@@ -4,6 +4,7 @@ import json
 import datetime
 import asyncio
 import requests
+from functools import partial
 from bs4 import BeautifulSoup
 
 heroes = {
@@ -94,20 +95,9 @@ class Gaming:
         player_name = battletag.split("-")[0]
         url = "http://www.diabloprogress.com/hero/{}/{}/{}".format(battletag, player_name, character_id)
         loop = asyncio.get_event_loop()
-        """
-        TODO make this use requests too
         post_data = json.dumps({"update": 1})
-        with aiohttp.ClientSession(headers=headers) as session:
-            try:
-                await session.post(url, data=post_data)
-
-            except Exception as e:
-                await self.bot.edit_message(msg, "Error updating diabloprogress: *{}*".format(e))
-                return
-
-        await self.bot.edit_message(msg, "Fetching stats for {} (1/4 updating diabloprogress)".format(tag))
-        await asyncio.sleep(10)
-        """
+        future_post = loop.run_in_executor(None, partial(requests.post, url, data=post_data))
+        await future_post
         await self.bot.edit_message(msg, "Fetching stats for {} (2/4 fetching updated stats)".format(tag))
         future = loop.run_in_executor(None, requests.get, url)
         res = await future
@@ -117,7 +107,6 @@ class Gaming:
             await self.bot.edit_message(msg, "Error fetching diabloprogress: *{}*".format(e))
             return
         await self.bot.edit_message(msg, "Got stats for {} (3/4 processing)".format(tag))
-        print(res.text)
         soup = BeautifulSoup(res.text, "html.parser")
         stats = soup.findAll("h2", text="Stats")[0]
         stats_table = stats.findNext("div")
@@ -125,9 +114,9 @@ class Gaming:
         paragon = "unknown"
         gr = "unknown"
         for attribute in stats_attrs:
-            if attribute.findAll("span", {"class": "char_attr_name"})[0] == "Paragon S7:":
+            if attribute.findAll("span", {"class": "char_attr_name"})[0].getText() == "Paragon S7:":
                 paragon = stats.findNext("span").getText()
-            if attribute.findAll("span", {"class": "char_attr_name"})[0] == "Solo GRift:":
+            if attribute.findAll("span", {"class": "char_attr_name"})[0].getText() == "Solo GRift:":
                 gr = stats.findNext("span").getText()
 
         await self.bot.edit_message(msg, "**Seasonal Diablo stats for {0}**\n"
