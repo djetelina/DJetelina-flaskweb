@@ -98,24 +98,23 @@ class Gaming:
                 await session.post(url, data=post_data)
 
             except Exception as e:
-                await self.bot.edit_message(msg, "Error updating diabloprogress {}".format(e))
+                await self.bot.edit_message(msg, "Error updating diabloprogress: *{}*".format(e))
                 return
 
         await self.bot.edit_message(msg, "Fetching stats for {} (1/4 updating diabloprogress)".format(tag))
         await asyncio.sleep(10)
-
+        await self.bot.edit_message(msg, "Fetching stats for {} (2/4 fetching updated stats)".format(tag))
         with aiohttp.ClientSession() as session:
-            await self.bot.edit_message(msg, "Fetching stats for {} (2/4 fetching updated stats)".format(tag))
             try:
                 async with session.get(url) as resp:
-                    data = await resp
+                    data = await resp.text()
 
             except Exception as e:
-                await self.bot.edit_message(msg, "Error fetching diabloprogress {}".format(e))
+                await self.bot.edit_message(msg, "Error fetching diabloprogress: *{}*".format(e))
                 return
 
         await self.bot.edit_message(msg, "Got stats for {} (3/4 processing)".format(tag))
-        soup = BeautifulSoup(data.content, "html.parser")
+        soup = BeautifulSoup(data, "html.parser")
         stats = soup.findAll("h2", text="Stats")[0]
         stats_table = stats.findNext("div")
         stats_attrs = stats_table.findAll('div')
