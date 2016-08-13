@@ -114,10 +114,11 @@ class Gaming:
         paragon = "unknown"
         gr = "unknown"
         for attribute in stats_attrs:
-            if attribute.findAll("span", {"class": "char_attr_name"})[0].getText() == "Paragon S7:":
-                paragon = stats.findNext("span").getText()
-            if attribute.findAll("span", {"class": "char_attr_name"})[0].getText() == "Solo GRift:":
-                gr = stats.findNext("span").getText()
+            title = attribute.findAll("span", {"class": "char_attr_name"})[0].getText()
+            if title == "Paragon S7:":
+                paragon = title.findNext("span").getText()
+            if title == "Solo GRift:":
+                gr = title.findNext("span").getText()
 
         await self.bot.edit_message(msg, "**Seasonal Diablo stats for {0}**\n"
                                          "Paragon: {1}\n"
