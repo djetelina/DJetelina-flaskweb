@@ -93,8 +93,9 @@ class Gaming:
         player_name = battletag.split("-")[0]
         post_data = json.dumps({"update": 1})
         url = "http://www.diabloprogress.com/hero/{}/{}/{}".format(battletag, player_name, character_id)
-        """print(url)
         headers = { 'User-Agent' : 'Mozilla/5.0' }
+        """
+        Possible bug?
         with aiohttp.ClientSession(headers=headers) as session:
             try:
                 await session.post(url, data=post_data)
