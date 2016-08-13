@@ -18,7 +18,7 @@ async def on_member_update(old, new):
     if old.game != new.game:
         if old.game == None:
             await bot.send_message(general,
-                                   "**GAME UPDATE** | **{0.name}** | Started playing **{1.game}** (2{:%H:%M})".format(
+                                   "**GAME UPDATE** | **{0.name}** | Started playing **{1.game}** ({2:%H:%M})".format(
                                        old, new, datetime.now()))
         elif new.game == None:
             await bot.send_message(general,
