@@ -86,13 +86,14 @@ class Gaming:
                                          "Most played: {3} ({4})".format(
             tag, rank, win_rate, hero, convert_to_time(most_played), convert_to_time(total_played), level))
 
-    # @commands.command(description="Diablo Greater Rift", brief="Diablo GR")
+    @commands.command(description="Diablo Greater Rift", brief="Diablo GR")
     async def diablo(self, tag: str, character_id: str):
         msg = await self.bot.say("Fetching stats for {} (0/4 scraping diabloprogress)".format(tag))
         battletag = tag.replace("#", "-")
         player_name = battletag.split("-")[0]
         post_data = json.dumps({"update": 1})
         url = "http://www.diabloprogress.com/hero/{}/{}/{}".format(battletag, player_name, character_id)
+        print(url)
         headers = { 'User-Agent' : 'Mozilla/5.0' }
         with aiohttp.ClientSession(headers=headers) as session:
             try:
