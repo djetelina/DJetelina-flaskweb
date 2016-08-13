@@ -86,14 +86,15 @@ class Gaming:
                                          "Most played: {3} ({4})".format(
             tag, rank, win_rate, hero, convert_to_time(most_played), convert_to_time(total_played), level))
 
-    @commands.command(description="Diablo Greater Rift", brief="Diablo GR")
+    # @commands.command(description="Diablo Greater Rift", brief="Diablo GR")
     async def diablo(self, tag: str, character_id: str):
         msg = await self.bot.say("Fetching stats for {} (0/4 scraping diabloprogress)".format(tag))
         battletag = tag.replace("#", "-")
         player_name = battletag.split("-")[0]
         post_data = json.dumps({"update": 1})
         url = "http://www.diabloprogress.com/hero/{}/{}/{}".format(battletag, player_name, character_id)
-        with aiohttp.ClientSession() as session:
+        headers = { 'User-Agent' : 'Mozilla/5.0' }
+        with aiohttp.ClientSession(headers=headers) as session:
             try:
                 await session.post(url, data=post_data)
 
@@ -104,7 +105,7 @@ class Gaming:
         await self.bot.edit_message(msg, "Fetching stats for {} (1/4 updating diabloprogress)".format(tag))
         await asyncio.sleep(10)
         await self.bot.edit_message(msg, "Fetching stats for {} (2/4 fetching updated stats)".format(tag))
-        with aiohttp.ClientSession() as session:
+        with aiohttp.ClientSession(headers=headers) as session:
             try:
                 async with session.get(url) as resp:
                     data = await resp.text()
