@@ -2,6 +2,8 @@ from discord.ext import commands
 import aiohttp
 import json
 import datetime
+import asyncio
+from bs4 import BeautifulSoup
 
 heroes = {
     "junkrat": "Junkrat",
@@ -35,7 +37,7 @@ class Gaming:
 
     @commands.command(description="Overwatch profile", brief="Overwatch profile")
     async def overwatch(self, tag: str):
-        msg = await self.bot.say("Fetching stats for {} (0/2 statistics)".format(tag))
+        msg = await self.bot.say("Fetching stats for {} (0/3 statistics)".format(tag))
 
         user = tag.replace("#", "-")
 
@@ -48,7 +50,7 @@ class Gaming:
                     await self.bot.edit_message(msg, "Error contacting Overwatch API")
                     return
 
-        await self.bot.edit_message(msg, "Fetching stats for {} (1/2 hero information)".format(tag))
+        await self.bot.edit_message(msg, "Fetching stats for {} (1/3 hero information)".format(tag))
 
         with aiohttp.ClientSession() as session:
             async with session.get("https://owapi.net/api/v2/u/{}/heroes/competitive".format(user)) as resp:
@@ -59,7 +61,7 @@ class Gaming:
                     await self.bot.edit_message(msg, "Error contacting Overwatch API")
                     return
 
-        await self.bot.edit_message(msg, "Got stats for {}, processing!".format(tag))
+        await self.bot.edit_message(msg, "Got stats for {},(2/3 processing)!".format(tag))
 
         rank = comp_data["overall_stats"]["comprank"]
         win_rate = comp_data["overall_stats"]["win_rate"]
@@ -81,11 +83,42 @@ class Gaming:
                                          "Level: {6}\n"
                                          "Rank: {1}\n"
                                          "Winrate: {2}%\n"
-                                         "Most played: {3} ({4} hour(s)".format(
+                                         "Most played: {3} ({4})".format(
             tag, rank, win_rate, hero, convert_to_time(most_played), convert_to_time(total_played), level))
 
+    @commands.command(description="Diablo Greater Rift", brief="Diablo GR")
+    async def diablo(self, tag: str, character_id: str):
+        msg = await self.bot.say("Fetching stats for {} (0/3 scraping diabloprogress)".format(tag))
+        battletag = tag.replace("#", "-")
+        player_name = battletag.split("-")[0]
+        post_data = json.dumps({"update": 1})
+        url = "http://www.diabloprogress.com/hero/{}/{}/{}".format(battletag, player_name, character_id)
+        with aiohttp.ClientSession as session:
+            await session.post(url, data=post_data)
+            await self.bot.edit_message(msg, "Fetching stats for {} (1/3 updating diabloprogress)".format(tag))
+            await asyncio.sleep(10)
+            async with session.get(url) as resp:
+                data = resp.content
+            await self.bot.edit_message(msg, "Got stats for {} (2/3 processing)".format(tag))
+        soup = BeautifulSoup(data, "html.parser")
+        stats = soup.findAll("h2", text="Stats")[0]
+        stats_table = stats.findNext("div")
+        stats_attrs = stats_table.findAll('div')
+        paragon = "unknown"
+        gr = "unknown"
+        for attribute in stats_attrs:
+            if attribute.findAll("span", {"class": "char_attr_name"})[0] == "Paragon S7:":
+                paragon = stats.findNext("span").getText()
+            if attribute.findAll("span", {"class": "char_attr_name"})[0] == "Solo GRift:":
+                gr = stats.findNext("span").getText()
 
-def convert_to_time(hours:float):
+        await self.bot.edit_message(msg, "**Seasonal Diablo stats for {0}**\n"
+                                         "Paragon: {1}\n"
+                                         "Solo GR: {2}\n".format(
+            tag, paragon, gr))
+
+
+def convert_to_time(hours: float):
     delta = datetime.timedelta(hours=hours)
     string = str(delta).split(':')[0]
     affix = 'hours'
