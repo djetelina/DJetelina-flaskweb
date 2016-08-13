@@ -104,9 +104,9 @@ class Gaming:
                 data = resp
             await self.bot.edit_message(msg, "Got stats for {} (3/4 processing)".format(tag))
 
-        print(data.read())
+        print(await data.read())
         print(data.content)
-        print(data.text)
+        print(data.text())
         soup = BeautifulSoup(data.text, "html.parser")
         stats = soup.findAll("h2", text="Stats")[0]
         stats_table = stats.findNext("div")
