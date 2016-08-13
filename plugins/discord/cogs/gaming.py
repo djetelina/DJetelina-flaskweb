@@ -94,20 +94,28 @@ class Gaming:
         post_data = json.dumps({"update": 1})
         url = "http://www.diabloprogress.com/hero/{}/{}/{}".format(battletag, player_name, character_id)
         with aiohttp.ClientSession() as session:
-            await session.post(url, data=post_data)
-            await self.bot.edit_message(msg, "Fetching stats for {} (1/4 updating diabloprogress)".format(tag))
-            await asyncio.sleep(10)
+            try:
+                await session.post(url, data=post_data)
+
+            except Exception as e:
+                await self.bot.edit_message(msg, "Error updating diabloprogress {}".format(e))
+                return
+
+        await self.bot.edit_message(msg, "Fetching stats for {} (1/4 updating diabloprogress)".format(tag))
+        await asyncio.sleep(10)
 
         with aiohttp.ClientSession() as session:
             await self.bot.edit_message(msg, "Fetching stats for {} (2/4 fetching updated stats)".format(tag))
-            async with session.get(url) as resp:
-                data = resp
-            await self.bot.edit_message(msg, "Got stats for {} (3/4 processing)".format(tag))
+            try:
+                async with session.get(url) as resp:
+                    data = await resp
 
-        print(await data.read())
-        print(data.content)
-        print(data.text())
-        soup = BeautifulSoup(data.text, "html.parser")
+            except Exception as e:
+                await self.bot.edit_message(msg, "Error fetching diabloprogress {}".format(e))
+                return
+
+        await self.bot.edit_message(msg, "Got stats for {} (3/4 processing)".format(tag))
+        soup = BeautifulSoup(data.content, "html.parser")
         stats = soup.findAll("h2", text="Stats")[0]
         stats_table = stats.findNext("div")
         stats_attrs = stats_table.findAll('div')
