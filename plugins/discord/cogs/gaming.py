@@ -98,7 +98,7 @@ class Gaming:
             await self.bot.edit_message(msg, "Fetching stats for {} (1/3 updating diabloprogress)".format(tag))
             await asyncio.sleep(10)
             async with session.get(url) as resp:
-                data = resp.content
+                data = resp.content()
             await self.bot.edit_message(msg, "Got stats for {} (2/3 processing)".format(tag))
         soup = BeautifulSoup(data, "html.parser")
         stats = soup.findAll("h2", text="Stats")[0]
