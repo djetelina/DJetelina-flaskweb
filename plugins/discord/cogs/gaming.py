@@ -93,7 +93,7 @@ class Gaming:
         player_name = battletag.split("-")[0]
         post_data = json.dumps({"update": 1})
         url = "http://www.diabloprogress.com/hero/{}/{}/{}".format(battletag, player_name, character_id)
-        print(url)
+        """print(url)
         headers = { 'User-Agent' : 'Mozilla/5.0' }
         with aiohttp.ClientSession(headers=headers) as session:
             try:
@@ -105,6 +105,7 @@ class Gaming:
 
         await self.bot.edit_message(msg, "Fetching stats for {} (1/4 updating diabloprogress)".format(tag))
         await asyncio.sleep(10)
+        """
         await self.bot.edit_message(msg, "Fetching stats for {} (2/4 fetching updated stats)".format(tag))
         with aiohttp.ClientSession(headers=headers) as session:
             try:
