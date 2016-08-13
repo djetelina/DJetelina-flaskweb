@@ -1,6 +1,7 @@
 from discord.ext import commands
 import aiohttp
 import json
+import datetime
 
 heroes = {
     "junkrat": "Junkrat",
@@ -27,13 +28,14 @@ heroes = {
     "dva": "D.Va"
 }
 
+
 class Gaming:
     def __init__(self, bot):
         self.bot = bot
 
     @commands.command(description="Overwatch profile", brief="Overwatch profile")
     async def overwatch(self, tag: str):
-        msg = await self.bot.say("Fetching stats for {}".format(tag))
+        msg = await self.bot.say("Fetching stats for {} (0/2 statistics)".format(tag))
 
         user = tag.replace("#", "-")
 
@@ -46,6 +48,8 @@ class Gaming:
                     await self.bot.edit_message(msg, "Error contacting Overwatch API")
                     return
 
+        await self.bot.edit_message(msg, "Fetching stats for {} (1/2 hero information)".format(tag))
+
         with aiohttp.ClientSession() as session:
             async with session.get("https://owapi.net/api/v2/u/{}/heroes/competitive".format(user)) as resp:
                 try:
@@ -54,6 +58,8 @@ class Gaming:
                 except json.decoder.JSONDecodeError:
                     await self.bot.edit_message(msg, "Error contacting Overwatch API")
                     return
+
+        await self.bot.edit_message(msg, "Got stats for {}, processing!".format(tag))
 
         rank = comp_data["overall_stats"]["comprank"]
         win_rate = comp_data["overall_stats"]["win_rate"]
@@ -75,8 +81,17 @@ class Gaming:
                                          "Level: {6}\n"
                                          "Rank: {1}\n"
                                          "Winrate: {2}%\n"
-                                         "Most played: {3} ({4} out of {5} hours)".format(
-            tag, rank, win_rate, hero, most_played, total_played, level))
+                                         "Most played: {3} ({4} hour(s)".format(
+            tag, rank, win_rate, hero, convert_to_time(most_played), convert_to_time(total_played), level))
+
+
+def convert_to_time(hours:float):
+    delta = datetime.timedelta(hours=hours)
+    string = str(delta).split(':')[0]
+    affix = 'hours'
+    if string.endswith("1"):
+        affix = "hour"
+    return "{} {}".format(string, affix)
 
 
 def setup(bot):
