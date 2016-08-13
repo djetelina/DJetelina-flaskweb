@@ -97,11 +97,14 @@ class Gaming:
             await session.post(url, data=post_data)
             await self.bot.edit_message(msg, "Fetching stats for {} (1/4 updating diabloprogress)".format(tag))
             await asyncio.sleep(10)
+
+        with aiohttp.ClientSession() as session:
             await self.bot.edit_message(msg, "Fetching stats for {} (2/4 fetching updated stats)".format(tag))
             async with session.get(url) as resp:
-                data = resp.read()
+                data = resp.content
             await self.bot.edit_message(msg, "Got stats for {} (3/4 processing)".format(tag))
-        soup = BeautifulSoup(data)
+
+        soup = BeautifulSoup(data, "html.parser")
         stats = soup.findAll("h2", text="Stats")[0]
         stats_table = stats.findNext("div")
         stats_attrs = stats_table.findAll('div')
