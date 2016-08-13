@@ -101,10 +101,13 @@ class Gaming:
         with aiohttp.ClientSession() as session:
             await self.bot.edit_message(msg, "Fetching stats for {} (2/4 fetching updated stats)".format(tag))
             async with session.get(url) as resp:
-                data = resp.content
+                data = resp
             await self.bot.edit_message(msg, "Got stats for {} (3/4 processing)".format(tag))
 
-        soup = BeautifulSoup(data, "html.parser")
+        print(data.read())
+        print(data.content)
+        print(data.text)
+        soup = BeautifulSoup(data.text, "html.parser")
         stats = soup.findAll("h2", text="Stats")[0]
         stats_table = stats.findNext("div")
         stats_attrs = stats_table.findAll('div')
