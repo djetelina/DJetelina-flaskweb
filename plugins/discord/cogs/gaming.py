@@ -3,6 +3,7 @@ import aiohttp
 import json
 import datetime
 import asyncio
+import requests
 from bs4 import BeautifulSoup
 
 heroes = {
@@ -91,11 +92,11 @@ class Gaming:
         msg = await self.bot.say("Fetching stats for {} (0/4 scraping diabloprogress)".format(tag))
         battletag = tag.replace("#", "-")
         player_name = battletag.split("-")[0]
-        post_data = json.dumps({"update": 1})
         url = "http://www.diabloprogress.com/hero/{}/{}/{}".format(battletag, player_name, character_id)
-        headers = { 'User-Agent' : 'Mozilla/5.0' }
+        loop = asyncio.get_event_loop()
         """
-        Possible bug?
+        TODO make this use requests too
+        post_data = json.dumps({"update": 1})
         with aiohttp.ClientSession(headers=headers) as session:
             try:
                 await session.post(url, data=post_data)
@@ -108,17 +109,15 @@ class Gaming:
         await asyncio.sleep(10)
         """
         await self.bot.edit_message(msg, "Fetching stats for {} (2/4 fetching updated stats)".format(tag))
-        with aiohttp.ClientSession(headers=headers) as session:
-            try:
-                async with session.get(url) as resp:
-                    data = await resp.text()
-
-            except Exception as e:
-                await self.bot.edit_message(msg, "Error fetching diabloprogress: *{}*".format(e))
-                return
-
+        future = loop.run_in_executor(None, requests.get, url)
+        data = await future
+        try:
+            data.raise_for_status()
+        except Exception as e:
+            await self.bot.edit_message(msg, "Error fetching diabloprogress: *{}*".format(e))
+            return
         await self.bot.edit_message(msg, "Got stats for {} (3/4 processing)".format(tag))
-        soup = BeautifulSoup(data, "html.parser")
+        soup = BeautifulSoup(data.text, "html.parser")
         stats = soup.findAll("h2", text="Stats")[0]
         stats_table = stats.findNext("div")
         stats_attrs = stats_table.findAll('div')
