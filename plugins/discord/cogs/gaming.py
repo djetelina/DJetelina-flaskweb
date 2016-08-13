@@ -88,18 +88,19 @@ class Gaming:
 
     @commands.command(description="Diablo Greater Rift", brief="Diablo GR")
     async def diablo(self, tag: str, character_id: str):
-        msg = await self.bot.say("Fetching stats for {} (0/3 scraping diabloprogress)".format(tag))
+        msg = await self.bot.say("Fetching stats for {} (0/4 scraping diabloprogress)".format(tag))
         battletag = tag.replace("#", "-")
         player_name = battletag.split("-")[0]
         post_data = json.dumps({"update": 1})
         url = "http://www.diabloprogress.com/hero/{}/{}/{}".format(battletag, player_name, character_id)
         with aiohttp.ClientSession() as session:
             await session.post(url, data=post_data)
-            await self.bot.edit_message(msg, "Fetching stats for {} (1/3 updating diabloprogress)".format(tag))
+            await self.bot.edit_message(msg, "Fetching stats for {} (1/4 updating diabloprogress)".format(tag))
             await asyncio.sleep(10)
+            await self.bot.edit_message(msg, "Fetching stats for {} (2/4 fetching updated stats)".format(tag))
             async with session.get(url) as resp:
-                data = resp.content()
-            await self.bot.edit_message(msg, "Got stats for {} (2/3 processing)".format(tag))
+                data = resp.text
+            await self.bot.edit_message(msg, "Got stats for {} (2/4 processing)".format(tag))
         soup = BeautifulSoup(data, "html.parser")
         stats = soup.findAll("h2", text="Stats")[0]
         stats_table = stats.findNext("div")
