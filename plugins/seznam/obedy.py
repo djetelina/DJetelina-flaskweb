@@ -3,14 +3,15 @@ import os
 import requests_cache
 from bs4 import BeautifulSoup
 
-class Restaurants:
 
+class Restaurants:
     def __init__(self):
         self.list = [ZlatyKlas(),
                      Purtes(),
                      Formanka(),
                      Mediterane(),
                      ]
+
 
 def get_restaurant(url):
     """
@@ -23,8 +24,8 @@ def get_restaurant(url):
     return r.content
 
 
+# noinspection PyUnresolvedReferences
 class Restaurant:
-
     def __init__(self):
         r = get_restaurant(self.url)
         self.meals = []
@@ -32,7 +33,6 @@ class Restaurant:
 
 
 class ZlatyKlas(Restaurant):
-
     name = "Zlatý Klas"
     url = "http://www.zlatyklas.cz/index.php?sec=today-menu&lang=cz"
 
@@ -48,23 +48,23 @@ class ZlatyKlas(Restaurant):
             except Exception as e:
                 pass
 
-class Formanka(Restaurant):
 
+class Formanka(Restaurant):
     name = "Formanka"
     url = "http://www.smichovskaformanka.cz/1-denni-menu"
 
     def parse_menu(self, r):
         soup = BeautifulSoup(r, "html.parser")
         row = soup.findAll("th")[0]
-        for i in range(1,7):
+        for i in range(1, 7):
             new_row = row.findNext('tr')
             name = new_row.findAll('td')[0].text
             price = new_row.findAll('td')[1].text
             self.meals.append({"name": name, "price": price})
             row = new_row
 
-class Purtes(Restaurant):
 
+class Purtes(Restaurant):
     name = "Purtes"
     url = "https://purtes.cz/cs/menu/todays-specials"
 
@@ -76,13 +76,13 @@ class Purtes(Restaurant):
             price = meal.findAll("div", {"class": "price"})[0].text
             self.meals.append({"name": name, "price": price})
 
-class Mediterane():
 
+class Mediterane:
     name = "Mediterane"
     url = "https://developers.zomato.com/api/v2.1/dailymenu?res_id=16506335"
 
     def __init__(self):
-        self.meals=[]
+        self.meals = []
         self.zomato()
 
     def zomato(self):

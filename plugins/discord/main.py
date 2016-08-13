@@ -16,11 +16,11 @@ async def on_ready():
 async def on_member_update(old, new):
     general = bot.get_channel("206507394187001856")
     if old.game != new.game:
-        if old.game == None:
+        if old.game is None:
             await bot.send_message(general,
                                    "**GAME UPDATE** | **{0.name}** | Started playing **{1.game}** ({2:%H:%M})".format(
                                        old, new, datetime.now()))
-        elif new.game == None:
+        elif new.game is None:
             await bot.send_message(general,
                                    "**GAME UPDATE** | **{0.name}** | No longer playing **{0.game}** ({1:%H:%M})".format(
                                        old, datetime.now()))

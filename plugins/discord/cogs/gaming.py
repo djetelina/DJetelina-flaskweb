@@ -39,7 +39,7 @@ class Gaming:
 
     @commands.command(description="Overwatch profile", brief="Overwatch profile")
     async def overwatch(self, tag: str):
-        msg = await self.bot.say("Fetching stats for {} (0/3 statistics)".format(tag))
+        msg = await self.bot.say("Fetching statistics for {} (0/3)".format(tag))
 
         user = tag.replace("#", "-")
 
@@ -52,7 +52,7 @@ class Gaming:
                     await self.bot.edit_message(msg, "Error contacting Overwatch API")
                     return
 
-        await self.bot.edit_message(msg, "Fetching stats for {} (1/3 hero information)".format(tag))
+        await self.bot.edit_message(msg, "Fetching information about heroes for {} (1/3)".format(tag))
 
         with aiohttp.ClientSession() as session:
             async with session.get("https://owapi.net/api/v2/u/{}/heroes/competitive".format(user)) as resp:
@@ -63,7 +63,7 @@ class Gaming:
                     await self.bot.edit_message(msg, "Error contacting Overwatch API")
                     return
 
-        await self.bot.edit_message(msg, "Got stats for {},(2/3 processing)!".format(tag))
+        await self.bot.edit_message(msg, "Processing stats {},(2/3)".format(tag))
 
         rank = comp_data["overall_stats"]["comprank"]
         win_rate = comp_data["overall_stats"]["win_rate"]
@@ -90,15 +90,18 @@ class Gaming:
 
     @commands.command(description="Diablo Greater Rift", brief="Diablo GR")
     async def diablo(self, tag: str, character_id: str):
-        msg = await self.bot.say("Fetching stats for {} (0/4 scraping diabloprogress)".format(tag))
         battletag = tag.replace("#", "-")
         player_name = battletag.split("-")[0]
         url = "http://www.diabloprogress.com/hero/{}/{}/{}".format(battletag, player_name, character_id)
         loop = asyncio.get_event_loop()
         post_data = json.dumps({"update": 1})
-        future_post = loop.run_in_executor(None, partial(requests.post, url, data=post_data))
+        headers = {"X-Requested-With": "XMLHttpRequest"}
+        msg = await self.bot.say("Updating diabloprogress (0/4)")
+        future_post = loop.run_in_executor(None, partial(requests.post, url, data=post_data, headers=headers))
         await future_post
-        await self.bot.edit_message(msg, "Fetching stats for {} (2/4 fetching updated stats)".format(tag))
+        self.bot.edit_message(msg, "Waiting 5 seconds for diabloprogress to update (1/4)")
+        await asyncio.sleep(5)
+        await self.bot.edit_message(msg, "Fetching updated stats (2/4)")
         future = loop.run_in_executor(None, requests.get, url)
         res = await future
         try:
@@ -106,7 +109,7 @@ class Gaming:
         except Exception as e:
             await self.bot.edit_message(msg, "Error fetching diabloprogress: *{}*".format(e))
             return
-        await self.bot.edit_message(msg, "Got stats for {} (3/4 processing)".format(tag))
+        await self.bot.edit_message(msg, "Got stats, processing (3/4)")
         soup = BeautifulSoup(res.text, "html.parser")
         stats = soup.findAll("h2", text="Stats")[0]
         stats_table = stats.findNext("div")
@@ -115,7 +118,7 @@ class Gaming:
         gr = "unknown"
         for attribute in stats_attrs:
             title = attribute.findAll("span", {"class": "char_attr_name"})[0]
-            if title.getText() == "Paragon S7:":
+            if title.getText().startswith("Paragon"):
                 paragon = title.findNext("span").getText()
             if title.getText() == "Solo GRift:":
                 gr = title.findNext("span").getText()
@@ -131,7 +134,7 @@ def convert_to_time(hours: float):
     string = str(delta).split(':')[0]
     affix = 'hours'
     if string.endswith("1"):
-        affix = "hour"
+        affix = 'hour'
     return "{} {}".format(string, affix)
 
 
