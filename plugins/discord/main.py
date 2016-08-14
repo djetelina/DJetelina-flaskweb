@@ -1,10 +1,12 @@
 from discord.ext import commands
 from datetime import datetime
+from plugins.discord.helpers.database import Database
 import os
 
 bot = commands.Bot(command_prefix='!', description="I'm the best bot!")
 extensions = ['plugins.discord.cogs.admin',
-              'plugins.discord.cogs.gaming']
+              'plugins.discord.cogs.gaming',
+              'plugins.discord.cogs.database']
 
 
 @bot.event
@@ -38,6 +40,8 @@ async def run_discord():
 
         except Exception as e:
             print('Discord failed to load extension {}\n{}: {}'.format(extension, type(e).__name__, e))
+
+    bot.db = Database()
 
     await bot.start(os.environ.get('DISCORD_TOKEN'))
 

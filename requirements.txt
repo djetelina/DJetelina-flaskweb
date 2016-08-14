@@ -14,3 +14,5 @@ requests
 requests-cache
 discord.py
 bs4
+sqlalchemy
+sqlalchemy_utils

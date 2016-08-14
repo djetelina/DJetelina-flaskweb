@@ -37,8 +37,20 @@ class Gaming:
     def __init__(self, bot):
         self.bot = bot
 
-    @commands.command(description="Overwatch profile", brief="Overwatch profile")
-    async def overwatch(self, tag: str):
+    @commands.command(description="Overwatch profile", brief="Overwatch profile", pass_context=True)
+    async def overwatch(self, ctx):
+        # TODO refactor
+        if len(ctx.message.content.split(" ")) < 2:
+            tag = self.bot.db.get_battletag(ctx.message.author)
+            if not tag:
+                await self.bot.say("You need to specify a battletag or register yours with a bot")
+                return
+        else:
+            argument = ctx.message.content.split(" ")[1]
+            if self.bot.db.get_battletag_by_nick(argument):
+                tag =  self.bot.db.get_battletag_by_nick(argument)
+            else:
+                tag = argument
         msg = await self.bot.say("Fetching statistics for {} (0/3)".format(tag))
 
         user = tag.replace("#", "-")
