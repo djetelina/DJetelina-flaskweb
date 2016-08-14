@@ -40,6 +40,7 @@ class Database:
             return "Already registered"
         else:
             self.db.add(UserDB(user_id=user.id))
+            self.db.commit()
             return "{0.mention} now registered, welcome!".format(user)
 
     def edit_nickname(self, user: discord.user, nickname: str) -> str:
@@ -47,6 +48,7 @@ class Database:
             return "You need to register first"
         else:
             self.db.query(UserDB).filter(UserDB.user_id == user.id).update({UserDB.nickname: nickname})
+            self.db.commit()
             return "{1.mention} will now register under nickname {0}".format(nickname, user)
 
     def edit_diablo_char(self, user: discord.user, char: str) -> str:
@@ -54,6 +56,7 @@ class Database:
             return "You need to register first"
         else:
             self.db.query(UserDB).filter(UserDB.user_id == user.id).update({UserDB.diablo_char: char})
+            self.db.commit()
             return "Diablo character {0} now registered to {1.mention}".format(char, user)
 
     def edit_battletag(self, user: discord.user, battletag: str) -> str:
@@ -61,6 +64,7 @@ class Database:
             return "You need to register first"
         else:
             self.db.query(UserDB).filter(UserDB.user_id == user.id).update({UserDB.battletag: battletag})
+            self.db.commit()
             return "Battletag {0} now registered to {1.mention}".format(battletag, user)
 
     def get_nickname(self, user: discord.user):
