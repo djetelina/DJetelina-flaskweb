@@ -27,8 +27,11 @@ class Commits:
         self.list = [self.parse_commit(x) for x in range(0, 15)]
 
     def parse_commit(self, number):
-        date = self.commits[number]['commit']['author']['date']
-        message = self.commits[number]['commit']['message']
+        try:
+            date = self.commits[number]['commit']['author']['date']
+            message = self.commits[number]['commit']['message']
+        except IndexError:
+            return Commit("2037-07-31T00:00:00Z", "Error parsing commit")
         return Commit(date, message)
 
 
