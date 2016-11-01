@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% block title %} - Projects{% endblock %}
+{% block title %} -{% if category %} {{ category }}{% endif %} Projects{% endblock %}
 {% block description %}List of my projects{% if category %} for category: {{ category }}{% endif %}. Mom, look!{% endblock %}
 {% block og %}
     <meta property="og:type" content="website" />

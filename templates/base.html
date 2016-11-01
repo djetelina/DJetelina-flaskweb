@@ -48,7 +48,7 @@
         </div>
         <div class="collapse navbar-collapse" id="navbar">
             <ul class="nav navbar-nav">
-                <li {% if request.path == '/' or request.path == '/home/' %}class="active"{% endif %}>
+                <li {% if request.path == '/' %}class="active"{% endif %}>
                      <a href="{{ url_for('home') }}">Home</a>
                 </li>
                 <li {% if request.path == '/about/' %}class="active"{% endif %}>

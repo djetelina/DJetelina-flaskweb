@@ -38,10 +38,9 @@ def internal_server_error(e):
 
 
 @app.route("/")
-@app.route("/home/")
 @cache.cached(timeout=50)
 def home():
-    latest_projects = Projects.query.order_by(Projects.modified.desc()).limit(2).all()
+    latest_projects = Projects.query.order_by(Projects.modified.desc()).limit(3).all()
     return render_template('home.html', projects=latest_projects)
 
 
@@ -170,7 +169,7 @@ def sitemap():
     pages = []
     filter_rule = ["/sitemap.xml", "/robots.txt", "/login/", "/logout/", "/admin/", "/add_project/", "/favicon.ico"]
     for rule in app.url_map.iter_rules():
-        if "GET" in rule.methods and len(rule.arguments) == 0 and rule.rule not in filter_rule:
+        if "GET" in rule.methods and not len(rule.arguments) and rule.rule not in filter_rule:
             pages.append(rule.rule)
 
     sitemap_xml = render_template('sitemap_template.xml', pages=pages, projects=all_projects, categories=categories)

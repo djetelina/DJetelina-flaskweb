@@ -6,10 +6,10 @@ from bs4 import BeautifulSoup
 
 class Restaurants:
     def __init__(self):
-        self.list = [ZlatyKlas(),
-                     Purtes(),
+        self.list = [Tradice(),
                      Formanka(),
-                     Mediterane(),
+                     ZlatyKlas(),
+                     Mediterane()
                      ]
 
 
@@ -19,7 +19,7 @@ def get_restaurant(url):
 
     :return:    JSON with commits api
     """
-    requests_cache.install_cache('restaurants_cache', expires_after=60 * 10)
+    requests_cache.install_cache('restaurants_cache', expires_after=10)
     r = requests.get(url)
     return r.content
 
@@ -45,36 +45,43 @@ class ZlatyKlas(Restaurant):
                 name = meal.findAll("span", {"class": "name"})[0].getText()
                 self.meals.append({"name": name, "price": price})
 
-            except Exception as e:
-                pass
+            except IndexError:
+                continue
+
+
+class Tradice(Restaurant):
+    name = "Tradice"
+    url = "http://www.tradiceandel.cz/cz/denni-nabidka/"
+
+    def parse_menu(self, r):
+        soup = BeautifulSoup(r, "html.parser")
+        menu = soup.findAll("div", {"class": "menu"})[0].findAll("div", {"class": "item"})
+        for meal in menu[:6]:
+            try:
+                price = meal.findAll("div", {"class": "price"})[0].getText()
+                name = meal.findAll("strong")[0].getText()
+                self.meals.append({"name": name, "price": price})
+
+            except IndexError:
+                continue
 
 
 class Formanka(Restaurant):
     name = "Formanka"
-    url = "http://www.smichovskaformanka.cz/1-denni-menu"
+    url = "http://www.smichovskaformanka.cz/2-denni-menu"
 
     def parse_menu(self, r):
         soup = BeautifulSoup(r, "html.parser")
-        row = soup.findAll("th")[0]
+        try:
+            row = soup.findAll("th")[0]
+        except IndexError:
+            return
         for i in range(1, 7):
             new_row = row.findNext('tr')
             name = new_row.findAll('td')[0].text
             price = new_row.findAll('td')[1].text
             self.meals.append({"name": name, "price": price})
             row = new_row
-
-
-class Purtes(Restaurant):
-    name = "Purtes"
-    url = "https://purtes.cz/cs/menu/todays-specials"
-
-    def parse_menu(self, r):
-        soup = BeautifulSoup(r, "html.parser")
-        menu = soup.findAll("div", {"class": "food"})
-        for meal in menu:
-            name = meal.findAll("h5")[0].text
-            price = meal.findAll("div", {"class": "price"})[0].text
-            self.meals.append({"name": name, "price": price})
 
 
 class Mediterane:
@@ -87,9 +94,12 @@ class Mediterane:
 
     def zomato(self):
         headers = {"User-agent": "curl/7.43.0", 'user_key': os.environ.get('ZOMATO_KEY'), 'Accept': 'application/json'}
-        requests_cache.install_cache('zomato_cache', expires_after=60 * 10)
+        requests_cache.install_cache('zomato_cache', expires_after=60)
         r = requests.get(self.url, headers=headers).json()
-        for meal in r['daily_menus'][0]['daily_menu']['dishes']:
-            name = meal['dish']['name']
-            price = meal['dish']['price']
-            self.meals.append({"name": name, "price": price})
+        try:
+            for meal in r['daily_menus'][0]['daily_menu']['dishes']:
+                name = meal['dish']['name']
+                price = meal['dish']['price']
+                self.meals.append({"name": name, "price": price})
+        except KeyError:
+            pass

@@ -48,7 +48,7 @@ class Gaming:
         else:
             argument = ctx.message.content.split(" ")[1]
             if self.bot.db.get_battletag_by_nick(argument):
-                tag =  self.bot.db.get_battletag_by_nick(argument)
+                tag = self.bot.db.get_battletag_by_nick(argument)
             else:
                 tag = argument
         msg = await self.bot.say("Fetching statistics for {} (0/3)".format(tag))

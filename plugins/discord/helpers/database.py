@@ -1,11 +1,9 @@
 import os
 
+import discord
 from sqlalchemy import create_engine, Column, Integer, String
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
-from sqlalchemy_utils import database_exists, create_database
-
-import discord
 
 Base = declarative_base()
 
@@ -27,7 +25,6 @@ class Tag(Base):
 
 
 class Database:
-
     def __init__(self):
         self.engine = create_engine(os.environ.get("DISCORD_DB"))
         Base.metadata.create_all(self.engine)
