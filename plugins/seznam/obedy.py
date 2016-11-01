@@ -101,7 +101,6 @@ class Cyril(Restaurant):
         try:
             menu = soup.findAll("table")[0].findAll("td")
             menu = [menu[i:i+2] for i in range(0, len(menu), 2)]
-            print(menu)
         except IndexError:
             return
         for name, price in menu:
