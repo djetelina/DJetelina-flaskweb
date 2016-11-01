@@ -13,6 +13,7 @@ class Restaurants:
                      Mediterane(),
                      Cyril()
                      ]
+        self.list = [restaurant for restaurant in self.list if restaurant.meals]
 
 
 def get_restaurant(url):
