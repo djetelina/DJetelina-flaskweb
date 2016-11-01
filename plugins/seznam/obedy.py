@@ -1,5 +1,6 @@
 import requests
 import os
+from itertools import tee
 import requests_cache
 from bs4 import BeautifulSoup
 
@@ -9,7 +10,8 @@ class Restaurants:
         self.list = [Tradice(),
                      Formanka(),
                      ZlatyKlas(),
-                     Mediterane()
+                     Mediterane(),
+                     Cyril()
                      ]
 
 
@@ -38,7 +40,10 @@ class ZlatyKlas(Restaurant):
 
     def parse_menu(self, r):
         soup = BeautifulSoup(r, "html.parser")
-        menu = soup.findAll("div", {"class": "jidelak"})[0].findAll("h2", {"class": "today"})
+        try:
+            menu = soup.findAll("div", {"class": "jidelak"})[0].findAll("h2", {"class": "today"})
+        except IndexError:
+            return
         for meal in menu:
             try:
                 price = meal.findAll("span", {"class": "price"})[0].getText()
@@ -55,7 +60,10 @@ class Tradice(Restaurant):
 
     def parse_menu(self, r):
         soup = BeautifulSoup(r, "html.parser")
-        menu = soup.findAll("div", {"class": "menu"})[0].findAll("div", {"class": "item"})
+        try:
+            menu = soup.findAll("div", {"class": "menu"})[0].findAll("div", {"class": "item"})
+        except IndexError:
+            return
         for meal in menu[:6]:
             try:
                 price = meal.findAll("div", {"class": "price"})[0].getText()
@@ -84,6 +92,25 @@ class Formanka(Restaurant):
             row = new_row
 
 
+class Cyril(Restaurant):
+    name = "Cyril's pub"
+    url = "http://www.cyrilspub.cz/denni-menu/"
+
+    def parse_menu(self, r):
+        soup = BeautifulSoup(r, "html.parser")
+        try:
+            menu = soup.findAll("table")[0].findAll("td")
+            menu = [menu[i:i+2] for i in range(0, len(menu), 2)]
+            print(menu)
+        except IndexError:
+            return
+        for name, price in menu:
+            name = name.getText()
+            price = price.getText()
+            if name not in ("DENNÍ MENU", "TÝDENNÍ POLEDNÍ NABÍDKA"):
+                self.meals.append({"name": name, "price": price})
+
+
 class Mediterane:
     name = "Mediterane"
     url = "https://developers.zomato.com/api/v2.1/dailymenu?res_id=16506335"
@@ -103,3 +130,9 @@ class Mediterane:
                 self.meals.append({"name": name, "price": price})
         except KeyError:
             pass
+
+
+def pairwise(iterable):
+    a, b = tee(iterable)
+    next(b, None)
+    return zip(a, b)

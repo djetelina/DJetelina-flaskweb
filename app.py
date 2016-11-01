@@ -48,6 +48,6 @@ def inject_python():
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
     # loop = asyncio.get_event_loop()
-    app.run(host='0.0.0.0', port=port, debug=True)
+    app.run(host='0.0.0.0', port=port, debug=False)
     # loop.run_in_executor(None, functools.partial(app.run, host='0.0.0.0', port=port, debug=True))
     # loop.run_until_complete(run_discord())
