@@ -1,5 +1,6 @@
 import requests
 import os
+import datetime
 from itertools import tee
 import requests_cache
 from bs4 import BeautifulSoup
@@ -60,12 +61,18 @@ class Tradice(Restaurant):
     url = "http://www.tradiceandel.cz/cz/denni-nabidka/"
 
     def parse_menu(self, r):
+        days = [0, 6, 12, 18, 24]
+        try:
+            x = days[datetime.datetime.now().weekday()]
+        except IndexError:
+            return
+
         soup = BeautifulSoup(r, "html.parser")
         try:
             menu = soup.findAll("div", {"class": "menu"})[0].findAll("div", {"class": "item"})
         except IndexError:
             return
-        for meal in menu[:6]:
+        for meal in menu[x:x+6]:
             try:
                 price = meal.findAll("div", {"class": "price"})[0].getText()
                 name = meal.findAll("strong")[0].getText()
@@ -87,7 +94,10 @@ class Formanka(Restaurant):
             return
         for i in range(1, 7):
             new_row = row.findNext('tr')
-            name = new_row.findAll('td')[0].text
+            try:
+                name = new_row.findAll('td')[0].text
+            except IndexError:
+                return
             price = new_row.findAll('td')[1].text
             self.meals.append({"name": name, "price": price})
             row = new_row
@@ -128,7 +138,7 @@ class Mediterane:
                 name = meal['dish']['name']
                 price = meal['dish']['price']
                 self.meals.append({"name": name, "price": price})
-        except KeyError:
+        except (KeyError, IndexError):
             pass
 
 
