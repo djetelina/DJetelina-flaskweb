@@ -84,7 +84,7 @@ class Tradice(Restaurant):
 
 class Formanka(Restaurant):
     name = "Formanka"
-    url = "http://www.smichovskaformanka.cz/2-denni-menu"
+    url = "http://www.smichovskaformanka.cz/1-denni-menu"
 
     def parse_menu(self, r):
         soup = BeautifulSoup(r, "html.parser")
