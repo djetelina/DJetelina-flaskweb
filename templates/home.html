@@ -18,7 +18,7 @@
             </ul>
             <p>Secondar purpose is to present that I can build a nice website. I love that I'll always be able to
                 work on something in here. I love presenting myself and this is a good way to do it!</p>
-            <p>You can read more about all that <a href="https://www.djetelina.cz/project/djetelina-website/">here</a>.</p>
+            <p>You can read more about all that <a href="{{ url_for('project', project_name='djetelina-website') }}">here</a>.</p>
         </div>
         <div class="col-sm-4">
             <h2>Recently worked on</h2>
@@ -29,7 +29,7 @@
                     </div>
                     <div class="panel-body">
                         <p>Category: {{ project.category }}</p>
-                        <p>{% if project.github != None %}
+                        <p>{% if project.github != None and not project.commits.list[0].faulty%}
                                 Last GitHub commit {{ human(project.commits.list[0].datetime) }}</p>
                                 <p>Commit message: {{ project.commits.list[0].message }}
                             {% else %}

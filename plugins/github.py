@@ -10,7 +10,10 @@ def fetch_commits(repo_name):
     :return:    JSON with commits api
     """
     requests_cache.install_cache('commits_cache', expires_after=60 * 5)
-    r = requests.get('https://api.github.com/repos/iScrE4m/{}/commits'.format(repo_name)).json()
+    try:
+        r = requests.get('https://api.github.com/repos/iScrE4m/{}/commits'.format(repo_name)).json()
+    except requests.exceptions.ConnectionError as e:
+        return None
     return r
 
 
@@ -30,8 +33,9 @@ class Commits:
         try:
             date = self.commits[number]['commit']['author']['date']
             message = self.commits[number]['commit']['message']
-        except IndexError:
-            return Commit("2037-07-31T00:00:00Z", "Error parsing commit")
+        except (IndexError, TypeError):
+            return Commit("2037-07-31T00:00:00Z", "Error parsing commit - may be caused by Github connection issues",
+                          faulty=True)
         return Commit(date, message)
 
 
@@ -44,7 +48,8 @@ class Commit:
     self.message    commit message
     """
 
-    def __init__(self, date, message):
+    def __init__(self, date, message, faulty=False):
         self.date = date
         self.datetime = datetime.strptime(date, '%Y-%m-%dT%H:%M:%SZ')
         self.message = message
+        self.faulty = faulty
