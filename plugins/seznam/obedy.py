@@ -90,13 +90,15 @@ class Formanka(Restaurant):
         soup = BeautifulSoup(r, "html.parser")
         try:
             row = soup.findAll("th")[0]
-        except IndexError:
+        except IndexError as e:
+            print('Chyba pri scrapovani Formanky: {}'.format(e))
             return
         for i in range(1, 7):
             new_row = row.findNext('tr')
             try:
                 name = new_row.findAll('td')[0].text
-            except IndexError:
+            except IndexError as e:
+                print('Chyba pri scrapovani Formanky: {}'.format(e))
                 return
             price = new_row.findAll('td')[1].text
             self.meals.append({"name": name, "price": price})
