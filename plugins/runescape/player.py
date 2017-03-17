@@ -1,11 +1,7 @@
 #!/usr/bin/env python
 # coding=utf-8
 import requests
-from collections import namedtuple
 from datetime import datetime
-
-Activity = namedtuple('Activity', ['date', 'text', 'details'])
-Quests = namedtuple('Quests', ['started', 'complete', 'not_started'])
 
 skills = {
     0: 'Attack',
@@ -37,8 +33,9 @@ skills = {
     26: 'Invention'
 }
 
+
 def _parse_activity(item):
-    return Activity(
+    return dict(
         date=datetime.strptime(item['date'], '%d-%b-%Y %H:%M'),
         text=item['text'],
         details=item['details']
@@ -56,7 +53,7 @@ class Player:
         ).json()
         self.activities = sorted(
             [_parse_activity(activity) for activity in profile['activities']],
-            key=lambda k: k.date, reverse=True
+            key=lambda k: k['date'], reverse=True
         )
         self.combat_level = profile['combatlevel']
         self.logged_in = True if profile['loggedIn'] == 'true' else False
@@ -68,7 +65,7 @@ class Player:
         self.rank = profile['rank']
         self.total_skill = profile['totalskill']
         self.total_xp = profile['totalxp']
-        self.quests = Quests(
+        self.quests = dict(
             started=profile['questsstarted'],
             complete=profile['questscomplete'],
             not_started=profile['questsnotstarted']

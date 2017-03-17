@@ -1,13 +1,14 @@
 #!/usr/bin/env python
 # coding=utf-8
-from flask import Blueprint, json
+from flask import Blueprint, json, render_template
 from .player import Player
 
 rs_bp = Blueprint('RuneScape', 'runescape', url_prefix='/rs')
 
+
 @rs_bp.route('/')
 def index():
-    return 'coming soon-ish'
+    return render_template('rs/compare.html', player1=Player())
 
 
 @rs_bp.route('/api/player/')
