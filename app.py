@@ -8,6 +8,8 @@ from flask_login import LoginManager
 from ago import human
 import os
 
+from plugins.runescape import blueprint as rs
+
 app = Flask(__name__)
 db = SQLAlchemy(app)
 cache = Cache(app, config={'CACHE_TYPE': 'simple'})
@@ -29,6 +31,7 @@ login_manager.init_app(app)
 app.config.from_object('config')
 
 Compress(app)
+app.register_blueprint(rs.rs_bp)
 
 
 @login_manager.user_loader
