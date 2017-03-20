@@ -59,7 +59,7 @@ class Player:
         self.logged_in = True if profile['loggedIn'] == 'true' else False
         self.skills = {skills[skill['id']]: {
             'level': skill['level'],
-            'xp': skill['xp'],
+            'xp': int(skill['xp'] / 10),
             'rank': skill['rank']
         } for skill in profile['skillvalues']}
         self.rank = profile['rank']

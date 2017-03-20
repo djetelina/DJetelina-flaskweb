@@ -8,7 +8,7 @@ rs_bp = Blueprint('RuneScape', 'runescape', url_prefix='/rs')
 
 @rs_bp.route('/')
 def index():
-    return render_template('rs/compare.html', player1=Player())
+    return render_template('rs/compare.html', player1=Player(), player2=Player('M Janiczek'))
 
 
 @rs_bp.route('/api/player/')
