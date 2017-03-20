@@ -1,9 +1,14 @@
 #!/usr/bin/env python
 # coding=utf-8
 from flask import Blueprint, json, render_template
-from .player import Player
+from .player import Player, RSApiError
 
 rs_bp = Blueprint('RuneScape', 'runescape', url_prefix='/rs')
+
+
+@rs_bp.errorhandler(RSApiError)
+def rs_err_handler(e):
+    return f'RS API returned {e.status_code}, try refreshing'
 
 
 @rs_bp.route('/')

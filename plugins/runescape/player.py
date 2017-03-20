@@ -43,6 +43,11 @@ def _parse_activity(item):
     )
 
 
+class RSApiError(Exception):
+    def __init__(self, status_code):
+        self.status_code = status_code
+
+
 class Player:
     def __init__(self, name='DJetelina'):
         self.name = name
@@ -53,9 +58,13 @@ class Player:
             self._get_profile()
 
     def _get_profile(self):
-        profile = requests.get(
+        res = requests.get(
             f'https://apps.runescape.com/runemetrics/profile/profile?user={self.name}&activities=20'
-        ).json()
+        )
+        if res.status_code != 200:
+            current_app.logger.error('RS API returned %s', res.status_code)
+            raise RSApiError(res.status_code)
+        profile = res.json()
         self.activities = sorted(
             [_parse_activity(activity) for activity in profile['activities']],
             key=lambda k: k['date'], reverse=True
