@@ -2,6 +2,7 @@
 # coding=utf-8
 import requests
 from datetime import datetime
+from flask import current_app
 
 skills = {
     0: 'Attack',
@@ -45,7 +46,11 @@ def _parse_activity(item):
 class Player:
     def __init__(self, name='DJetelina'):
         self.name = name
-        self._get_profile()
+        try:
+            self._get_profile()
+        except Exception as e:
+            current_app.logger.warning('Exception happened in getting rs profile: %s, retry', e)
+            self._get_profile()
 
     def _get_profile(self):
         profile = requests.get(
