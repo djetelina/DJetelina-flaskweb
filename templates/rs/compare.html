@@ -69,6 +69,15 @@
 <body>
 <h1><span class="myName text-success">{{ player1.name }}</span> vs <span class="opponentName text-info">{{ player2.name }}</span></h1>
     <div class="col-sm-3">
+        <table class="table">
+            <tr>
+                <th>Quests</th>
+                <td><span class="text-success">{{ player1.quests['complete'] }}</span>/
+                    <span class="text-info">{{ player1.quests['started'] }}</span>/
+                    <span class="text-danger">{{ player1.quests['not_started'] }}</span>
+                </td>
+            </tr>
+        </table>
         {% for entry in player1.activities[:10] %}
             <div class="panel panel-success">
                 <div class="panel-heading">
@@ -116,6 +125,15 @@
     </table>
     </div>
     <div class="col-sm-3">
+        <table class="table">
+            <tr>
+                <th>Quests</th>
+                <td><span class="text-success">{{ player2.quests['complete'] }}</span>/
+                    <span class="text-info">{{ player2.quests['started'] }}</span>/
+                    <span class="text-danger">{{ player2.quests['not_started'] }}</span>
+                </td>
+            </tr>
+        </table>
         {% for entry in player2.activities[:10] %}
             <div class="panel panel-info">
                 <div class="panel-heading">
