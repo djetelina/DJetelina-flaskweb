@@ -54,8 +54,7 @@ class Player:
         self.name = name
         try:
             self._get_profile()
-        except Exception as e:
-            current_app.logger.warning('Exception happened in getting rs profile: %s, retry', e)
+        except Exception:
             self._get_profile()
 
     def _get_profile(self):
@@ -64,8 +63,11 @@ class Player:
         )
         if res.status_code != 200:
             current_app.logger.error('RS API returned %s', res.status_code)
-            raise RSApiError(res.status_code)
+            raise RSApiError(res.status_code, None)
         profile = res.json()
+        if profile.get('error', False):
+            current_app.logger.error('RS API returned %s', profile['error'])
+            raise RSApiError(res.status_code, profile['error'])
         try:
             self.activities = sorted(
                 [_parse_activity(activity) for activity in profile['activities']],

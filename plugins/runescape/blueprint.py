@@ -8,9 +8,7 @@ rs_bp = Blueprint('RuneScape', 'runescape', url_prefix='/rs')
 
 @rs_bp.errorhandler(RSApiError)
 def rs_err_handler(e):
-    if e.more:
-        return f'RuneScape api returned 200, but there was a key error, source: {e.more}'
-    return f'RS API returned {e.status_code}, try refreshing'
+    return render_template('rs/rsapierror.html', error=e)
 
 
 @rs_bp.route('/')
