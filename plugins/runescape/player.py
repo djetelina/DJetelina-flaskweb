@@ -44,8 +44,9 @@ def _parse_activity(item):
 
 
 class RSApiError(Exception):
-    def __init__(self, status_code):
+    def __init__(self, status_code, more):
         self.status_code = status_code
+        self.more = more
 
 
 class Player:
@@ -65,10 +66,13 @@ class Player:
             current_app.logger.error('RS API returned %s', res.status_code)
             raise RSApiError(res.status_code)
         profile = res.json()
-        self.activities = sorted(
-            [_parse_activity(activity) for activity in profile['activities']],
-            key=lambda k: k['date'], reverse=True
-        )
+        try:
+            self.activities = sorted(
+                [_parse_activity(activity) for activity in profile['activities']],
+                key=lambda k: k['date'], reverse=True
+            )
+        except KeyError:
+            raise RSApiError(res.status_code, profile)
         self.combat_level = profile['combatlevel']
         self.logged_in = True if profile['loggedIn'] == 'true' else False
         self.skills = {skills[skill['id']]: {
