@@ -13,7 +13,7 @@ from plugins.runescape import blueprint as rs
 app = Flask(__name__)
 db = SQLAlchemy(app)
 cache = Cache(app, config={'CACHE_TYPE': 'simple'})
-Markdown(app)
+Markdown(app, safe_mode=False)
 if 'ON_HEROKU' in os.environ:
     sslify = SSLify(app)
     debug = False
