@@ -31,7 +31,7 @@ class Commits:
         try:
             date = self.commits[number]['commit']['author']['date']
             message = self.commits[number]['commit']['message']
-        except (IndexError, TypeError):
+        except (IndexError, TypeError, KeyError):
             return Commit("2037-07-31T00:00:00Z", "Error parsing commit - may be caused by Github connection issues",
                           faulty=True)
         return Commit(date, message)
