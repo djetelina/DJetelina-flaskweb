@@ -2,4 +2,5 @@
 *.pyc
 .idea/
 venv/
+venv3.6/
 *.sqlite

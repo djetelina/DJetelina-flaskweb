@@ -82,27 +82,25 @@ class Tradice(Restaurant):
                 continue
 
 
-class Formanka(Restaurant):
+class Formanka:
     name = "Formanka"
-    url = "http://www.smichovskaformanka.cz/1-denni-menu"
+    url = "https://developers.zomato.com/api/v2.1/dailymenu?res_id=16506447"
 
-    def parse_menu(self, r):
-        soup = BeautifulSoup(r, "html.parser")
+    def __init__(self):
+        self.meals = []
+        self.zomato()
+
+    def zomato(self):
+        headers = {"User-agent": "curl/7.43.0", 'user_key': os.environ.get('ZOMATO_KEY'), 'Accept': 'application/json'}
+        requests_cache.install_cache('zomato_cache', expires_after=60)
+        r = requests.get(self.url, headers=headers).json()
         try:
-            row = soup.findAll("th")[0]
-        except IndexError as e:
-            print('Chyba pri scrapovani Formanky: {}'.format(e))
-            return
-        for i in range(1, 7):
-            new_row = row.findNext('tr')
-            try:
-                name = new_row.findAll('td')[0].text
-            except IndexError as e:
-                print('Chyba pri scrapovani Formanky: {}'.format(e))
-                return
-            price = new_row.findAll('td')[1].text
-            self.meals.append({"name": name, "price": price})
-            row = new_row
+            for meal in r['daily_menus'][0]['daily_menu']['dishes']:
+                name = meal['dish']['name']
+                price = meal['dish']['price']
+                self.meals.append({"name": name, "price": price})
+        except (KeyError, IndexError):
+            pass
 
 
 class Cyril(Restaurant):
@@ -144,7 +142,4 @@ class Mediterane:
             pass
 
 
-def pairwise(iterable):
-    a, b = tee(iterable)
-    next(b, None)
-    return zip(a, b)
+# TODO Il nostro (nema zomato daily menu)
