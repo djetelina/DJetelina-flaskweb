@@ -12,7 +12,7 @@ class Restaurants:
                      Formanka(),
                      ZlatyKlas(),
                      Mediterane(),
-                     Cyril()
+#                    Cyril()
                      ]
         self.list = [restaurant for restaurant in self.list if restaurant.meals]
 
