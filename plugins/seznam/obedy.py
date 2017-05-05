@@ -10,7 +10,7 @@ class Restaurants:
                      Formanka(),
                      ZlatyKlas(),
                      Mediterane(),
-#                    Cyril()
+                     Cyril()
                      ]
         self.list = [restaurant for restaurant in self.list if restaurant.meals]
 
@@ -99,22 +99,24 @@ class Formanka:
             pass
 
 
-class Cyril(Restaurant):
+class Cyril:
     name = "Cyril's pub"
-    url = "http://www.cyrilspub.cz/denni-menu/"
+    url = "https://developers.zomato.com/api/v2.1/dailymenu?res_id=16506663"
 
-    def parse_menu(self, r):
-        soup = BeautifulSoup(r, "html.parser")
+    def __init__(self):
+        self.meals = []
+        self.zomato()
+
+    def zomato(self):
+        headers = {"User-agent": "curl/7.43.0", 'user_key': os.environ.get('ZOMATO_KEY'), 'Accept': 'application/json'}
+        r = requests.get(self.url, headers=headers).json()
         try:
-            menu = soup.findAll("table")[0].findAll("td")
-            menu = [menu[i:i+2] for i in range(0, len(menu), 2)]
-        except IndexError:
-            return
-        for name, price in menu:
-            name = name.getText()
-            price = price.getText()
-            if name not in ("DENNÍ MENU", "TÝDENNÍ POLEDNÍ NABÍDKA"):
+            for meal in r['daily_menus'][0]['daily_menu']['dishes']:
+                name = meal['dish']['name']
+                price = meal['dish']['price']
                 self.meals.append({"name": name, "price": price})
+        except (KeyError, IndexError):
+            pass
 
 
 class Mediterane:
