@@ -1,5 +1,4 @@
 import requests
-import requests_cache
 from datetime import datetime
 
 
@@ -9,7 +8,6 @@ def fetch_commits(repo_name):
 
     :return:    JSON with commits api
     """
-    requests_cache.install_cache('commits_cache', expires_after=60 * 5)
     try:
         r = requests.get('https://api.github.com/repos/iScrE4m/{}/commits'.format(repo_name)).json()
     except requests.exceptions.ConnectionError as e:

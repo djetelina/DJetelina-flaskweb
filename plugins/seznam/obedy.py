@@ -1,8 +1,6 @@
 import requests
 import os
 import datetime
-from itertools import tee
-import requests_cache
 from bs4 import BeautifulSoup
 
 
@@ -23,7 +21,6 @@ def get_restaurant(url):
 
     :return:    JSON with commits api
     """
-    requests_cache.install_cache('restaurants_cache', expires_after=10)
     r = requests.get(url)
     return r.content
 
@@ -92,7 +89,6 @@ class Formanka:
 
     def zomato(self):
         headers = {"User-agent": "curl/7.43.0", 'user_key': os.environ.get('ZOMATO_KEY'), 'Accept': 'application/json'}
-        requests_cache.install_cache('zomato_cache', expires_after=60)
         r = requests.get(self.url, headers=headers).json()
         try:
             for meal in r['daily_menus'][0]['daily_menu']['dishes']:
@@ -131,7 +127,6 @@ class Mediterane:
 
     def zomato(self):
         headers = {"User-agent": "curl/7.43.0", 'user_key': os.environ.get('ZOMATO_KEY'), 'Accept': 'application/json'}
-        requests_cache.install_cache('zomato_cache', expires_after=60)
         r = requests.get(self.url, headers=headers).json()
         try:
             for meal in r['daily_menus'][0]['daily_menu']['dishes']:
