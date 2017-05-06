@@ -25,9 +25,9 @@
                         </thead>
                         <tbody>
                             {% for meal in restaurant.meals %}
-                                <tr {% for word in nonvege if word in meal.name.lower() %}
-                                        class="warning"
-                                    {% endfor %}>
+                                <tr {% if meal.is_vegetarian %}
+                                        class="success"
+                                    {% endif %}>
                                     <td>{{ meal.name }}</td>
                                     <td>{{ meal.price }}</td>
                                 </tr>

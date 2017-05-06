@@ -1,6 +1,10 @@
 import requests
+import logging
+from traceback import format_exc
 from datetime import datetime
 
+
+log = logging.getLogger(__name__)
 
 def fetch_commits(repo_name):
     """
@@ -9,10 +13,14 @@ def fetch_commits(repo_name):
     :return:    JSON with commits api
     """
     try:
-        r = requests.get('https://api.github.com/repos/iScrE4m/{}/commits'.format(repo_name)).json()
-    except requests.exceptions.ConnectionError as e:
+        r = requests.get('https://api.github.com/repos/iScrE4m/{}/commits'.format(repo_name))
+    except requests.exceptions.ConnectionError:
+        log.error("Connection error when connecting to Github: %s", format_exc())
         return None
-    return r
+    if r.status_code != 200:
+        log.error("Bad status code from Github, got %s", r.status_code)
+        return None
+    return r.json()
 
 
 class Commits:
@@ -28,10 +36,14 @@ class Commits:
         self.list = [self.parse_commit(x) for x in range(0, 15)]
 
     def parse_commit(self, number):
+        if self.commits is None:
+            return Commit("2037-07-31T00:00:00Z", "Error parsing commit - may be caused by Github connection issues",
+                          faulty=True)
         try:
             date = self.commits[number]['commit']['author']['date']
             message = self.commits[number]['commit']['message']
         except (IndexError, TypeError, KeyError):
+            log.error("Exception happened while parsing commits: %s", format_exc())
             return Commit("2037-07-31T00:00:00Z", "Error parsing commit - may be caused by Github connection issues",
                           faulty=True)
         return Commit(date, message)
