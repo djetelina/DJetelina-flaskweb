@@ -1,0 +1,3 @@
+[submodule "rses"]
+	path = rses
+	url = https://github.com/iScrE4m/RSES

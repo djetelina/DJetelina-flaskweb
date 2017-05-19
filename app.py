@@ -9,6 +9,7 @@ from ago import human
 import os
 
 from plugins.runescape import blueprint as rs
+from rses.rses.src import rses_api_bp, rses_web_client_bp
 
 app = Flask(__name__)
 db = SQLAlchemy(app)
@@ -32,6 +33,8 @@ app.config.from_object('config')
 
 Compress(app)
 app.register_blueprint(rs.rs_bp)
+app.register_blueprint(rses_api_bp)
+app.register_blueprint(rses_web_client_bp)
 
 
 @login_manager.user_loader
