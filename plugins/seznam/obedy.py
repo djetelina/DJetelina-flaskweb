@@ -6,7 +6,8 @@ from bs4 import BeautifulSoup
 
 MEAT_IDENTIFIERS = [
     'kuře', 'vepř', 'hově', 'bologne', 'boloň', 'krůt', 'maso', 'masem', 'šunk', 'slanin', 'salám', 'ančo', 'pstruh',
-    'beef', 'kanč', 'kanec', ' medailon', 'vrabec', 'býč', 'býk', 'kachn', 'klobás', 'krkovič', 'tresk', 'pancett'
+    'beef', 'kanč', 'kanec', ' medailon', 'vrabec', 'býč', 'býk', 'kachn', 'klobás', 'krkovič', 'tresk', 'pancett', 
+    'špek', 'losos', 'svíč', 'králí'
 ]
 
 
