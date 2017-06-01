@@ -52,7 +52,8 @@ class ZomatoRestaurant:
             for meal in r['daily_menus'][0]['daily_menu']['dishes']:
                 name = meal['dish']['name']
                 price = meal['dish']['price']
-                self.meals.append(Meal(name, price))
+                if price:
+                    self.meals.append(Meal(name, price))
         except (KeyError, IndexError):
                 pass
 
