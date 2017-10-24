@@ -6,7 +6,8 @@
 {% endblock %}
 {% block content %}
     <div itemscope itemtype="https://schema.org/Person">
-        <h1>About <span itemprop="name"><span itemprop="givenName">David</span> <span itemprop="familyName">Jetelina</span></span></h1>
+        <h1>About <span itemprop="name"><span itemprop="givenName">David</span>
+			<span itemprop="familyName">Jetelina</span></span></h1>
         <ol class="breadcrumb" itemscope itemtype="https://schema.org/BreadcrumbList">
             <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
                 <a itemscope itemtype="https://schema.org/Thing" itemprop="item" href="{{ url_for('home') }}">
@@ -25,7 +26,8 @@
             <h2>Career</h2>
             <p>
                 I was born <span itemprop="birthDate" content="1992-07-31">31st of July 1992</span> in a small city called
-                <span itemprop="birthPlace" itemscope itemtype="https://schema.org/Place"><span itemprop="address" itemscope itemtype="https://schema.org/PostalAddress">
+                <span itemprop="birthPlace" itemscope itemtype="https://schema.org/Place">
+					<span itemprop="address" itemscope itemtype="https://schema.org/PostalAddress">
                     <span itemprop="addressLocality">Nový Jičín</span>, <span itemprop="addressCountry">Czech Republic</span>.
                 </span></span>
                 Since my father was a preacher, we moved a lot, so after 2 years in Nový Jičín 6 years in Vsetín we ended up in
@@ -35,13 +37,14 @@
                     </span>
                 </span>
                 There, I finished elementary school
-                and high school, <a href="http://panska.cz/" target="_blank">SPŠST Panská</a>, where I studied Audio and Video
-                technology - technological and organizational focus (nicknamed production).
+                and high school, <a href="http://panska.cz/" target="_blank" rel="noopener">SPŠST Panská</a>,
+				where I studied Audio and Video technology - technological and organizational focus (nicknamed production).
             </p>
             <p>
                 After Maturita (A levels/SAT), I went to Faculty of Humanities (Charles University). After two months I decided,
                 that I don't want to keep studying now - I wanted to work instead and I had the opportunities.
-                Thanks to my high school and temp job at <a href="http://www.awrstudio.cz/" target="_blank">AWR Studio</a>
+                Thanks to my high school and temp job at <a href="http://www.awrstudio.cz/" target="_blank"
+															rel="noopener">AWR Studio</a>
                 I had enough experience in video editing to make a living and start working as a freelancer.
             </p>
             <p>
@@ -56,10 +59,12 @@
                 two semesters, about to be 24, I know I want to quit school again.
             </p>
             <p>
-                So I started a new chapter. I am now a junior programmer at
-                <a href="https://www.seznam.cz" target="_blank">Seznam</a>!
-                For those not living in Czech Republic, Seznam is czech version of Google. After 3 months
-                I can say with confidence that I found exactly what I was looking for.
+                So I started a new chapter as a junior programmer at
+                <a href="https://www.seznam.cz" target="_blank" rel="noopener">Seznam</a>!
+                For those not living in Czech Republic, Seznam is czech version of Google. After half a year
+				I was promised to be promoted from junior "soon", so my junior career ended after 10 months of real work,
+				I have to admit I'm a bit proud. Wearing big boy pants, I continue to enjoy my time at Seznam. You can
+				read more about the projects I work on <a href={{ url_for('projects') }}>here</a>!
             </p>
         </div>
         <div class="col-sm-6">
@@ -68,7 +73,7 @@
                 I grew up playing computer games and tending to their communities. I moderated few internet forums,
                 shoutcasted Dota AllStars in years 2009 and 2010 (before eSports became really big) and much more.
                 Besides gaming, I loved immersing myself in different worlds and stories. My profile on
-                <a href="https://trakt.tv/users/iscre4m" target="_blank">trakt.tv</a> confirms just that.
+                <a href="https://trakt.tv/users/iscre4m" target="_blank" rel="noopener">trakt.tv</a> confirms just that.
             </p>
             <p>
                 I also fell in love with programming. It was only a matter of time before I did, as it always was all around me.

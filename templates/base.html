@@ -8,6 +8,7 @@
         <meta name="description" content="{% block description %}I'm David Jetelina. Browse my projects, read about me, connect and stuff!{% endblock %}">
         <meta name="author" content="David Jetelina">
         <meta charset="utf-8">
+		<meta name="referrer" content="origin-when-crossorigin">
 
         <meta property="og:site_name" content="DJetelina" />
         <meta property="og:locale" content="en_GB" />
@@ -79,12 +80,18 @@
             </ul>
             {% block navbar_right %}
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="mailto:david@djetelina.cz" target="_blank"><i class="fa fa-envelope"></i></a></li>
-                    <li><a href="https://www.facebook.com/djetelina" target="_blank"><i class="fa fa-facebook"></i></a></li>
-                    <li><a href="https://twitter.com/djetelina" target="_blank"><i class="fa fa-twitter"></i></a></li>
-                    <li><a href="https://linkedin.com/in/david-jetelina-893085aa" target="_blank"><i class="fa fa-linkedin"></i></a></li>
-                    <li><a href="https://github.com/iscre4m/" target="_blank"><i class="fa fa-github"></i></a></li>
-                    <li><a href="http://stackoverflow.com/users/5616110/iscre4m?tab=profile" target="_blank"><i class="fa fa-stack-overflow"></i></a></li>
+                    <li><a href="mailto:david@djetelina.cz" target="_blank">
+						<i class="fa fa-envelope"></i></a></li>
+                    <li><a href="https://www.facebook.com/djetelina" target="_blank" rel="noopener">
+						<i class="fa fa-facebook"></i></a></li>
+                    <li><a href="https://twitter.com/djetelina" target="_blank" rel="noopener">
+						<i class="fa fa-twitter"></i></a></li>
+                    <li><a href="https://linkedin.com/in/david-jetelina-893085aa" target="_blank" rel="noopener">
+						<i class="fa fa-linkedin"></i></a></li>
+                    <li><a href="https://github.com/iscre4m/" target="_blank" rel="noopener">
+						<i class="fa fa-github"></i></a></li>
+                    <li><a href="http://stackoverflow.com/users/5616110/iscre4m?tab=profile" target="_blank"
+						   rel="noopener"><i class="fa fa-stack-overflow"></i></a></li>
                 </ul>
             {% endblock %}
         </div><!--/.navbar-collapse -->
