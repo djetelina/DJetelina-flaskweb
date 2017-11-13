@@ -185,7 +185,7 @@ def robots():
 
 
 @app.route("/keybase.txt")
-def robots():
+def keybase():
     return send_from_directory(os.path.join(app.root_path, 'static'), 'keybase.txt')
 
 
