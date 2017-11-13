@@ -184,6 +184,11 @@ def robots():
     return send_from_directory(os.path.join(app.root_path, 'static'), 'robots.txt')
 
 
+@app.route("/keybase.txt")
+def robots():
+    return send_from_directory(os.path.join(app.root_path, 'static'), 'keybase.txt')
+
+
 @app.route("/.well-known/acme-challenge/<string:file>")
 def ssl_verif(file):
     if file == "zBoZTgJhuUvbAx2d2bSOzLbAxU5vQRG-y_aLx3-7Buk":
