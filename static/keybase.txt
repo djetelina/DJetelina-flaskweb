@@ -1,0 +1,55 @@
+==================================================================
+https://keybase.io/djetelina
+--------------------------------------------------------------------
+
+I hereby claim:
+
+  * I am an admin of https://www.djetelina.cz
+  * I am djetelina (https://keybase.io/djetelina) on keybase.
+  * I have a public key ASAxYL34OSIuIfloTuCslDz-JN5oCGb9tDp4i4LGJz16Kwo
+
+To do so, I am signing this object:
+
+{
+  "body": {
+    "key": {
+      "eldest_kid": "01203160bdf839222e21f9684ee0ac943cfe24de680866fdb43a788b82c6273d7a2b0a",
+      "host": "keybase.io",
+      "kid": "01203160bdf839222e21f9684ee0ac943cfe24de680866fdb43a788b82c6273d7a2b0a",
+      "uid": "7bfca03ce4bc331dd4f01695ac41b819",
+      "username": "djetelina"
+    },
+    "merkle_root": {
+      "ctime": 1510591862,
+      "hash": "6021c487281a07ceae16d316cf3b0e20c02d64ead4474ebc955d523c06773dc2c2b6e789a2d9a8cd20ef852b816ab93f587ac8d5a7a1ef11959b0fd58a5c2284",
+      "hash_meta": "1aff2dd0e8f829ddd567406771db2ff820a86e071caeb0b5973bd23982f03cac",
+      "seqno": 1699902
+    },
+    "service": {
+      "hostname": "www.djetelina.cz",
+      "protocol": "https:"
+    },
+    "type": "web_service_binding",
+    "version": 1
+  },
+  "client": {
+    "name": "keybase.io go client",
+    "version": "1.0.35"
+  },
+  "ctime": 1510591922,
+  "expire_in": 504576000,
+  "prev": "ef4e71c9af06fbf2d0840140bb9798bb96c8df4e278a815a2f176a8d7186e287",
+  "seqno": 8,
+  "tag": "signature"
+}
+
+which yields the signature:
+
+hKRib2R5hqhkZXRhY2hlZMOpaGFzaF90eXBlCqNrZXnEIwEgMWC9+DkiLiH5aE7grJQ8/iTeaAhm/bQ6eIuCxic9eisKp3BheWxvYWTFA0l7ImJvZHkiOnsia2V5Ijp7ImVsZGVzdF9raWQiOiIwMTIwMzE2MGJkZjgzOTIyMmUyMWY5Njg0ZWUwYWM5NDNjZmUyNGRlNjgwODY2ZmRiNDNhNzg4YjgyYzYyNzNkN2EyYjBhIiwiaG9zdCI6ImtleWJhc2UuaW8iLCJraWQiOiIwMTIwMzE2MGJkZjgzOTIyMmUyMWY5Njg0ZWUwYWM5NDNjZmUyNGRlNjgwODY2ZmRiNDNhNzg4YjgyYzYyNzNkN2EyYjBhIiwidWlkIjoiN2JmY2EwM2NlNGJjMzMxZGQ0ZjAxNjk1YWM0MWI4MTkiLCJ1c2VybmFtZSI6ImRqZXRlbGluYSJ9LCJtZXJrbGVfcm9vdCI6eyJjdGltZSI6MTUxMDU5MTg2MiwiaGFzaCI6IjYwMjFjNDg3MjgxYTA3Y2VhZTE2ZDMxNmNmM2IwZTIwYzAyZDY0ZWFkNDQ3NGViYzk1NWQ1MjNjMDY3NzNkYzJjMmI2ZTc4OWEyZDlhOGNkMjBlZjg1MmI4MTZhYjkzZjU4N2FjOGQ1YTdhMWVmMTE5NTliMGZkNThhNWMyMjg0IiwiaGFzaF9tZXRhIjoiMWFmZjJkZDBlOGY4MjlkZGQ1Njc0MDY3NzFkYjJmZjgyMGE4NmUwNzFjYWViMGI1OTczYmQyMzk4MmYwM2NhYyIsInNlcW5vIjoxNjk5OTAyfSwic2VydmljZSI6eyJob3N0bmFtZSI6Ind3dy5kamV0ZWxpbmEuY3oiLCJwcm90b2NvbCI6Imh0dHBzOiJ9LCJ0eXBlIjoid2ViX3NlcnZpY2VfYmluZGluZyIsInZlcnNpb24iOjF9LCJjbGllbnQiOnsibmFtZSI6ImtleWJhc2UuaW8gZ28gY2xpZW50IiwidmVyc2lvbiI6IjEuMC4zNSJ9LCJjdGltZSI6MTUxMDU5MTkyMiwiZXhwaXJlX2luIjo1MDQ1NzYwMDAsInByZXYiOiJlZjRlNzFjOWFmMDZmYmYyZDA4NDAxNDBiYjk3OThiYjk2YzhkZjRlMjc4YTgxNWEyZjE3NmE4ZDcxODZlMjg3Iiwic2Vxbm8iOjgsInRhZyI6InNpZ25hdHVyZSJ9o3NpZ8RAsLeZXhJO2gOjmmjzsckKnFffA7PlqlrSzH3ZCQoBZH9yyLIyIWJU6c+HN363NKqTUfDb7+D3JPb83C/cGR4ZDKhzaWdfdHlwZSCkaGFzaIKkdHlwZQildmFsdWXEIKWo3+Ibo/NJD72mouHgTNwNID3NRPpuC/Zhmzzuu6cjo3RhZ80CAqd2ZXJzaW9uAQ==
+
+And finally, I am proving ownership of this host by posting or
+appending to this document.
+
+View my publicly-auditable identity here: https://keybase.io/djetelina
+
+==================================================================
