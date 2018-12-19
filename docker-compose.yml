@@ -1,0 +1,21 @@
+version: '3'
+
+services:
+  website:
+    restart: "on-failure"
+    build:
+      context: .
+    networks:
+      djetelina:
+        aliases:
+          - website
+    ports:
+      - "8000:8000"
+    volumes:
+      - "./src/:/usr/src/app/"
+
+
+networks:
+  djetelina:
+    driver:
+      bridge
