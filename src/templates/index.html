@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>David Jetelina{% block title %}{% endblock %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="David Jetelina">
+    <meta charset="utf-8">
+    <meta name="referrer" content="origin-when-crossorigin">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='ico/favicon.ico') }}">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+          crossorigin="anonymous">
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"
+          integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+</head>
+<body>
+<div class="container">
+{% block content %}
+    <h1>David Jetelina</h1>
+    <p class="lead">I see things for what they could be</p>
+    <h2>Who</h2>
+    <p>Software developer</p>
+    <h2>Contact & profiles</h2>
+    <li><a href="mailto:david@djetelina.cz" target="_blank">
+        <i class="fa fa-envelope"></i> Email</a></li>
+    <li><a href="https://twitter.com/djetelina" target="_blank" rel="noopener">
+        <i class="fa fa-twitter"></i> Twitter</a></li>
+    <li><a href="https://linkedin.com/in/david-jetelina-893085aa" target="_blank" rel="noopener">
+        <i class="fa fa-linkedin"></i> Linkedin</a></li>
+    <li><a href="https://github.com/iscre4m/" target="_blank" rel="noopener">
+        <i class="fa fa-github"></i> GitHub</a></li>
+    <li><a href="http://stackoverflow.com/users/5616110/iscre4m?tab=profile" target="_blank"
+           rel="noopener" class="mx-auto"><i class="fa fa-stack-overflow"></i> Stack Overflow</a></li>
+{% endblock %}
+</div>
+{% block js_footer %}
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+            crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+            integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            crossorigin="anonymous"></script>
+{% endblock %}
+</body>
+</html>

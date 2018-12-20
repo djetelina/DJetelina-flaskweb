@@ -9,7 +9,8 @@ RUN pip install --no-cache-dir pipenv \
     && apt-get update \
     && apt-get install -yyy gcc \
     && pipenv install --system --deploy \
-    && apt-get purge -yyy gcc \
+    && pip uninstall -y pipenv \
+    && apt-get purge -yyy gcc python3-pip \
     && apt-get autoremove -yyy
 
 COPY src/ .

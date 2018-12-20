@@ -9,6 +9,8 @@ services:
       djetelina:
         aliases:
           - website
+    environment:
+      - DJETELINA_DEBUG=True
     ports:
       - "8000:8000"
     volumes:

@@ -16,10 +16,8 @@ request_duration_s = Histogram(
 class MetricsMiddleware:
     def __init__(self, app: Sanic) -> None:
         self.app = app
-
-    def register(self) -> None:
-        self.app.middleware('request')(self.before_request)
-        self.app.middleware('response')(self.after_request)
+        self.app.register_middleware(self.before_request, attach_to='request')
+        self.app.register_middleware(self.after_request, attach_to='response')
 
     async def before_request(self, request: Request) -> None:
         time_start.set(time.time())
